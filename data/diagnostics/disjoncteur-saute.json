@@ -1,0 +1,28 @@
+{
+  "id": "disjoncteur-saute",
+  "titre": "Disjoncteur qui saute",
+  "icone": "⚡",
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Quand tu réarmes le disjoncteur, re-saute-t-il tout de suite ?",
+      "reponses": [
+        { "texte": "Non, il tient", "suite": "resultat_reussi" },
+        { "texte": "Oui, il re-saute immédiatement", "suite": "resultat_court_circuit" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_reussi": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le disjoncteur a probablement sauté suite à une surcharge ponctuelle. Réarme-le simplement.",
+      "tutoId": "reparer-disjoncteur"
+    },
+    "resultat_court_circuit": {
+      "verdict": "rouge",
+      "titre": "Appelle un pro tout de suite",
+      "conseil": "Un disjoncteur qui re-saute immédiatement signale probablement un court-circuit. N'essaie pas de le réarmer plusieurs fois, et ne touche pas au tableau électrique. Appelle un électricien."
+    }
+  }
+}

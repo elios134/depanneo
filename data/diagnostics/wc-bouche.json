@@ -1,0 +1,29 @@
+{
+  "id": "wc-bouche",
+  "titre": "WC bouché",
+  "icone": "🚽",
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Depuis quand les WC sont bouchés ?",
+      "reponses": [
+        { "texte": "Ça vient d'arriver", "suite": "resultat_ventouse" },
+        { "texte": "Depuis plusieurs jours, l'eau remonte lentement", "suite": "resultat_persistant" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_ventouse": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Une ventouse ou un furet suffit dans la plupart des cas.",
+      "tutoId": "deboucher-wc"
+    },
+    "resultat_persistant": {
+      "verdict": "orange",
+      "titre": "Essaie de déboucher, sinon appelle un pro",
+      "conseil": "Si la ventouse et le furet ne suffisent pas, le bouchon est probablement plus loin dans la canalisation. Un plombier pourra intervenir avec un matériel adapté.",
+      "tutoId": "deboucher-wc"
+    }
+  }
+}

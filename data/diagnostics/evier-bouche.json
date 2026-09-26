@@ -1,0 +1,29 @@
+{
+  "id": "evier-bouche",
+  "titre": "Évier ou lavabo bouché",
+  "icone": "🚰",
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "L'eau s'écoule-t-elle un peu, ou plus du tout ?",
+      "reponses": [
+        { "texte": "Elle s'écoule lentement", "suite": "resultat_deboucher" },
+        { "texte": "Elle ne s'écoule plus du tout, et d'autres éviers sont touchés", "suite": "resultat_canalisation" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_deboucher": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Un furet ou un produit déboucheur adapté suffit généralement.",
+      "tutoId": "deboucher-evier"
+    },
+    "resultat_canalisation": {
+      "verdict": "orange",
+      "titre": "Fais appel à un pro",
+      "conseil": "Le bouchon est probablement profond dans une canalisation commune. Un plombier sera plus efficace.",
+      "tutoId": "deboucher-evier"
+    }
+  }
+}

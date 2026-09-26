@@ -1,0 +1,27 @@
+{
+  "id": "chaudiere-en-panne",
+  "titre": "Chaudière en panne",
+  "icone": "🌡️",
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Un voyant d'erreur est-il allumé sur la chaudière ?",
+      "reponses": [
+        { "texte": "Oui", "suite": "resultat_voyant" },
+        { "texte": "Non, rien ne s'allume du tout", "suite": "resultat_alimentation" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_voyant": {
+      "verdict": "orange",
+      "titre": "Note le code, appelle un chauffagiste",
+      "conseil": "Note le code d'erreur affiché, ne redémarre pas la chaudière plusieurs fois, et appelle un chauffagiste en lui donnant ce code."
+    },
+    "resultat_alimentation": {
+      "verdict": "orange",
+      "titre": "Vérifie, sinon appelle un chauffagiste",
+      "conseil": "Vérifie que la chaudière est bien alimentée électriquement et que la pression d'eau est correcte. Si rien ne change, appelle un chauffagiste."
+    }
+  }
+}

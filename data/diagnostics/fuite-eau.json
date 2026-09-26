@@ -1,0 +1,49 @@
+{
+  "id": "fuite-eau",
+  "titre": "Fuite d'eau",
+  "icone": "💧",
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "D'où vient la fuite ?",
+      "reponses": [
+        { "texte": "Sous l'évier ou le lavabo", "suite": "q2" },
+        { "texte": "Du compteur d'eau", "suite": "resultat_compteur" },
+        { "texte": "Du plafond ou d'en haut", "suite": "resultat_plafond" }
+      ]
+    },
+    "q2": {
+      "question": "Le tuyau est-il percé, ou juste un raccord qui goutte ?",
+      "reponses": [
+        { "texte": "Juste un raccord qui goutte", "suite": "resultat_raccord" },
+        { "texte": "Tuyau percé ou cassé", "suite": "resultat_perce" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_raccord": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Resserre le raccord ou change le joint.",
+      "tutoId": "changer-joint"
+    },
+    "resultat_perce": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Coupe l'eau au compteur, un pro doit intervenir pour remplacer le tuyau.",
+      "gesteUrgenceId": "couper-eau"
+    },
+    "resultat_compteur": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Une fuite au compteur peut venir du joint ou du compteur lui-même. Coupe l'eau si tu peux, et contacte ton fournisseur d'eau.",
+      "gesteUrgenceId": "couper-eau"
+    },
+    "resultat_plafond": {
+      "verdict": "rouge",
+      "titre": "Appelle un pro tout de suite",
+      "conseil": "Une fuite venant du plafond peut avoir plusieurs origines et présente un risque de dégât des eaux ou électrique. Coupe l'eau si tu peux localiser l'arrivée concernée.",
+      "gesteUrgenceId": "couper-eau"
+    }
+  }
+}

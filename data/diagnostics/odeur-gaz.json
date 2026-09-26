@@ -1,0 +1,24 @@
+{
+  "id": "odeur-gaz",
+  "titre": "Odeur de gaz",
+  "icone": "🔥",
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "As-tu déjà ouvert les fenêtres et coupé l'arrivée de gaz si tu peux le faire sans risque ?",
+      "reponses": [
+        { "texte": "Oui", "suite": "resultat_gaz" },
+        { "texte": "Non, pas encore", "suite": "resultat_gaz" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_gaz": {
+      "verdict": "rouge",
+      "titre": "Appelle un pro tout de suite",
+      "conseil": "Ne touche à rien d'électrique (pas d'interrupteur, pas de sonnette), aère si tu peux le faire sans risque, sors du logement et appelle le numéro d'urgence gaz.",
+      "gesteUrgenceId": "couper-gaz",
+      "numeroUtile": "0800 47 33 33"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pas-eau-chaude",
+  "titre": "Pas d'eau chaude",
+  "icone": "🚿",
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "As-tu un chauffe-eau électrique ou une chaudière ?",
+      "reponses": [
+        { "texte": "Chauffe-eau électrique", "suite": "q2" },
+        { "texte": "Chaudière", "suite": "resultat_chaudiere" }
+      ]
+    },
+    "q2": {
+      "question": "Le disjoncteur du chauffe-eau a-t-il sauté ?",
+      "reponses": [
+        { "texte": "Oui, il est en position basse", "suite": "resultat_rearmer" },
+        { "texte": "Non, tout est allumé mais toujours pas d'eau chaude", "suite": "resultat_panne" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_rearmer": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Réarme le disjoncteur du chauffe-eau et attends quelques heures que l'eau chauffe.",
+      "tutoId": "reparer-disjoncteur"
+    },
+    "resultat_panne": {
+      "verdict": "rouge",
+      "titre": "Appelle un pro tout de suite",
+      "conseil": "Le chauffe-eau est probablement en panne (résistance ou thermostat). N'ouvre pas le chauffe-eau toi-même, fais appel à un pro."
+    },
+    "resultat_chaudiere": {
+      "verdict": "orange",
+      "titre": "Vérifie, sinon appelle un chauffagiste",
+      "conseil": "Vérifie que la chaudière est bien alimentée, allumée, et qu'aucun voyant d'erreur n'est affiché. Si le problème persiste, appelle un chauffagiste."
+    }
+  }
+}
