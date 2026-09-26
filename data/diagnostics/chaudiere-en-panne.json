@@ -5,6 +5,13 @@
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {
+      "question": "Sens-tu une odeur de gaz, ou as-tu mal à la tête, des nausées ou des vertiges près de la chaudière ?",
+      "reponses": [
+        { "texte": "Oui", "suite": "resultat_gaz" },
+        { "texte": "Non", "suite": "q2" }
+      ]
+    },
+    "q2": {
       "question": "Un voyant d'erreur est-il allumé sur la chaudière ?",
       "reponses": [
         { "texte": "Oui", "suite": "resultat_voyant" },
@@ -13,6 +20,13 @@
     }
   },
   "resultats": {
+    "resultat_gaz": {
+      "verdict": "rouge",
+      "titre": "Appelle un pro tout de suite",
+      "conseil": "Ne touche à rien d'électrique, aère si tu peux le faire sans risque et sors du logement. Appelle Urgence Sécurité Gaz depuis l'extérieur. En cas de malaise (maux de tête, nausées), appelle le 112 : cela peut être du monoxyde de carbone.",
+      "gesteUrgenceId": "couper-gaz",
+      "numeroUtile": "0800 47 33 33"
+    },
     "resultat_voyant": {
       "verdict": "orange",
       "titre": "Note le code, appelle un chauffagiste",

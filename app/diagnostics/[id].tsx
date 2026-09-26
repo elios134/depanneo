@@ -1,6 +1,7 @@
-import { Link, useLocalSearchParams, type Href } from 'expo-router';
+import { Link, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { NumeroUrgence } from '../../components/NumeroUrgence';
 import { VerdictBadge } from '../../components/VerdictBadge';
 import { diagnostics } from '../../data/diagnostics';
 import { estResultat, getEtape, getResultat } from '../../lib/diagnosticEngine';
@@ -26,12 +27,10 @@ export default function EcranDiagnostic() {
         <Text style={styles.titreResultat}>{resultat.titre}</Text>
         <Text style={styles.conseil}>{resultat.conseil}</Text>
 
-        {resultat.numeroUtile ? (
-          <Text style={styles.numero}>Numéro utile : {resultat.numeroUtile}</Text>
-        ) : null}
+        {resultat.numeroUtile ? <NumeroUrgence numero={resultat.numeroUtile} /> : null}
 
         {resultat.gesteUrgenceId ? (
-          <Link href={`/urgences/${resultat.gesteUrgenceId}` as Href} asChild>
+          <Link href={`/urgences/${resultat.gesteUrgenceId}`} asChild>
             <Pressable style={styles.boutonSecondaire}>
               <Text style={styles.boutonSecondaireTexte}>Voir le geste d'urgence</Text>
             </Pressable>
@@ -39,7 +38,7 @@ export default function EcranDiagnostic() {
         ) : null}
 
         {resultat.tutoId ? (
-          <Link href={`/tutos/${resultat.tutoId}` as Href} asChild>
+          <Link href={`/tutos/${resultat.tutoId}`} asChild>
             <Pressable style={styles.boutonPrincipal}>
               <Text style={styles.boutonPrincipalTexte}>Voir le mini-tuto</Text>
             </Pressable>

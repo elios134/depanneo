@@ -16,14 +16,13 @@
     "resultat_deboucher": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Un furet ou un produit déboucheur adapté suffit généralement.",
+      "conseil": "Une ventouse ou un furet suffit généralement.",
       "tutoId": "deboucher-evier"
     },
     "resultat_canalisation": {
       "verdict": "orange",
       "titre": "Fais appel à un pro",
-      "conseil": "Le bouchon est probablement profond dans une canalisation commune. Un plombier sera plus efficace.",
-      "tutoId": "deboucher-evier"
+      "conseil": "Le bouchon est probablement profond dans une canalisation commune. Un plombier sera plus efficace."
     }
   }
 }

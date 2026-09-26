@@ -5,6 +5,7 @@ export const tutos: Tuto[] = [
     id: 'deboucher-evier',
     titre: 'Déboucher un évier',
     etapes: [
+      'Mets des gants. N\'utilise jamais la ventouse après avoir versé un produit déboucheur : il pourrait t\'éclabousser.',
       'Retire l\'eau stagnante avec un récipient si l\'évier est plein.',
       'Utilise une ventouse en appuyant fermement plusieurs fois sur l\'orifice d\'évacuation.',
       'Si ça ne suffit pas, utilise un furet en le poussant doucement dans la canalisation.',

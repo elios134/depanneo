@@ -32,6 +32,7 @@ export interface GesteUrgence {
   id: string;
   titre: string;
   etapes: string[];
+  numeroUtile?: string;
 }
 
 export interface Tuto {

@@ -42,8 +42,8 @@
     "resultat_plafond": {
       "verdict": "rouge",
       "titre": "Appelle un pro tout de suite",
-      "conseil": "Une fuite venant du plafond peut avoir plusieurs origines et présente un risque de dégât des eaux ou électrique. Coupe l'eau si tu peux localiser l'arrivée concernée.",
-      "gesteUrgenceId": "couper-eau"
+      "conseil": "Ne touche pas aux interrupteurs ni aux lampes proches de l'eau. Si l'eau coule près d'une lampe ou d'une prise, coupe le courant au disjoncteur général si tu peux y accéder au sec. Préviens le voisin du dessus ou le gardien, puis appelle un pro.",
+      "gesteUrgenceId": "couper-courant"
     }
   }
 }

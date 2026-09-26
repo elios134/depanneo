@@ -1,6 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { EtapesList } from '../../components/EtapesList';
+import { NumeroUrgence } from '../../components/NumeroUrgence';
 import { gestesUrgence } from '../../data/gestesUrgence';
 
 export default function EcranGesteUrgence() {
@@ -19,6 +20,7 @@ export default function EcranGesteUrgence() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.titre}>{geste.titre}</Text>
       <EtapesList etapes={geste.etapes} />
+      {geste.numeroUtile ? <NumeroUrgence numero={geste.numeroUtile} /> : null}
     </ScrollView>
   );
 }
