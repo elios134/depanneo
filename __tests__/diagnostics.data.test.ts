@@ -21,4 +21,15 @@ describe('données de diagnostics', () => {
     const numeros = Object.values(diagGaz!.resultats).map((r) => r.numeroUtile);
     expect(numeros.every((n) => Boolean(n))).toBe(true);
   });
+
+  it('tout résultat qui renvoie vers le geste "couper-gaz" est rouge avec un numéro utile', () => {
+    for (const diag of diagnostics) {
+      for (const resultat of Object.values(diag.resultats)) {
+        if (resultat.gesteUrgenceId === 'couper-gaz') {
+          expect(resultat.verdict).toBe('rouge');
+          expect(Boolean(resultat.numeroUtile)).toBe(true);
+        }
+      }
+    }
+  });
 });

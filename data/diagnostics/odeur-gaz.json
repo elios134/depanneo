@@ -2,16 +2,8 @@
   "id": "odeur-gaz",
   "titre": "Odeur de gaz",
   "icone": "🔥",
-  "etapeInitiale": "q1",
-  "etapes": {
-    "q1": {
-      "question": "As-tu déjà ouvert les fenêtres et coupé l'arrivée de gaz si tu peux le faire sans risque ?",
-      "reponses": [
-        { "texte": "Oui", "suite": "resultat_gaz" },
-        { "texte": "Non, pas encore", "suite": "resultat_gaz" }
-      ]
-    }
-  },
+  "etapeInitiale": "resultat_gaz",
+  "etapes": {},
   "resultats": {
     "resultat_gaz": {
       "verdict": "rouge",

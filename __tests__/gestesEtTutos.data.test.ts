@@ -34,4 +34,10 @@ describe('gestes d\'urgence et tutos', () => {
       }
     }
   });
+
+  it('le geste "couper-gaz" affiche le numéro d\'urgence gaz', () => {
+    const gaz = gestesUrgence.find((g) => g.id === 'couper-gaz');
+    expect(gaz).toBeDefined();
+    expect(gaz!.numeroUtile).toBe('0800 47 33 33');
+  });
 });

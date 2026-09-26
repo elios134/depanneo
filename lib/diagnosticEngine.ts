@@ -1,7 +1,7 @@
 import type { Diagnostic, Etape, Resultat } from './types';
 
 export function estResultat(diag: Diagnostic, id: string): boolean {
-  return id in diag.resultats;
+  return Object.prototype.hasOwnProperty.call(diag.resultats, id);
 }
 
 export function getEtape(diag: Diagnostic, id: string): Etape {
