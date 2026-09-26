@@ -4,7 +4,7 @@ import type { Verdict } from '../lib/types';
 const CONFIG: Record<Verdict, { emoji: string; libelle: string; couleur: string }> = {
   vert: { emoji: '🟢', libelle: 'Tu peux réparer', couleur: '#2e7d32' },
   orange: { emoji: '🟠', libelle: 'Sécurise en attendant', couleur: '#ef6c00' },
-  rouge: { emoji: '🔴', libelle: 'Appelle un pro', couleur: '#c62828' },
+  rouge: { emoji: '🔴', libelle: 'Appelle un pro tout de suite', couleur: '#c62828' },
 };
 
 export function VerdictBadge({ verdict }: { verdict: Verdict }) {
