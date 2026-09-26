@@ -1,4 +1,4 @@
-import { Link, type Href } from 'expo-router';
+import { Link } from 'expo-router';
 import { FlatList, Pressable, StyleSheet, Text } from 'react-native';
 import { diagnostics } from '../../data/diagnostics';
 
@@ -9,7 +9,7 @@ export default function ListeDiagnostics() {
       data={diagnostics}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <Link href={`/diagnostics/${item.id}` as Href} asChild>
+        <Link href={`/diagnostics/${item.id}`} asChild>
           <Pressable style={styles.ligne}>
             <Text style={styles.icone}>{item.icone}</Text>
             <Text style={styles.titre}>{item.titre}</Text>

@@ -1,4 +1,4 @@
-import { Link, type Href } from 'expo-router';
+import { Link } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { gestesUrgence } from '../data/gestesUrgence';
 
@@ -7,7 +7,7 @@ export default function Accueil() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.titre}>Une panne à la maison ?</Text>
 
-      <Link href={'/diagnostics' as Href} asChild>
+      <Link href="/diagnostics" asChild>
         <Pressable style={styles.boutonPrincipal}>
           <Text style={styles.boutonPrincipalTexte}>Diagnostiquer une panne</Text>
         </Pressable>
@@ -16,7 +16,7 @@ export default function Accueil() {
       <Text style={styles.sousTitre}>Gestes d'urgence</Text>
       <View style={styles.gestes}>
         {gestesUrgence.map((geste) => (
-          <Link key={geste.id} href={`/urgences/${geste.id}` as Href} asChild>
+          <Link key={geste.id} href={`/urgences/${geste.id}`} asChild>
             <Pressable style={styles.boutonGeste}>
               <Text style={styles.boutonGesteTexte}>{geste.titre}</Text>
             </Pressable>
