@@ -1,4 +1,6 @@
+import { estNomIcone } from './icones';
 import type { Diagnostic, Verdict } from './types';
+import { CATEGORIES } from './types';
 
 const aClePropre = (obj: object, cle: string): boolean =>
   Object.prototype.hasOwnProperty.call(obj, cle);
@@ -38,6 +40,16 @@ export function validerDiagnostic(diag: Diagnostic): string[] {
     if (typeof resultat.conseil !== 'string' || resultat.conseil.length === 0) {
       erreurs.push(`Diagnostic "${diag.id}", résultat "${resultatId}": conseil manquant`);
     }
+  }
+
+  if (!CATEGORIES.includes(diag.categorie)) {
+    erreurs.push(`Diagnostic "${diag.id}": catégorie "${diag.categorie}" invalide`);
+  }
+  if (typeof diag.icone !== 'string' || !estNomIcone(diag.icone)) {
+    erreurs.push(`Diagnostic "${diag.id}": icône "${diag.icone}" inconnue`);
+  }
+  if (!Array.isArray(diag.motsCles) || diag.motsCles.length === 0) {
+    erreurs.push(`Diagnostic "${diag.id}": mots-clés manquants`);
   }
 
   return erreurs;

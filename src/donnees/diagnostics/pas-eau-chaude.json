@@ -1,7 +1,9 @@
 {
   "id": "pas-eau-chaude",
   "titre": "Pas d'eau chaude",
-  "icone": "🚿",
+  "categorie": "plomberie",
+  "icone": "heater",
+  "motsCles": ["eau chaude", "chauffe-eau", "ballon", "froide"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {

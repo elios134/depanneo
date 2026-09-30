@@ -6,7 +6,9 @@ describe('validerDiagnostic', () => {
     const diag: Diagnostic = {
       id: 'test',
       titre: 'Test',
-      icone: '🔧',
+      categorie: 'plomberie',
+      icone: 'droplets',
+      motsCles: ['fuite'],
       etapeInitiale: 'q1',
       etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'r1' }] } },
       resultats: { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok' } },
@@ -18,7 +20,9 @@ describe('validerDiagnostic', () => {
     const diag: Diagnostic = {
       id: 'test',
       titre: 'Test',
-      icone: '🔧',
+      categorie: 'plomberie',
+      icone: 'droplets',
+      motsCles: ['fuite'],
       etapeInitiale: 'introuvable',
       etapes: {},
       resultats: {},
@@ -31,7 +35,9 @@ describe('validerDiagnostic', () => {
     const diag: Diagnostic = {
       id: 'test',
       titre: 'Test',
-      icone: '🔧',
+      categorie: 'plomberie',
+      icone: 'droplets',
+      motsCles: ['fuite'],
       etapeInitiale: 'q1',
       etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'nulle_part' }] } },
       resultats: {},
@@ -44,7 +50,9 @@ describe('validerDiagnostic', () => {
     const diag: Diagnostic = {
       id: 'test',
       titre: 'Test',
-      icone: '🔧',
+      categorie: 'plomberie',
+      icone: 'droplets',
+      motsCles: ['fuite'],
       etapeInitiale: 'r1',
       etapes: {},
       resultats: { r1: { verdict: 'rouge', titre: 'OK', conseil: 'ok' } },
@@ -56,7 +64,9 @@ describe('validerDiagnostic', () => {
     const diag: Diagnostic = {
       id: 'test',
       titre: 'Test',
-      icone: '🔧',
+      categorie: 'plomberie',
+      icone: 'droplets',
+      motsCles: ['fuite'],
       etapeInitiale: 'q1',
       etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'r1' }] } },
       resultats: { r1: { verdict: 'Rouge', titre: 'OK', conseil: 'ok' } as unknown as Resultat },
@@ -69,7 +79,9 @@ describe('validerDiagnostic', () => {
     const diag: Diagnostic = {
       id: 'test',
       titre: 'Test',
-      icone: '🔧',
+      categorie: 'plomberie',
+      icone: 'droplets',
+      motsCles: ['fuite'],
       etapeInitiale: 'q1',
       etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'r1' }] } },
       resultats: { r1: { verdict: 'rouge', titre: 'OK', conseil: '' } },
@@ -82,12 +94,44 @@ describe('validerDiagnostic', () => {
     const diag: Diagnostic = {
       id: 'test',
       titre: 'Test',
-      icone: '🔧',
+      categorie: 'plomberie',
+      icone: 'droplets',
+      motsCles: ['fuite'],
       etapeInitiale: 'q1',
       etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'constructor' }] } },
       resultats: {},
     };
     const erreurs = validerDiagnostic(diag);
     expect(erreurs.length).toBeGreaterThan(0);
+  });
+
+  const base = (): Diagnostic => ({
+    id: 'test',
+    titre: 'Test',
+    categorie: 'plomberie',
+    icone: 'droplets',
+    motsCles: ['fuite'],
+    etapeInitiale: 'q1',
+    etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'r1' }] } },
+    resultats: { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok' } },
+  });
+
+  it('refuse une catégorie inconnue', () => {
+    const diag = { ...base(), categorie: 'gaz' as unknown as Diagnostic['categorie'] };
+    expect(validerDiagnostic(diag).join(' ')).toContain('catégorie');
+  });
+
+  it('refuse une icône inconnue', () => {
+    const diag = { ...base(), icone: '💧' as unknown as Diagnostic['icone'] };
+    expect(validerDiagnostic(diag).join(' ')).toContain('icône');
+  });
+
+  it('refuse une liste de mots-clés vide', () => {
+    const diag = { ...base(), motsCles: [] };
+    expect(validerDiagnostic(diag).join(' ')).toContain('mots-clés');
+  });
+
+  it('accepte un diagnostic complet', () => {
+    expect(validerDiagnostic(base())).toEqual([]);
   });
 });

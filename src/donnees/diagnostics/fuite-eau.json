@@ -1,7 +1,9 @@
 {
   "id": "fuite-eau",
   "titre": "Fuite d'eau",
-  "icone": "💧",
+  "categorie": "plomberie",
+  "icone": "droplets",
+  "motsCles": ["fuite", "eau", "goutte", "plafond", "compteur", "tuyau"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {

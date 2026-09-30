@@ -1,7 +1,9 @@
 {
   "id": "wc-bouche",
   "titre": "WC bouché",
-  "icone": "🚽",
+  "categorie": "plomberie",
+  "icone": "toilet",
+  "motsCles": ["wc", "toilettes", "bouché", "cuvette"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {

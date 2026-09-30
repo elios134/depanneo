@@ -1,7 +1,9 @@
 {
   "id": "disjoncteur-saute",
   "titre": "Disjoncteur qui saute",
-  "icone": "⚡",
+  "categorie": "electricite",
+  "icone": "toggle-left",
+  "motsCles": ["disjoncteur", "saute", "tableau", "plombs"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {

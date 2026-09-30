@@ -1,7 +1,9 @@
 {
   "id": "plus-de-courant",
   "titre": "Plus de courant du tout",
-  "icone": "🔌",
+  "categorie": "electricite",
+  "icone": "zap-off",
+  "motsCles": ["courant", "électricité", "coupure", "noir"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {

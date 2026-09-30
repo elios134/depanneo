@@ -1,7 +1,9 @@
 {
   "id": "evier-bouche",
   "titre": "Évier ou lavabo bouché",
-  "icone": "🚰",
+  "categorie": "plomberie",
+  "icone": "waves",
+  "motsCles": ["évier", "lavabo", "bouché", "écoulement"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {

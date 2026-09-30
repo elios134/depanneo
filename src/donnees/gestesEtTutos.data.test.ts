@@ -1,3 +1,5 @@
+import { estNomIcone } from '@/domaine/icones';
+import { CATEGORIES } from '@/domaine/types';
 import { gestesUrgence } from '@/donnees/gestesUrgence';
 import { tutos } from '@/donnees/tutos';
 import { diagnostics } from '@/donnees/diagnostics';
@@ -39,5 +41,22 @@ describe('gestes d\'urgence et tutos', () => {
     const gaz = gestesUrgence.find((g) => g.id === 'couper-gaz');
     expect(gaz).toBeDefined();
     expect(gaz!.numeroUtile).toBe('0800 47 33 33');
+  });
+
+  it('chaque geste et chaque tuto a une icône connue', () => {
+    for (const g of gestesUrgence) expect(estNomIcone(g.icone)).toBe(true);
+    for (const t of tutos) expect(estNomIcone(t.icone)).toBe(true);
+  });
+
+  it('chaque tuto a une catégorie, une durée et un outil', () => {
+    for (const t of tutos) {
+      expect(CATEGORIES).toContain(t.categorie);
+      expect(t.duree.length).toBeGreaterThan(0);
+      expect(t.outil.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('le geste gaz s\'appelle « Odeur de gaz ? »', () => {
+    expect(gestesUrgence.find((g) => g.id === 'couper-gaz')!.titre).toBe('Odeur de gaz ?');
   });
 });

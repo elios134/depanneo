@@ -4,6 +4,7 @@ export const gestesUrgence: GesteUrgence[] = [
   {
     id: 'couper-eau',
     titre: 'Couper l\'eau',
+    icone: 'droplets',
     etapes: [
       'Repère le robinet d\'arrêt général, près du compteur d\'eau : souvent dans un placard technique, sur le palier, à la cave ou dans un regard dehors.',
       'Robinet à tête ronde : tourne-le dans le sens des aiguilles d\'une montre jusqu\'à ce qu\'il bloque.',
@@ -14,6 +15,7 @@ export const gestesUrgence: GesteUrgence[] = [
   {
     id: 'couper-courant',
     titre: 'Couper le courant',
+    icone: 'power',
     etapes: [
       'Si le tableau électrique est mouillé ou si tu as les pieds dans l\'eau, n\'y touche pas : sors de la pièce et appelle un pro.',
       'Avec les mains sèches, repère le disjoncteur général dans ton tableau électrique (souvent le plus gros interrupteur).',
@@ -23,7 +25,8 @@ export const gestesUrgence: GesteUrgence[] = [
   },
   {
     id: 'couper-gaz',
-    titre: 'Couper le gaz',
+    titre: 'Odeur de gaz ?',
+    icone: 'flame',
     numeroUtile: '0800 47 33 33',
     etapes: [
       'Ne touche à aucun interrupteur, prise ou sonnette, et n\'allume aucune flamme.',

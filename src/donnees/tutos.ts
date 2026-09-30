@@ -4,6 +4,10 @@ export const tutos: Tuto[] = [
   {
     id: 'deboucher-evier',
     titre: 'Déboucher un évier',
+    categorie: 'plomberie',
+    icone: 'waves',
+    duree: '10 min',
+    outil: 'furet',
     etapes: [
       'Mets des gants. N\'utilise jamais la ventouse après avoir versé un produit déboucheur : il pourrait t\'éclabousser.',
       'Retire l\'eau stagnante avec un récipient si l\'évier est plein.',
@@ -14,6 +18,10 @@ export const tutos: Tuto[] = [
   {
     id: 'deboucher-wc',
     titre: 'Déboucher des WC',
+    categorie: 'plomberie',
+    icone: 'toilet',
+    duree: '5 min',
+    outil: 'ventouse',
     etapes: [
       'Mets des gants et enfonce une ventouse adaptée dans la cuvette.',
       'Effectue des mouvements de va-et-vient fermes pendant une minute.',
@@ -23,6 +31,10 @@ export const tutos: Tuto[] = [
   {
     id: 'changer-joint',
     titre: 'Changer un joint ou resserrer un raccord',
+    categorie: 'plomberie',
+    icone: 'wrench',
+    duree: '15 min',
+    outil: 'clé',
     etapes: [
       'Coupe l\'eau avant de commencer (voir le geste "Couper l\'eau").',
       'Dévisse le raccord qui fuit avec une clé adaptée.',
@@ -33,6 +45,10 @@ export const tutos: Tuto[] = [
   {
     id: 'reparer-disjoncteur',
     titre: 'Réarmer un disjoncteur',
+    categorie: 'electricite',
+    icone: 'toggle-left',
+    duree: '2 min',
+    outil: 'aucun',
     etapes: [
       'Repère le disjoncteur en position basse dans le tableau électrique.',
       'Débranche ou éteins l\'appareil qui a pu causer la surcharge, si tu en identifies un.',

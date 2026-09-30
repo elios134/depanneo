@@ -4,7 +4,9 @@ import type { Diagnostic } from '@/domaine/types';
 const diagTest: Diagnostic = {
   id: 'test',
   titre: 'Test',
-  icone: '🔧',
+  categorie: 'plomberie',
+  icone: 'droplets',
+  motsCles: ['fuite'],
   etapeInitiale: 'q1',
   etapes: {
     q1: {

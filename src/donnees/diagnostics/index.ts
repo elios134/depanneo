@@ -5,8 +5,6 @@ import evierBouche from './evier-bouche.json';
 import pasEauChaude from './pas-eau-chaude.json';
 import disjoncteurSaute from './disjoncteur-saute.json';
 import plusDeCourant from './plus-de-courant.json';
-import odeurGaz from './odeur-gaz.json';
-import chaudiereEnPanne from './chaudiere-en-panne.json';
 
 export const diagnostics: Diagnostic[] = [
   fuiteEau as Diagnostic,
@@ -15,6 +13,4 @@ export const diagnostics: Diagnostic[] = [
   pasEauChaude as Diagnostic,
   disjoncteurSaute as Diagnostic,
   plusDeCourant as Diagnostic,
-  odeurGaz as Diagnostic,
-  chaudiereEnPanne as Diagnostic,
 ];
