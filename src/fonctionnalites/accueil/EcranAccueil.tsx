@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeProvider';
 import { useMargeBarre } from '@/ui/useMargeBarre';
-import { FondCarte } from './components/FondCarte';
+import { FondCarte } from '@/fonctionnalites/pros/components/FondCarte';
 import { Logo } from './components/Logo';
 import { PanneauAccueil } from './components/PanneauAccueil';
 

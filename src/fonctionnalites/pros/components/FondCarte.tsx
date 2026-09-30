@@ -1,4 +1,4 @@
-import { StyleSheet, View, type DimensionValue } from 'react-native';
+import { StyleSheet, View, type DimensionValue, type StyleProp, type ViewStyle } from 'react-native';
 import { teinte } from '@/theme/teinte';
 import { useTheme } from '@/theme/ThemeProvider';
 
@@ -21,20 +21,33 @@ const BLOCS: Forme[] = [
   { left: '48%', top: '70%', width: '20%', height: '8%' },
 ];
 
-export function FondCarte() {
+export function FondCarte({ neutre = false, avecPoint = true }: { neutre?: boolean; avecPoint?: boolean }) {
   const { couleurs } = useTheme();
   const rect = (formes: Forme[], couleur: string, rayon = 0) =>
     formes.map((f, i) => <View key={i} style={[styles.abs, f, { backgroundColor: couleur, borderRadius: rayon }]} />);
+  const racine: StyleProp<ViewStyle> = [StyleSheet.absoluteFill, { backgroundColor: couleurs.carteSol, overflow: 'hidden', pointerEvents: 'none' }];
+  if (neutre) {
+    return (
+      <View style={racine}>
+        {rect(ROUTES, couleurs.carteBloc)}
+        {rect(GRANDES_ROUTES, couleurs.carteBloc)}
+      </View>
+    );
+  }
   return (
-    <View style={[StyleSheet.absoluteFill, { backgroundColor: couleurs.carteSol, overflow: 'hidden', pointerEvents: 'none' }]}>
+    <View style={racine}>
       <View style={[styles.abs, styles.riviere, { backgroundColor: couleurs.carteEau }]} />
       {rect(ROUTES, couleurs.carteRoute)}
       {rect(GRANDES_ROUTES, couleurs.carteRouteGrande)}
       {rect(BLOCS, couleurs.carteBloc, 4)}
       <View style={[styles.abs, styles.parc, { backgroundColor: couleurs.carteParc }]} />
-      <View style={[styles.abs, styles.halo, { backgroundColor: teinte(couleurs.accent, 0.12) }]} />
-      <View style={[styles.abs, styles.haloProche, { backgroundColor: teinte(couleurs.accent, 0.25) }]} />
-      <View style={[styles.abs, styles.point, { backgroundColor: couleurs.accent, borderColor: couleurs.surAccent }]} />
+      {avecPoint ? (
+        <>
+          <View style={[styles.abs, styles.halo, { backgroundColor: teinte(couleurs.accent, 0.12) }]} />
+          <View style={[styles.abs, styles.haloProche, { backgroundColor: teinte(couleurs.accent, 0.25) }]} />
+          <View style={[styles.abs, styles.point, { backgroundColor: couleurs.accent, borderColor: couleurs.surAccent }]} />
+        </>
+      ) : null}
     </View>
   );
 }
