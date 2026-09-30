@@ -2,6 +2,7 @@ import { estNomIcone } from '@/domaine/icones';
 import { CATEGORIES } from '@/domaine/types';
 import { gestesUrgence } from '@/donnees/gestesUrgence';
 import { tutos } from '@/donnees/tutos';
+import { numerosUtiles } from './numerosUtiles';
 import { diagnostics } from '@/donnees/diagnostics';
 
 describe('gestes d\'urgence et tutos', () => {
@@ -58,5 +59,9 @@ describe('gestes d\'urgence et tutos', () => {
 
   it('le geste gaz s\'appelle « Odeur de gaz ? »', () => {
     expect(gestesUrgence.find((g) => g.id === 'couper-gaz')!.titre).toBe('Odeur de gaz ?');
+  });
+
+  it('liste les numéros utiles gaz et 112', () => {
+    expect(numerosUtiles.map((n) => n.numero)).toEqual(['0800 47 33 33', '112']);
   });
 });
