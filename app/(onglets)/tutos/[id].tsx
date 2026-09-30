@@ -1,4 +1,3 @@
-// app/tutos/[id].tsx
 import { useLocalSearchParams } from 'expo-router';
 import { EcranTuto } from '@/fonctionnalites/tutos/EcranTuto';
 

@@ -1,4 +1,3 @@
-// app/urgences/[id].tsx
 import { useLocalSearchParams } from 'expo-router';
 import { EcranGeste } from '@/fonctionnalites/urgences/EcranGeste';
 
