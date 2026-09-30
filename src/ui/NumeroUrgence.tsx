@@ -1,5 +1,5 @@
 // src/ui/NumeroUrgence.tsx
-import { Linking } from 'react-native';
+import { appeler } from './appeler';
 import { BoutonPrincipal } from './BoutonPrincipal';
 
 export function NumeroUrgence({ numero }: { numero: string }) {
@@ -8,7 +8,7 @@ export function NumeroUrgence({ numero }: { numero: string }) {
       libelle={`Appeler le ${numero}`}
       icone="phone"
       variante="danger"
-      onPress={() => Linking.openURL('tel:' + numero.replace(/\s/g, ''))}
+      onPress={() => appeler(numero)}
     />
   );
 }

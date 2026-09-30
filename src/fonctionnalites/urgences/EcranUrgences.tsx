@@ -1,11 +1,12 @@
 // src/fonctionnalites/urgences/EcranUrgences.tsx
 import { router } from 'expo-router';
-import { Linking, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import type { GesteUrgence } from '@/domaine/types';
 import { gestesUrgence } from '@/donnees/gestesUrgence';
 import { numerosUtiles } from '@/donnees/numerosUtiles';
 import type { Couleurs } from '@/theme/tokens';
 import { useTheme } from '@/theme/ThemeProvider';
+import { appeler } from '@/ui/appeler';
 import { CarteListe } from '@/ui/CarteListe';
 import { EnTete } from '@/ui/EnTete';
 import { FondEcran } from '@/ui/FondEcran';
@@ -45,7 +46,7 @@ export function EcranUrgences() {
           couleur={couleurs.danger}
           titre={n.libelle}
           sousTitre={n.detail ? `${n.numero} · ${n.detail}` : n.numero}
-          onPress={() => Linking.openURL('tel:' + n.numero.replace(/\s/g, ''))}
+          onPress={() => appeler(n.numero)}
         />
       ))}
     </FondEcran>
