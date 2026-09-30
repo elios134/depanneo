@@ -9,7 +9,7 @@ export function PanneauAccueil() {
   return (
     <Verre style={styles.panneau}>
       <View style={[styles.poignee, { backgroundColor: couleurs.bordure }]} />
-      <BoutonPrincipal libelle="Diagnostiquer une panne" icone="stethoscope" onPress={() => router.push('/diagnostic')} />
+      <BoutonPrincipal libelle="Diagnostiquer une panne" icone="stethoscope" onPress={() => router.push('/diagnostic/index')} />
       <Text style={[styles.avertissement, { color: couleurs.texteDiscret }]}>
         Conseils uniquement — ne remplace pas un professionnel.
       </Text>
