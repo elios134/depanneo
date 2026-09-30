@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
+import { metierDeCategorie } from '@/domaine/pro';
 import type { Diagnostic } from '@/domaine/types';
 import { diagnostics } from '@/donnees/diagnostics';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -16,7 +17,7 @@ function Parcours({ diagnostic }: { diagnostic: Diagnostic }) {
     return (
       <FondEcran>
         <EnTete titre="Résultat" action="fermer" />
-        <CarteResultat resultat={parcours.resultat} onRecommencer={parcours.recommencer} />
+        <CarteResultat resultat={parcours.resultat} metier={metierDeCategorie(diagnostic.categorie)} onRecommencer={parcours.recommencer} />
       </FondEcran>
     );
   }
