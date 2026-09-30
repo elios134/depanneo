@@ -1,6 +1,6 @@
 // src/fonctionnalites/pros/EcranPros.tsx
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Metier } from '@/domaine/pro';
 import { useReglages } from '@/fonctionnalites/reglages/ReglagesProvider';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -34,15 +34,18 @@ export function EcranPros() {
         <>
           <Text style={[styles.message, discret]}>Indique ta ville pour trouver les pros autour de toi.</Text>
           <RechercheVille onChoisir={(lieu) => modifier({ villeParDefaut: lieu })} />
-          <Text style={[styles.lien, { color: couleurs.accent }]} onPress={demanderAutorisation}>
-            Utiliser ma position
-          </Text>
+          <Pressable accessibilityRole="button" hitSlop={8} onPress={demanderAutorisation} style={styles.lienZone}>
+            <Text style={[styles.lien, { color: couleurs.accent }]}>Utiliser ma position</Text>
+          </Pressable>
         </>
       ) : (
         <>
           <View style={[styles.carte, { borderColor: couleurs.bordure }]}>
-            <CartePros centre={position} pros={liste} horsLigne={horsLigne} recentrage={0} />
+            <CartePros centre={position} pros={liste} horsLigne={horsLigne} recentrage={0} interactive={false} />
           </View>
+          {horsLigne ? null : (
+            <Text style={[styles.creditCarte, discret]}>© OpenFreeMap · OpenStreetMap</Text>
+          )}
           <Onglets<Metier | 'tous'>
             options={[
               { valeur: 'tous', libelle: 'Tous' },
@@ -77,5 +80,7 @@ const styles = StyleSheet.create({
   carte: { height: 170, borderRadius: 18, borderWidth: 1, overflow: 'hidden' },
   message: { fontSize: 13.5, textAlign: 'center', lineHeight: 19 },
   lien: { fontSize: 14, textAlign: 'center' },
+  lienZone: { paddingVertical: 8, alignItems: 'center' },
+  creditCarte: { fontSize: 10.5, textAlign: 'left' },
   credit: { fontSize: 11, textAlign: 'center', marginTop: 4 },
 });

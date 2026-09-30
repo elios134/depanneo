@@ -6,4 +6,5 @@ export interface PropsCartePros {
   pros: Pro[];
   horsLigne: boolean;
   recentrage: number;
+  interactive?: boolean;
 }

@@ -13,7 +13,7 @@ const STYLES = {
 const FRANCE: [number, number] = [2.4, 46.6];
 const ZOOM_PROCHE = 13;
 
-export function CartePros({ centre, pros, horsLigne, recentrage }: PropsCartePros) {
+export function CartePros({ centre, pros, horsLigne, recentrage, interactive = true }: PropsCartePros) {
   const { nom } = useTheme();
   const camera = useRef<CameraRef>(null);
   const lat = centre?.lat;
@@ -27,7 +27,14 @@ export function CartePros({ centre, pros, horsLigne, recentrage }: PropsCartePro
   if (horsLigne) return <FondCarte neutre />;
 
   return (
-    <Map style={StyleSheet.absoluteFill} mapStyle={STYLES[nom]} attribution={false} logo={false} compass={false}>
+    <Map style={StyleSheet.absoluteFill} mapStyle={STYLES[nom]} attribution={false} logo={false} compass={false}
+      dragPan={interactive}
+      touchZoom={interactive}
+      doubleTapZoom={interactive}
+      doubleTapHoldZoom={interactive}
+      touchRotate={interactive}
+      touchPitch={interactive}
+    >
       <Camera
         ref={camera}
         initialViewState={
