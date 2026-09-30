@@ -8,14 +8,16 @@ export function Verre({ children, style }: { children: ReactNode; style?: StyleP
   const { couleurs } = useTheme();
   return (
     <View style={[styles.base, { borderColor: couleurs.bordure, shadowColor: couleurs.ombre }, style]}>
-      <BlurView intensity={40} tint={couleurs.flou} style={StyleSheet.absoluteFill} />
-      <View style={[StyleSheet.absoluteFill, { backgroundColor: couleurs.verre }]} />
+      <BlurView intensity={40} tint={couleurs.flou} pointerEvents="none" style={[StyleSheet.absoluteFill, styles.calque]} />
+      <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.calque, { backgroundColor: couleurs.verre }]} />
       {children}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  // Sur le web, les calques absolus se peignent sinon au-dessus des enfants.
+  calque: { zIndex: -1 },
   base: {
     overflow: 'hidden',
     borderWidth: 1,
