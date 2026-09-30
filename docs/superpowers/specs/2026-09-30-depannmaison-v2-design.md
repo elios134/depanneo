@@ -160,4 +160,80 @@ Annuaire de pros partenaires payant, comptes utilisateurs, carnet d'entretien, p
 
 ## 11. Mise à jour de CLAUDE.md
 
-Au début du chantier A, `CLAUDE.md` est mis à jour : périmètre plomberie + électricité basique, gaz limité au filet de sécurité, nouvelles fonctionnalités (carte, pros, réglages), style SC Fleet Manager, règle « pas d'UI sans maquette validée ».
+Au début du chantier A, `CLAUDE.md` est mis à jour : périmètre plomberie + électricité basique, gaz limité au filet de sécurité, nouvelles fonctionnalités (carte, pros, réglages), style SC Fleet Manager, règle « pas d'UI sans maquette validée », et les règles d'architecture de la section 12.
+
+## 12. Architecture du code
+
+Mêmes principes que SC Fleet Manager : fichiers courts, **une fonctionnalité = un dossier**, on ne met en commun que ce qui sert à **au moins 2 fonctionnalités**.
+
+### Arborescence cible
+
+```
+app/                                  # ROUTES UNIQUEMENT (Expo Router) — fichiers minces
+  _layout.tsx                         # providers (Thème, Réglages) + Stack racine
+  (onglets)/
+    _layout.tsx                       # Tabs + tabBar={BarreNavigation}
+    (accueil)/
+      _layout.tsx                     # Stack de l'onglet Accueil
+      index.tsx                       # → EcranAccueil
+      diagnostic/index.tsx            # → EcranChoixPanne
+      diagnostic/[id].tsx             # → EcranDiagnostic
+    urgences/  _layout.tsx, index.tsx, [id].tsx
+    tutos/     _layout.tsx, index.tsx, [id].tsx
+    pros.tsx
+    reglages/  _layout.tsx, index.tsx, a-propos.tsx
+
+src/
+  theme/            tokens.ts, ThemeProvider.tsx, useTheme.ts
+  ui/               composants partagés : Icone, Verre, CarteListe, BoutonPrincipal,
+                    Onglets, Pastille, EtapesList, NumeroUrgence, VerdictBadge
+  navigation/       BarreNavigation.tsx
+  domaine/          types.ts, diagnosticEngine.ts, validateDiagnostic.ts   (ex-lib/)
+  donnees/          diagnostics/*.json + index.ts, gestesUrgence.ts, tutos.ts (ex-data/)
+  fonctionnalites/
+    accueil/        EcranAccueil.tsx + components/ (FondCarte, PanneauAccueil, Logo, BoutonRecentrer)
+    diagnostic/     EcranChoixPanne.tsx, EcranDiagnostic.tsx
+                    components/ (ListePannes, CarteQuestion, CarteResultat, BarreProgression)
+                    hooks/useParcoursDiagnostic.ts
+                    lib/parcours.ts (historique, précédente, progression — pur), lib/recherche.ts
+    urgences/       EcranUrgences.tsx, EcranGeste.tsx
+    tutos/          EcranTutos.tsx, EcranTuto.tsx
+    pros/           EcranPros.tsx (+ au chantier B : lib/overpass.ts, lib/distance.ts,
+                    lib/cachePros.ts, hooks/usePosition.ts, hooks/usePros.ts, components/CartePros.tsx)
+    reglages/       EcranReglages.tsx, EcranAPropos.tsx, ReglagesProvider.tsx, lib/reglages.ts
+```
+
+- Les fichiers de `app/` ne contiennent **aucune logique ni style** : ils importent l'écran et le rendent (≤ 30 lignes).
+- `lib/` = logique **pure** (pas de React), testée unitairement. `hooks/` = état React. `components/` = affichage, sans logique métier.
+- Tests **à côté du fichier testé** (`parcours.ts` → `parcours.test.ts`). Les tests actuels de `__tests__/` sont déplacés au chantier A.
+- Le déplacement `lib/` → `src/domaine/` et `data/` → `src/donnees/` est fait au chantier A en **déplacement pur** (aucun changement de comportement, tests verts), dans un commit séparé.
+
+### Taille des fichiers (cibles indicatives, comme SC Fleet)
+
+| Type de fichier | Cible | Plafond souple |
+|---|---|---|
+| Route `app/` | ≤ 30 | 30 |
+| Composant UI (`ui/`, `components/`) | 80–150 | ~250 |
+| Écran (`Ecran*.tsx`) | 150–250 | ~350 |
+| Hook / lib pure | 100–200 | ~300 |
+| Données (JSON, listes) | — | pas de limite |
+
+Au-delà du plafond : découper avant d'ajouter du code.
+
+### Règles de code
+
+- TypeScript `strict` + `noUnusedLocals` + `noUnusedParameters` : aucun code mort.
+- **Aucune couleur en dur hors de `src/theme/tokens.ts`** : tout passe par `useTheme()`, sinon le thème clair casse. Un test Jest parcourt `src/` et échoue s'il trouve une couleur hexadécimale ou `rgba(` ailleurs que dans `src/theme/`.
+- État global limité à 2 contextes : **Thème** et **Réglages**. L'état d'un diagnostic reste local à l'écran (hook `useParcoursDiagnostic`).
+- Noms en français pour le métier (`EcranDiagnostic`, `pannes`, `verdict`), termes techniques du framework inchangés (`useState`, `Stack`).
+- Dépendances ajoutées : chantier A → `lucide-react-native`, `react-native-svg`, `expo-blur`, `@react-native-async-storage/async-storage` ; chantier B → `@maplibre/maplibre-react-native`, `expo-location`. Aucune autre dépendance sans validation.
+
+### Volume estimé (hors JSON et tests)
+
+| Chantier | Code applicatif | Tests |
+|---|---|---|
+| A — Design et navigation | ~1 800–2 200 lignes, ~40 fichiers | ~400 lignes |
+| B — Carte et pros | ~700–900 lignes, ~10 fichiers | ~300 lignes |
+| C — Contenu | ~50 lignes de code + ~3 000 lignes de JSON | ~100 lignes |
+
+L'appli V1 actuelle fait ~600 lignes de code applicatif.
