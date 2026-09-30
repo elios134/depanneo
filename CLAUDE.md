@@ -24,6 +24,7 @@ Particuliers, locataires et propriétaires, sans connaissance technique. Tout do
 - React Native + Expo (Expo Router), TypeScript strict.
 - Design : style SC Fleet Manager (sombre, verre dépoli, barre de navigation flottante), icônes Lucide.
 - Données des pannes : JSON embarqués. Carte : MapLibre + OpenFreeMap. Pros : Overpass (OpenStreetMap).
+- Carte native : l'appli ne tourne plus dans Expo Go ; build de développement nécessaire (voir `docs/build-android.md`). La prévisualisation web affiche un fond de carte factice.
 
 ## Architecture du code
 - `app/` = routes uniquement (fichiers ≤ 30 lignes). Écrans dans `src/fonctionnalites/<nom>/`, partagé (≥ 2 fonctionnalités) dans `src/ui/`, thème dans `src/theme/`, types et moteur dans `src/domaine/`, données dans `src/donnees/`.
