@@ -131,6 +131,14 @@ describe('validerDiagnostic', () => {
     expect(validerDiagnostic(diag).join(' ')).toContain('mots-clés');
   });
 
+  it('refuse un verdict rouge qui propose un tuto', () => {
+    const diag = base();
+    diag.resultats = { r1: { verdict: 'rouge', titre: 'Danger', conseil: 'Appelle un pro', tutoId: 'un-tuto' } };
+    const erreurs = validerDiagnostic(diag).join(' ');
+    expect(erreurs).toContain('tuto');
+    expect(erreurs).toContain('rouge');
+  });
+
   it('accepte un diagnostic complet', () => {
     expect(validerDiagnostic(base())).toEqual([]);
   });

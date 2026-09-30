@@ -19,7 +19,7 @@ export function CarteResultat({ resultat, onRecommencer }: { resultat: Resultat;
       key="tuto"
       libelle={`Voir le tuto (${tuto.duree})`}
       icone="book-open"
-      onPress={() => router.push({ pathname: '/tutos/[id]', params: { id: tuto.id } })}
+      onPress={() => router.push({ pathname: '/tutos/[id]', params: { id: tuto.id } }, { withAnchor: true })}
     />
   ) : null;
   const carteGeste = geste ? (
@@ -29,7 +29,7 @@ export function CarteResultat({ resultat, onRecommencer }: { resultat: Resultat;
       couleur={couleurs.danger}
       titre={geste.titre}
       sousTitre="Geste de sécurité"
-      onPress={() => router.push({ pathname: '/urgences/[id]', params: { id: geste.id } })}
+      onPress={() => router.push({ pathname: '/urgences/[id]', params: { id: geste.id } }, { withAnchor: true })}
     />
   ) : null;
   const numero = resultat.numeroUtile ? <NumeroUrgence key="numero" numero={resultat.numeroUtile} /> : null;
@@ -37,7 +37,7 @@ export function CarteResultat({ resultat, onRecommencer }: { resultat: Resultat;
   const actions =
     resultat.verdict === 'vert' ? [boutonTuto, carteGeste] :
     resultat.verdict === 'orange' ? [carteGeste, numero, boutonTuto] :
-    [numero, carteGeste, boutonTuto];
+    [numero, carteGeste];
 
   return (
     <View style={styles.bloc}>

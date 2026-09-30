@@ -34,6 +34,11 @@ export function validerDiagnostic(diag: Diagnostic): string[] {
         `Diagnostic "${diag.id}", résultat "${resultatId}": verdict "${resultat.verdict}" invalide`
       );
     }
+    if (resultat.verdict === 'rouge' && resultat.tutoId) {
+      erreurs.push(
+        `Diagnostic "${diag.id}", résultat "${resultatId}": un verdict rouge ne doit pas proposer de tuto`
+      );
+    }
     if (typeof resultat.titre !== 'string' || resultat.titre.length === 0) {
       erreurs.push(`Diagnostic "${diag.id}", résultat "${resultatId}": titre manquant`);
     }
