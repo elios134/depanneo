@@ -1,28 +1,14 @@
-import { Linking, Pressable, StyleSheet, Text } from 'react-native';
+// src/ui/NumeroUrgence.tsx
+import { Linking } from 'react-native';
+import { BoutonPrincipal } from './BoutonPrincipal';
 
 export function NumeroUrgence({ numero }: { numero: string }) {
   return (
-    <Pressable
-      style={styles.bouton}
-      accessibilityRole="button"
-      accessibilityLabel={`Appeler le ${numero}`}
+    <BoutonPrincipal
+      libelle={`Appeler le ${numero}`}
+      icone="phone"
+      variante="danger"
       onPress={() => Linking.openURL('tel:' + numero.replace(/\s/g, ''))}
-    >
-      <Text style={styles.texte}>📞 Appeler le {numero}</Text>
-    </Pressable>
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  bouton: {
-    backgroundColor: '#c62828',
-    borderRadius: 8,
-    padding: 16,
-    alignItems: 'center',
-  },
-  texte: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
-});
