@@ -17,7 +17,8 @@ export function EnTete({ titre, sousTitre, action }: Props) {
     <View style={styles.ligne}>
       {action ? (
         <Pressable
-          onPress={() => router.back()}
+          hitSlop={8}
+          onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
           accessibilityRole="button"
           accessibilityLabel={action === 'retour' ? 'Retour' : 'Fermer'}
         >
