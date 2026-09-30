@@ -26,7 +26,7 @@ export function FondCarte() {
   const rect = (formes: Forme[], couleur: string, rayon = 0) =>
     formes.map((f, i) => <View key={i} style={[styles.abs, f, { backgroundColor: couleur, borderRadius: rayon }]} />);
   return (
-    <View style={[StyleSheet.absoluteFill, { backgroundColor: couleurs.carteSol }]} pointerEvents="none">
+    <View style={[StyleSheet.absoluteFill, { backgroundColor: couleurs.carteSol, overflow: 'hidden', pointerEvents: 'none' }]}>
       <View style={[styles.abs, styles.riviere, { backgroundColor: couleurs.carteEau }]} />
       {rect(ROUTES, couleurs.carteRoute)}
       {rect(GRANDES_ROUTES, couleurs.carteRouteGrande)}
