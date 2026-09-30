@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeProvider';
-import { MARGE_BARRE } from '@/ui/FondEcran';
+import { useMargeBarre } from '@/ui/useMargeBarre';
 import { FondCarte } from './components/FondCarte';
 import { Logo } from './components/Logo';
 import { PanneauAccueil } from './components/PanneauAccueil';
@@ -9,13 +9,14 @@ import { PanneauAccueil } from './components/PanneauAccueil';
 export function EcranAccueil() {
   const { couleurs } = useTheme();
   const { top } = useSafeAreaInsets();
+  const margeBarre = useMargeBarre();
   return (
     <View style={[styles.racine, { backgroundColor: couleurs.carteSol }]}>
       <FondCarte />
       <View style={[styles.logo, { top: top + 12 }]}>
         <Logo />
       </View>
-      <View style={[styles.panneau, { bottom: MARGE_BARRE - 20 }]}>
+      <View style={[styles.panneau, { bottom: margeBarre - 8 }]}>
         <PanneauAccueil />
       </View>
     </View>

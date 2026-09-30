@@ -20,5 +20,5 @@ export function PanneauAccueil() {
 const styles = StyleSheet.create({
   panneau: { borderRadius: 24, padding: 12, gap: 10 },
   poignee: { width: 38, height: 4, borderRadius: 2, alignSelf: 'center' },
-  avertissement: { fontSize: 11.5, textAlign: 'center' },
+  avertissement: { fontSize: 12.5, textAlign: 'center' },
 });

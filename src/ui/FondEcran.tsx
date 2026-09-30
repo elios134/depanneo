@@ -4,13 +4,13 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeProvider';
-
-export const MARGE_BARRE = 110;
+import { useMargeBarre } from './useMargeBarre';
 
 export function FondEcran({ children, defilant = true }: { children: ReactNode; defilant?: boolean }) {
   const { couleurs } = useTheme();
   const { top } = useSafeAreaInsets();
-  const contenuStyle = { paddingTop: top + 12, paddingBottom: MARGE_BARRE, paddingHorizontal: 16, gap: 12 };
+  const margeBarre = useMargeBarre();
+  const contenuStyle = { paddingTop: top + 12, paddingBottom: margeBarre, paddingHorizontal: 16, gap: 12 };
   return (
     <View style={[styles.racine, { backgroundColor: couleurs.fond }]}>
       <Svg style={StyleSheet.absoluteFill}>
