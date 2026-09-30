@@ -12,12 +12,13 @@ const FRAICHEUR_MS = 60000;
 let memoire: { position: Position; date: number } | null = null;
 
 export function usePosition(): { position: Position | null; statut: StatutPosition; demanderAutorisation: () => void } {
-  const { reglages, modifier } = useReglages();
+  const { reglages, modifier, charge } = useReglages();
   const [gps, setGps] = useState<Position | null>(memoire?.position ?? null);
   const [etat, setEtat] = useState<'chargement' | 'ok' | 'refuse'>(memoire ? 'ok' : 'chargement');
   const [essai, setEssai] = useState(0);
 
   useEffect(() => {
+    if (!charge) return;
     if (!reglages.localisation) {
       setEtat('refuse');
       return;
@@ -50,7 +51,7 @@ export function usePosition(): { position: Position | null; statut: StatutPositi
     return () => {
       annule = true;
     };
-  }, [reglages.localisation, essai]);
+  }, [charge, reglages.localisation, essai]);
 
   const demanderAutorisation = () => {
     if (!reglages.localisation) {
@@ -65,6 +66,7 @@ export function usePosition(): { position: Position | null; statut: StatutPositi
       .catch(() => setEssai((n) => n + 1));
   };
 
+  if (!charge) return { position: null, statut: 'chargement', demanderAutorisation };
   if (etat === 'ok' && gps) return { position: gps, statut: 'gps', demanderAutorisation };
   if (etat === 'chargement') return { position: null, statut: 'chargement', demanderAutorisation };
   if (reglages.villeParDefaut) return { position: reglages.villeParDefaut.position, statut: 'ville', demanderAutorisation };

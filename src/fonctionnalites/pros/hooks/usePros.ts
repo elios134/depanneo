@@ -1,6 +1,7 @@
 // src/fonctionnalites/pros/hooks/usePros.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
+import { distanceKm } from '@/domaine/distance';
 import type { Position } from '@/domaine/lieux';
 import type { Pro } from '@/domaine/pro';
 import { useReglages } from '@/fonctionnalites/reglages/ReglagesProvider';
@@ -63,8 +64,9 @@ export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPro
         setEtat('ok');
       } catch {
         if (annule) return;
-        setPros(cache?.pros ?? []);
-        setDate(cache?.date ?? null);
+        const proche = cache !== null && distanceKm(cache.centre, ici) <= rayonKm;
+        setPros(proche ? cache.pros : []);
+        setDate(proche ? cache.date : null);
         setEtat('hors-ligne');
       }
     })();
