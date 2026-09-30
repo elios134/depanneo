@@ -7,7 +7,7 @@ export default function Accueil() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.titre}>Une panne à la maison ?</Text>
 
-      <Link href="/diagnostics" asChild>
+      <Link href="/diagnostic" asChild>
         <Pressable style={styles.boutonPrincipal}>
           <Text style={styles.boutonPrincipalTexte}>Diagnostiquer une panne</Text>
         </Pressable>
