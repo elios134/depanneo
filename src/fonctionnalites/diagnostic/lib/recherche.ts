@@ -1,7 +1,7 @@
 import type { Categorie, Diagnostic } from '@/domaine/types';
 
 export function normaliser(texte: string): string {
-  return texte.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+  return texte.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 }
 
 export function filtrerPannes(pannes: Diagnostic[], categorie: Categorie, recherche: string): Diagnostic[] {
