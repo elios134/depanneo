@@ -6,7 +6,9 @@ export default function RootLayout() {
   return (
     <ReglagesProvider>
       <ThemeProvider>
-        <Stack screenOptions={{ headerShown: false }} />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(onglets)" />
+        </Stack>
       </ThemeProvider>
     </ReglagesProvider>
   );
