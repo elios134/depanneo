@@ -29,6 +29,7 @@ Particuliers, locataires et propriétaires, sans connaissance technique. Tout do
 - `app/` = routes uniquement (fichiers ≤ 30 lignes). Écrans dans `src/fonctionnalites/<nom>/`, partagé (≥ 2 fonctionnalités) dans `src/ui/`, thème dans `src/theme/`, types et moteur dans `src/domaine/`, données dans `src/donnees/`.
 - Tailles cibles : composant 80–150 lignes (plafond ~250), écran 150–250 (~350), hook/lib 100–200 (~300).
 - Aucune couleur en dur hors de `src/theme/` (un test le vérifie). Logique pure dans `lib/`, testée ; tests à côté du fichier.
+- Types des routes (Expo Router) : régénérer avec `npx expo start` ; ne pas utiliser `npx expo export` pour préparer `tsc` (il génère des types pollués).
 - Spec de référence : `docs/superpowers/specs/2026-09-30-depannmaison-v2-design.md`.
 
 ## Règles de sécurité (important)

@@ -21,7 +21,7 @@
 - TypeScript `strict` + `noUnusedLocals` + `noUnusedParameters` : `npx tsc --noEmit` doit sortir 0 erreur.
 - Dépendances autorisées pour ce chantier : `lucide-react-native`, `react-native-svg`, `expo-blur`, `@react-native-async-storage/async-storage`. Aucune autre.
 - Règles de sécurité CLAUDE.md inchangées ; les gestes d'urgence (dont gaz) doivent rester à 1 appui depuis n'importe quel écran (onglet Urgences, tâche 13).
-- Vérification de chaque tâche : `npm test`, `npx tsc --noEmit`, et `npx expo export --platform web --output-dir dist-check` (qui régénère aussi les types des routes dans `.expo/types`), puis supprimer `dist-check`. Si `tsc` signale une route inconnue juste après avoir créé/déplacé un fichier de route, relancer l'export web puis `tsc`.
+- Vérification de chaque tâche : `npm test` et `npx tsc --noEmit`, après avoir régénéré les types des routes avec `npx expo start`. `npx expo export` sert seulement à vérifier que le bundle web se construit, jamais à régénérer les types.
 - Ne jamais committer `dist-check/`, `.expo/`, `node_modules/`, `.superpowers/`.
 
 ### Écarts assumés du chantier A (décisions de ce plan)
