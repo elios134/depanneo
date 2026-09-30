@@ -1,7 +1,7 @@
 // src/fonctionnalites/reglages/EcranReglages.tsx
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import { Platform, StyleSheet, Switch, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeProvider';
 import { CarteListe } from '@/ui/CarteListe';
 import { EnTete } from '@/ui/EnTete';
@@ -59,6 +59,8 @@ export function EcranReglages() {
           onValueChange={(localisation) => modifier({ localisation })}
           trackColor={{ true: couleurs.accent, false: couleurs.bordure }}
           thumbColor={couleurs.surAccent}
+          // Sur le web, le pouce coché utilise activeThumbColor (sinon il reste vert par défaut).
+          {...(Platform.OS === 'web' ? { activeThumbColor: couleurs.surAccent } : {})}
         />
       </View>
       <CarteListe
