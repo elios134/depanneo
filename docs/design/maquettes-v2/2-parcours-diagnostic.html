@@ -1,0 +1,127 @@
+<h2>Parcours diagnostic</h2>
+<p class="subtitle">Après l'appui sur « Diagnostiquer une panne » : 1) choisir la panne, 2) répondre aux questions, 3) voir le verdict. Dis-moi ce que tu gardes ou changes, écran par écran.</p>
+
+<style>
+  .row { display:flex; gap:22px; flex-wrap:wrap; justify-content:center; margin-top:14px; }
+  .col { text-align:center; }
+  .col h3 { margin:10px 0 2px; font-size:15px; }
+  .col p { margin:0 auto; font-size:12.5px; opacity:.75; max-width:250px; }
+  .phone { width:250px; height:520px; border-radius:34px; border:9px solid #000; overflow:hidden; position:relative; box-shadow:0 10px 30px rgba(0,0,0,.35); font-family: Inter, system-ui, "Segoe UI", sans-serif; color:rgba(255,255,255,.9); text-align:left; background: radial-gradient(ellipse at 15% 60%, rgba(79,163,255,.16) 0%, transparent 60%), radial-gradient(ellipse at 85% 10%, rgba(139,92,246,.12) 0%, transparent 50%), #0a0a0f; }
+  .phone * { box-sizing:border-box; }
+  .glass { background:rgba(18,18,26,.82); border:1px solid rgba(255,255,255,.10); backdrop-filter:blur(20px); }
+  .scr { position:absolute; inset:0; padding:16px 12px 80px; display:flex; flex-direction:column; gap:9px; overflow:hidden; }
+  .top { display:flex; align-items:center; gap:8px; }
+  .back { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+  .ttl { font-weight:700; font-size:15px; }
+  .seg { display:flex; padding:4px; border-radius:14px; gap:4px; }
+  .seg div { flex:1; text-align:center; font-size:12px; font-weight:600; padding:8px 4px; border-radius:10px; color:rgba(255,255,255,.6); }
+  .seg .on { background:#4FA3FF; color:#fff; }
+  .item { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.10); border-radius:13px; padding:9px 10px; display:flex; align-items:center; gap:9px; font-size:12px; font-weight:600; }
+  .item .d { width:26px; height:26px; border-radius:50%; background:rgba(46,233,165,.16); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+  .item .chev { margin-left:auto; opacity:.4; }
+  .search { border-radius:12px; padding:9px 11px; font-size:12px; color:rgba(255,255,255,.45); }
+  .prog { height:5px; border-radius:3px; background:rgba(255,255,255,.08); overflow:hidden; }
+  .prog i { display:block; height:100%; width:50%; background:#4FA3FF; border-radius:3px; }
+  .step { font-size:11px; color:rgba(255,255,255,.5); }
+  .q { font-size:19px; font-weight:700; line-height:1.3; margin:6px 0 6px; }
+  .ans { border-radius:14px; padding:13px 12px; font-size:13px; font-weight:600; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); }
+  .ans.idk { color:rgba(255,255,255,.6); border-style:dashed; }
+  .prev { font-size:12px; color:#4FA3FF; text-align:center; margin-top:auto; }
+  .verdict { border-radius:18px; padding:14px; display:flex; align-items:center; gap:10px; }
+  .verdict .big { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .verdict b { display:block; font-size:15px; }
+  .verdict small { font-size:11px; opacity:.8; }
+  .v-vert { background:rgba(46,233,165,.12); border:1px solid rgba(46,233,165,.40); }
+  .v-vert .big { background:rgba(46,233,165,.25); }
+  .v-vert b { color:#5ff2bd; }
+  .v-rouge { background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.45); }
+  .v-rouge .big { background:rgba(239,68,68,.25); }
+  .v-rouge b { color:#fca5a5; }
+  .txt { font-size:12.5px; line-height:1.45; color:rgba(255,255,255,.8); }
+  .btn { border-radius:14px; padding:12px; text-align:center; font-weight:700; font-size:13px; }
+  .btn.blue { background:#4FA3FF; color:#fff; box-shadow:0 6px 18px rgba(79,163,255,.35); }
+  .btn.red { background:#ef4444; color:#fff; box-shadow:0 6px 18px rgba(239,68,68,.35); }
+  .btn.ghost { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); }
+  .pros { font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:rgba(255,255,255,.5); margin-top:4px; }
+  .pro { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.10); border-radius:12px; padding:8px 10px; display:flex; align-items:center; gap:8px; font-size:11.5px; }
+  .pro b { display:block; font-size:12px; }
+  .pro small { color:rgba(255,255,255,.5); }
+  .pro .c { margin-left:auto; width:28px; height:28px; border-radius:50%; background:rgba(79,163,255,.18); display:flex; align-items:center; justify-content:center; font-size:12px; }
+  .nav { position:absolute; left:50%; transform:translateX(-50%); bottom:12px; border-radius:22px; padding:5px; display:flex; gap:3px; z-index:5; }
+  .nb { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; opacity:.65; }
+  .nb.on { background:#4FA3FF; opacity:1; }
+  .nb.pill { width:auto; padding:0 10px; font-size:11px; font-weight:600; border-radius:18px; }
+</style>
+
+<div class="row">
+
+  <div class="col">
+    <div class="phone"><div class="scr">
+      <div class="top"><div class="back glass">←</div><div class="ttl">Quelle panne ?</div></div>
+      <div class="seg glass"><div class="on">🚿 Plomberie</div><div>💡 Électricité</div></div>
+      <div class="search glass">🔍 Chercher : « fuite », « WC »…</div>
+      <div class="item"><div class="d">💧</div>Fuite d'eau<span class="chev">›</span></div>
+      <div class="item"><div class="d">🚽</div>WC bouché<span class="chev">›</span></div>
+      <div class="item"><div class="d">🚽</div>WC lent à se remplir<span class="chev">›</span></div>
+      <div class="item"><div class="d">🚽</div>Chasse d'eau qui coule<span class="chev">›</span></div>
+      <div class="item"><div class="d">🚰</div>Robinet dur à fermer<span class="chev">›</span></div>
+      <div class="item"><div class="d">🚰</div>Robinet qui goutte<span class="chev">›</span></div>
+      <div class="item"><div class="d">🛁</div>Douche qui s'écoule mal<span class="chev">›</span></div>
+    </div>
+    <div class="nav glass"><div class="nb on">⌂</div><div class="nb">⚠️</div><div class="nb pill">📖 Tutos</div><div class="nb">📍</div><div class="nb">⚙️</div></div>
+    </div>
+    <h3>1 · Choisir la panne</h3>
+    <p>Onglets Plomberie / Électricité + recherche. La liste défile (16 cas plomberie, 6 électricité).</p>
+  </div>
+
+  <div class="col">
+    <div class="phone"><div class="scr">
+      <div class="top"><div class="back glass">✕</div><div class="ttl">WC lent à se remplir</div></div>
+      <div class="prog"><i></i></div>
+      <div class="step">Question 2 sur ~4</div>
+      <div class="q">Le robinet d'arrivée d'eau des WC est-il bien ouvert à fond ?</div>
+      <div class="ans">Oui, il est ouvert à fond</div>
+      <div class="ans">Non, ou je ne suis pas sûr</div>
+      <div class="ans idk">Je ne sais pas où il est</div>
+      <div class="prev">← Question précédente</div>
+    </div>
+    <div class="nav glass"><div class="nb on">⌂</div><div class="nb">⚠️</div><div class="nb pill">📖 Tutos</div><div class="nb">📍</div><div class="nb">⚙️</div></div>
+    </div>
+    <h3>2 · Questions</h3>
+    <p>Une question à la fois, barre de progression, réponse « je ne sais pas », retour à la question précédente.</p>
+  </div>
+
+  <div class="col">
+    <div class="phone"><div class="scr">
+      <div class="top"><div class="back glass">✕</div><div class="ttl">Résultat</div></div>
+      <div class="verdict v-vert"><div class="big">🛠️</div><div><b>Tu peux réparer</b><small>Réparation simple, sans danger</small></div></div>
+      <div class="txt">Le robinet flotteur est sûrement entartré. Un nettoyage suffit dans la plupart des cas.</div>
+      <div class="btn blue">📖 Voir le tuto (5 min)</div>
+      <div class="btn ghost">🔄 Recommencer</div>
+      <div class="pros">Si tu préfères un pro</div>
+      <div class="pro"><div><b>Plomberie Martin</b><small>800 m</small></div><div class="c">📞</div></div>
+    </div>
+    <div class="nav glass"><div class="nb on">⌂</div><div class="nb">⚠️</div><div class="nb pill">📖 Tutos</div><div class="nb">📍</div><div class="nb">⚙️</div></div>
+    </div>
+    <h3>3a · Verdict vert</h3>
+    <p>Tuto mis en avant, pros proposés en second.</p>
+  </div>
+
+  <div class="col">
+    <div class="phone"><div class="scr">
+      <div class="top"><div class="back glass">✕</div><div class="ttl">Résultat</div></div>
+      <div class="verdict v-rouge"><div class="big">📞</div><div><b>Appelle un pro tout de suite</b><small>Ne répare pas toi-même</small></div></div>
+      <div class="txt">Un disjoncteur qui re-saute immédiatement signale un court-circuit. Ne le réarme pas plusieurs fois et ne touche pas au tableau.</div>
+      <div class="pros">Électriciens près de toi</div>
+      <div class="pro"><div><b>Élec Services 13</b><small>1,2 km</small></div><div class="c">📞</div></div>
+      <div class="pro"><div><b>Dupont Électricité</b><small>2,4 km</small></div><div class="c">📞</div></div>
+      <div class="btn ghost">⚡ Couper le courant (geste)</div>
+    </div>
+    <div class="nav glass"><div class="nb on">⌂</div><div class="nb">⚠️</div><div class="nb pill">📖 Tutos</div><div class="nb">📍</div><div class="nb">⚙️</div></div>
+    </div>
+    <h3>3b · Verdict rouge</h3>
+    <p>Les pros du bon métier (électricien ici) passent en premier, avec le geste de sécurité.</p>
+  </div>
+
+</div>
+<p class="subtitle" style="margin-top:14px">Le verdict orange suit le même modèle, avec le geste de sécurité en premier puis les pros. Pros fictifs.</p>
