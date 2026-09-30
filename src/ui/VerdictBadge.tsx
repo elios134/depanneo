@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import type { Verdict } from '../lib/types';
+import type { Verdict } from '@/domaine/types';
 
 const CONFIG: Record<Verdict, { emoji: string; libelle: string; couleur: string }> = {
   vert: { emoji: '🟢', libelle: 'Tu peux réparer', couleur: '#2e7d32' },

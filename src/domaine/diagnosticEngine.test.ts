@@ -1,5 +1,5 @@
-import { estResultat, getEtape, getResultat } from '../lib/diagnosticEngine';
-import type { Diagnostic } from '../lib/types';
+import { estResultat, getEtape, getResultat } from '@/domaine/diagnosticEngine';
+import type { Diagnostic } from '@/domaine/types';
 
 const diagTest: Diagnostic = {
   id: 'test',

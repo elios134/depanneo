@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { gestesUrgence } from '../data/gestesUrgence';
+import { gestesUrgence } from '@/donnees/gestesUrgence';
 
 export default function Accueil() {
   return (

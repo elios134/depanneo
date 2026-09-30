@@ -1,4 +1,4 @@
-import type { GesteUrgence } from '../lib/types';
+import type { GesteUrgence } from '@/domaine/types';
 
 export const gestesUrgence: GesteUrgence[] = [
   {

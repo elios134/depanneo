@@ -1,5 +1,5 @@
-import { validerDiagnostic } from '../lib/validateDiagnostic';
-import { diagnostics } from '../data/diagnostics';
+import { validerDiagnostic } from '@/domaine/validateDiagnostic';
+import { diagnostics } from '@/donnees/diagnostics';
 
 describe('données de diagnostics', () => {
   it('contient exactement 8 diagnostics', () => {

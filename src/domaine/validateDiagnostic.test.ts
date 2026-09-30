@@ -1,5 +1,5 @@
-import { validerDiagnostic } from '../lib/validateDiagnostic';
-import type { Diagnostic, Resultat } from '../lib/types';
+import { validerDiagnostic } from '@/domaine/validateDiagnostic';
+import type { Diagnostic, Resultat } from '@/domaine/types';
 
 describe('validerDiagnostic', () => {
   it('ne trouve aucune erreur sur un arbre valide', () => {

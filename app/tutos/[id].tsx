@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { EtapesList } from '../../components/EtapesList';
-import { tutos } from '../../data/tutos';
+import { EtapesList } from '@/ui/EtapesList';
+import { tutos } from '@/donnees/tutos';
 
 export default function EcranTuto() {
   const { id } = useLocalSearchParams<{ id: string }>();

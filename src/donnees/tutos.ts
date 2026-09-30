@@ -1,4 +1,4 @@
-import type { Tuto } from '../lib/types';
+import type { Tuto } from '@/domaine/types';
 
 export const tutos: Tuto[] = [
   {

@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import { FlatList, Pressable, StyleSheet, Text } from 'react-native';
-import { diagnostics } from '../../data/diagnostics';
+import { diagnostics } from '@/donnees/diagnostics';
 
 export default function ListeDiagnostics() {
   return (

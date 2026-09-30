@@ -1,8 +1,8 @@
 import { useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { EtapesList } from '../../components/EtapesList';
-import { NumeroUrgence } from '../../components/NumeroUrgence';
-import { gestesUrgence } from '../../data/gestesUrgence';
+import { EtapesList } from '@/ui/EtapesList';
+import { NumeroUrgence } from '@/ui/NumeroUrgence';
+import { gestesUrgence } from '@/donnees/gestesUrgence';
 
 export default function EcranGesteUrgence() {
   const { id } = useLocalSearchParams<{ id: string }>();

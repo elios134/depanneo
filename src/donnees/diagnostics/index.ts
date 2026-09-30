@@ -1,4 +1,4 @@
-import type { Diagnostic } from '../../lib/types';
+import type { Diagnostic } from '@/domaine/types';
 import fuiteEau from './fuite-eau.json';
 import wcBouche from './wc-bouche.json';
 import evierBouche from './evier-bouche.json';

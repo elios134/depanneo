@@ -1,10 +1,10 @@
 import { Link, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { NumeroUrgence } from '../../components/NumeroUrgence';
-import { VerdictBadge } from '../../components/VerdictBadge';
-import { diagnostics } from '../../data/diagnostics';
-import { estResultat, getEtape, getResultat } from '../../lib/diagnosticEngine';
+import { NumeroUrgence } from '@/ui/NumeroUrgence';
+import { VerdictBadge } from '@/ui/VerdictBadge';
+import { diagnostics } from '@/donnees/diagnostics';
+import { estResultat, getEtape, getResultat } from '@/domaine/diagnosticEngine';
 
 export default function EcranDiagnostic() {
   const { id } = useLocalSearchParams<{ id: string }>();

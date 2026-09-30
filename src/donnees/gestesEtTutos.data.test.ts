@@ -1,6 +1,6 @@
-import { gestesUrgence } from '../data/gestesUrgence';
-import { tutos } from '../data/tutos';
-import { diagnostics } from '../data/diagnostics';
+import { gestesUrgence } from '@/donnees/gestesUrgence';
+import { tutos } from '@/donnees/tutos';
+import { diagnostics } from '@/donnees/diagnostics';
 
 describe('gestes d\'urgence et tutos', () => {
   it('contient les 3 gestes d\'urgence attendus', () => {
