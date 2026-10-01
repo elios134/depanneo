@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import Svg, { Circle, G, Path, Rect, Text as SvgText } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeProvider';
 import { DUREE_DISJONCTEUR_MS, imageDisjoncteur } from './animation';
+import { POLICE_SCHEMA } from './policeSchema';
 import { useTempsBoucle } from './useTempsBoucle';
 
 export function SchemaDisjoncteur({ immobile }: { immobile: boolean }) {
@@ -15,10 +16,10 @@ export function SchemaDisjoncteur({ immobile }: { immobile: boolean }) {
         <Rect x={80} y={8} width={60} height={104} rx={8} fill={couleurs.carte} stroke={couleurs.texteDiscret} strokeWidth={2} />
         <Rect x={100} y={28} width={20} height={64} rx={4} fill={couleurs.bordure} />
         <Rect x={96} y={62 + image.decalageLevier} width={28} height={26} rx={5} fill={couleurs.accent} />
-        <SvgText x={146} y={24} fill={couleurs.texteDiscret} fontSize={9}>
+        <SvgText fontFamily={POLICE_SCHEMA} x={146} y={24} fill={couleurs.texteDiscret} fontSize={9}>
           I = marche
         </SvgText>
-        <SvgText x={146} y={106} fill={couleurs.texteDiscret} fontSize={9}>
+        <SvgText fontFamily={POLICE_SCHEMA} x={146} y={106} fill={couleurs.texteDiscret} fontSize={9}>
           0 = coupé
         </SvgText>
         <Path
