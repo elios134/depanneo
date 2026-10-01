@@ -19,17 +19,19 @@ import { filtrerPros } from './lib/filtrerPros';
 export function EcranPros() {
   const { couleurs } = useTheme();
   const { reglages, modifier } = useReglages();
-  const { position, statut, demanderAutorisation } = usePosition();
-  const { pros, etat, date } = usePros(position);
+  const { position, statut, demanderAutorisation } = usePosition({ passif: true });
+  const { pros, etat, date, reessayer } = usePros(position);
+  const [carteEchec, setCarteEchec] = useState(false);
   const [filtre, setFiltre] = useState<Metier | 'tous'>('tous');
   const liste = filtrerPros(pros, filtre);
   const horsLigne = etat === 'hors-ligne';
+  const sansReseau = horsLigne || carteEchec;
   const discret = { color: couleurs.texteDiscret };
 
   return (
     <FondEcran>
       <EnTete titre="Pros près de toi" />
-      {horsLigne ? <View style={styles.centre}><BandeauHorsLigne /></View> : null}
+      {sansReseau ? <View style={styles.centre}><BandeauHorsLigne /></View> : null}
       {statut === 'aucune' ? (
         <>
           <Text style={[styles.message, discret]}>Indique ta ville pour trouver les pros autour de toi.</Text>
@@ -41,10 +43,10 @@ export function EcranPros() {
       ) : (
         <>
           <View style={[styles.carte, { borderColor: couleurs.bordure }]}>
-            <CartePros centre={position} pros={liste} horsLigne={horsLigne} recentrage={0} interactive={false} />
+            <CartePros centre={position} pros={liste} horsLigne={horsLigne} recentrage={0} interactive={false} onEchecCarte={setCarteEchec} />
           </View>
-          {horsLigne ? null : (
-            <Text style={[styles.creditCarte, discret]}>© OpenFreeMap · OpenStreetMap</Text>
+          {sansReseau ? null : (
+            <Text style={[styles.creditCarte, discret]}>© OpenFreeMap · OpenMapTiles · OpenStreetMap</Text>
           )}
           <Onglets<Metier | 'tous'>
             options={[
@@ -63,11 +65,19 @@ export function EcranPros() {
               Aucun pro trouvé dans un rayon de {reglages.rayonKm} km. Les données d'OpenStreetMap peuvent être incomplètes.
             </Text>
           ) : null}
+          {horsLigne && pros.length === 0 ? (
+            <Text style={[styles.message, discret]}>Pas de liste enregistrée. Reconnecte-toi pour trouver les pros autour de toi.</Text>
+          ) : null}
           {liste.map((pro) => (
             <CartePro key={pro.id} pro={pro} />
           ))}
           {date !== null && liste.length > 0 ? (
             <Text style={[styles.credit, discret]}>Données © OpenStreetMap · mis à jour {ageTexte(date, Date.now())}</Text>
+          ) : null}
+          {horsLigne ? (
+            <Pressable accessibilityRole="button" hitSlop={8} onPress={reessayer} style={styles.lienZone}>
+              <Text style={[styles.lien, { color: couleurs.accent }]}>Réessayer</Text>
+            </Pressable>
           ) : null}
         </>
       )}

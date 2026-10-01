@@ -18,28 +18,31 @@ export function EcranAccueil() {
   const { top } = useSafeAreaInsets();
   const margeBarre = useMargeBarre();
   const { position, statut, demanderAutorisation } = usePosition();
-  const { pros, etat, date } = usePros(position);
+  const { pros, etat, date, reessayer } = usePros(position);
+  const [carteEchec, setCarteEchec] = useState(false);
   const [recentrage, setRecentrage] = useState(0);
   const horsLigne = etat === 'hors-ligne';
+  // Fond de carte non chargé (mode avion avec liste en cache) : même bandeau que hors connexion.
+  const sansReseau = horsLigne || carteEchec;
 
   return (
     <View style={[styles.racine, { backgroundColor: couleurs.carteSol }]}>
-      <CartePros centre={position} pros={pros} horsLigne={horsLigne} recentrage={recentrage} />
+      <CartePros centre={position} pros={pros} horsLigne={horsLigne} recentrage={recentrage} onEchecCarte={setCarteEchec} />
       <View style={[styles.haut, { top: top + 12 }]}>
         <Logo />
-        {horsLigne ? <BandeauHorsLigne /> : null}
-        {statut === 'gps' && !horsLigne ? (
+        {sansReseau ? <BandeauHorsLigne /> : null}
+        {statut === 'gps' && !sansReseau ? (
           <BoutonRecentrer onPress={() => setRecentrage((n) => n + 1)} />
         ) : (
           <View style={styles.place} />
         )}
       </View>
-      {!horsLigne ? (
-        <Text style={[styles.credit, { top: top + 62, color: couleurs.texteDiscret }]}>© OpenFreeMap · OpenStreetMap</Text>
+      {!sansReseau ? (
+        <Text style={[styles.credit, { top: top + 62, color: couleurs.texteDiscret }]}>© OpenFreeMap · OpenMapTiles · OpenStreetMap</Text>
       ) : null}
       <View style={[styles.panneau, { bottom: margeBarre - 8 }]}>
         <PanneauAccueil>
-          <SectionPros statut={statut} pros={pros} etat={etat} date={date} onUtiliserPosition={demanderAutorisation} />
+          <SectionPros statut={statut} pros={pros} etat={etat} date={date} onUtiliserPosition={demanderAutorisation} onReessayer={reessayer} />
         </PanneauAccueil>
       </View>
     </View>

@@ -7,4 +7,6 @@ export interface PropsCartePros {
   horsLigne: boolean;
   recentrage: number;
   interactive?: boolean;
+  // Signale que le fond de carte n'a pas pu se charger (ex. mode avion), puis qu'il s'est chargé.
+  onEchecCarte?: (echec: boolean) => void;
 }

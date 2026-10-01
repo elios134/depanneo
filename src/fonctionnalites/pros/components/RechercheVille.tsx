@@ -51,6 +51,7 @@ export function RechercheVille({ onChoisir }: { onChoisir: (lieu: Lieu) => void 
           placeholder="Ta ville ou ton code postal"
           placeholderTextColor={couleurs.texteDiscret}
           accessibilityLabel="Ta ville ou ton code postal"
+          autoCorrect={false}
           style={[styles.saisie, { color: couleurs.texte }]}
         />
       </Verre>

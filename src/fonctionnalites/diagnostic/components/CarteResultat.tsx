@@ -23,7 +23,7 @@ interface Props {
 
 export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
   const { couleurs } = useTheme();
-  const { position } = usePosition();
+  const { position } = usePosition({ passif: true });
   const { pros } = usePros(position);
   const tuto = tutos.find((t) => t.id === resultat.tutoId);
   const geste = gestesUrgence.find((g) => g.id === resultat.gesteUrgenceId);

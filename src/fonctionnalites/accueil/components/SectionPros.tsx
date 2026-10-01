@@ -16,6 +16,7 @@ interface Props {
   etat: EtatPros;
   date: number | null;
   onUtiliserPosition: () => void;
+  onReessayer: () => void;
 }
 
 function Lien({ texte, onPress }: { texte: string; onPress: () => void }) {
@@ -27,7 +28,7 @@ function Lien({ texte, onPress }: { texte: string; onPress: () => void }) {
   );
 }
 
-export function SectionPros({ statut, pros, etat, date, onUtiliserPosition }: Props) {
+export function SectionPros({ statut, pros, etat, date, onUtiliserPosition, onReessayer }: Props) {
   const { couleurs } = useTheme();
   const { reglages, modifier } = useReglages();
   const titre = (texte: string, avecToutVoir: boolean) => (
@@ -71,6 +72,7 @@ export function SectionPros({ statut, pros, etat, date, onUtiliserPosition }: Pr
             ? 'Reconnecte-toi pour trouver les pros autour de toi.'
             : "Les données viennent d'OpenStreetMap et peuvent être incomplètes."}
         </Text>
+        {horsLigne ? <Lien texte="Réessayer" onPress={onReessayer} /> : null}
         {!horsLigne && reglages.rayonKm < 20 ? <Lien texte="Élargir à 20 km" onPress={() => modifier({ rayonKm: 20 })} /> : null}
       </View>
     );
@@ -85,6 +87,7 @@ export function SectionPros({ statut, pros, etat, date, onUtiliserPosition }: Pr
       {etat === 'hors-ligne' && date !== null ? (
         <Text style={[styles.message, { color: couleurs.texteDiscret }]}>Liste enregistrée {ageTexte(date, Date.now())}</Text>
       ) : null}
+      {etat === 'hors-ligne' ? <Lien texte="Réessayer" onPress={onReessayer} /> : null}
     </View>
   );
 }
