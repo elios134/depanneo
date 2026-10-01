@@ -50,10 +50,14 @@ export const tutos: Tuto[] = [
     duree: '2 min',
     outil: 'aucun',
     etapes: [
-      'Repère le disjoncteur en position basse dans le tableau électrique.',
-      'Débranche ou éteins l\'appareil qui a pu causer la surcharge, si tu en identifies un.',
-      'Remets le disjoncteur en position haute.',
-      'Si le disjoncteur re-saute immédiatement, ne réessaie pas plusieurs fois : fais appel à un électricien.',
+      'Si le tableau électrique est mouillé, chaud ou sent le brûlé, n\'y touche pas : appelle un électricien.',
+      'Avec les mains sèches, ouvre la porte du tableau électrique (ne démonte jamais le capot).',
+      'Si tu sais quel appareil a fait sauter le disjoncteur, débranche-le d\'abord.',
+      {
+        texte: 'Repère le disjoncteur en position basse et remonte-le d\'un coup franc.',
+        schema: 'disjoncteur',
+      },
+      'S\'il redescend tout de suite, ne force pas : débranche les appareils de la pièce et appelle un électricien s\'il re-saute.',
     ],
   },
 ];

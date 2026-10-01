@@ -1,3 +1,4 @@
+import { schemaEtape } from '@/domaine/etapes';
 import { estNomIcone } from '@/domaine/icones';
 import { CATEGORIES } from '@/domaine/types';
 import { gestesUrgence } from '@/donnees/gestesUrgence';
@@ -14,6 +15,11 @@ describe('gestes d\'urgence et tutos', () => {
   it('contient les 4 mini-tutos attendus', () => {
     const ids = tutos.map((t) => t.id).sort();
     expect(ids).toEqual(['changer-joint', 'deboucher-evier', 'deboucher-wc', 'reparer-disjoncteur']);
+  });
+
+  it('« Réarmer un disjoncteur » montre le schéma du disjoncteur', () => {
+    const tuto = tutos.find((t) => t.id === 'reparer-disjoncteur')!;
+    expect(tuto.etapes.map(schemaEtape)).toContain('disjoncteur');
   });
 
   it('chaque gesteUrgenceId référencé dans les diagnostics existe dans gestesUrgence', () => {

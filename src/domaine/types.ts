@@ -1,3 +1,4 @@
+import type { EtapeTuto } from './etapes';
 import type { NomIcone } from './icones';
 
 export type Verdict = 'vert' | 'orange' | 'rouge';
@@ -56,5 +57,5 @@ export interface Tuto {
   icone: NomIcone;
   duree: string;
   outil: string;
-  etapes: string[];
+  etapes: EtapeTuto[];
 }
