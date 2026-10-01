@@ -3,28 +3,48 @@
   "titre": "Disjoncteur qui saute",
   "categorie": "electricite",
   "icone": "toggle-left",
-  "motsCles": ["disjoncteur", "saute", "tableau", "plombs"],
+  "motsCles": ["disjoncteur", "saute", "tableau", "plombs", "coupure"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {
+      "question": "Le disjoncteur a-t-il sauté quand tu as allumé un appareil précis ?",
+      "reponses": [
+        { "texte": "Oui (radiateur, four, bouilloire…)", "suite": "q2" },
+        { "texte": "Non", "suite": "q3" },
+        { "texte": "Je ne sais pas", "suite": "q3", "inconnu": true }
+      ]
+    },
+    "q2": {
+      "question": "Débranche cet appareil, puis réarme le disjoncteur. Tient-il ?",
+      "reponses": [
+        { "texte": "Oui, il tient", "suite": "resultat_appareil" },
+        { "texte": "Non, il re-saute", "suite": "resultat_court_circuit" }
+      ]
+    },
+    "q3": {
       "question": "Quand tu réarmes le disjoncteur, re-saute-t-il tout de suite ?",
       "reponses": [
-        { "texte": "Non, il tient", "suite": "resultat_reussi" },
+        { "texte": "Non, il tient", "suite": "resultat_surcharge" },
         { "texte": "Oui, il re-saute immédiatement", "suite": "resultat_court_circuit" }
       ]
     }
   },
   "resultats": {
-    "resultat_reussi": {
+    "resultat_appareil": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "C'est l'appareil qui est en défaut. Ne le rebranche pas, fais-le réparer ou remplace-le."
+    },
+    "resultat_surcharge": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Le disjoncteur a probablement sauté suite à une surcharge ponctuelle. Réarme-le simplement.",
+      "conseil": "Trop d'appareils en même temps sur le même circuit. Répartis-les sur d'autres prises ou d'autres pièces.",
       "tutoId": "reparer-disjoncteur"
     },
     "resultat_court_circuit": {
       "verdict": "rouge",
       "titre": "Appelle un pro tout de suite",
-      "conseil": "Un disjoncteur qui re-saute immédiatement signale probablement un court-circuit. N'essaie pas de le réarmer plusieurs fois, et ne touche pas au tableau électrique. Appelle un électricien."
+      "conseil": "Un disjoncteur qui re-saute immédiatement signale un défaut. Ne le réarme pas plusieurs fois et ne touche pas au tableau. Appelle un électricien."
     }
   }
 }

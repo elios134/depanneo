@@ -3,40 +3,43 @@
   "titre": "Plus de courant du tout",
   "categorie": "electricite",
   "icone": "zap-off",
-  "motsCles": ["courant", "électricité", "coupure", "noir"],
+  "motsCles": ["courant", "électricité", "coupure", "noir", "panne"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {
       "question": "Tes voisins ont-ils aussi une coupure de courant ?",
       "reponses": [
-        { "texte": "Oui, c'est coupé chez eux aussi", "suite": "resultat_coupure_generale" },
-        { "texte": "Non, juste chez moi", "suite": "q2" }
+        { "texte": "Oui, c'est coupé chez eux aussi", "suite": "resultat_reseau" },
+        { "texte": "Non, juste chez moi", "suite": "q2" },
+        { "texte": "Je ne sais pas", "suite": "q2", "inconnu": true }
       ]
     },
     "q2": {
-      "question": "Le disjoncteur général est-il en position basse (coupé) ?",
+      "question": "Le disjoncteur général (souvent le plus gros, parfois dans l'entrée ou un placard technique) est-il en position basse ?",
       "reponses": [
         { "texte": "Oui", "suite": "resultat_reenclencher" },
-        { "texte": "Non, il est en position haute mais toujours pas de courant", "suite": "resultat_panne_grave" }
+        { "texte": "Non, il est en haut", "suite": "resultat_pro" },
+        { "texte": "Je ne le trouve pas", "suite": "resultat_pro", "inconnu": true }
       ]
     }
   },
   "resultats": {
-    "resultat_coupure_generale": {
+    "resultat_reseau": {
       "verdict": "orange",
-      "titre": "Attends ou contacte ton fournisseur",
-      "conseil": "C'est une coupure générale du réseau. Attends le rétablissement ou contacte ton fournisseur d'électricité."
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Coupure du réseau. Attends le rétablissement. Le numéro de dépannage d'Enedis figure sur ta facture d'électricité. Débranche les appareils sensibles en attendant."
     },
     "resultat_reenclencher": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Remets le disjoncteur général en position haute.",
-      "tutoId": "reparer-disjoncteur"
+      "conseil": "Remets-le en position haute. S'il re-saute, continue avec le diagnostic « Disjoncteur qui saute ».",
+      "tutoId": "reparer-disjoncteur",
+      "renvoi": { "type": "diagnostic", "id": "disjoncteur-saute" }
     },
-    "resultat_panne_grave": {
+    "resultat_pro": {
       "verdict": "rouge",
       "titre": "Appelle un pro tout de suite",
-      "conseil": "Une absence de courant sans disjoncteur coupé est anormale. N'ouvre pas le tableau électrique, appelle un électricien."
+      "conseil": "Une coupure chez toi sans disjoncteur coupé est anormale. N'ouvre pas le tableau. Appelle un électricien, ou le dépannage Enedis (numéro sur ta facture)."
     }
   }
 }

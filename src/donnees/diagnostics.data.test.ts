@@ -91,4 +91,12 @@ describe('données de diagnostics', () => {
       }
     }
   });
+
+  it('« Pas d\'eau chaude » demande d\'abord chauffe-eau ou chaudière, et la chaudière renvoie vers le gaz', () => {
+    const diag = diagnostics.find((d) => d.id === 'pas-eau-chaude')!;
+    expect(diag.etapeInitiale).toBe('q0');
+    expect(diag.resultats.resultat_chauffagiste.verdict).toBe('orange');
+    expect(diag.resultats.resultat_chauffagiste.renvoi).toEqual({ type: 'urgence', id: 'couper-gaz' });
+    expect(diag.resultats.resultat_pro.verdict).toBe('orange');
+  });
 });
