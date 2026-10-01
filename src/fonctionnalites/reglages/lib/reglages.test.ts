@@ -23,7 +23,17 @@ describe('réglages', () => {
   });
 
   it('relit exactement ce qui a été écrit', () => {
-    const r = { theme: 'auto' as const, rayonKm: 20 as const, localisation: false, villeParDefaut: 'Marseille' };
+    const r = {
+      theme: 'auto' as const,
+      rayonKm: 20 as const,
+      localisation: false,
+      villeParDefaut: { nom: 'Marseille', codePostal: '13013', position: { lat: 43.34, lon: 5.43 } },
+    };
     expect(lireReglages(ecrireReglages(r))).toEqual(r);
+  });
+
+  it('ignore une ville par défaut mal formée', () => {
+    const lu = lireReglages(JSON.stringify({ villeParDefaut: { nom: 'Marseille', position: { lat: 'x', lon: 5 } } }));
+    expect(lu.villeParDefaut).toBeNull();
   });
 });

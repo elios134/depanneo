@@ -1,7 +1,9 @@
 // src/fonctionnalites/reglages/EcranReglages.tsx
 import { router } from 'expo-router';
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Platform, StyleSheet, Switch, Text, View } from 'react-native';
+import { libelleLieu } from '@/domaine/lieux';
+import { RechercheVille } from '@/fonctionnalites/pros/components/RechercheVille';
 import { useTheme } from '@/theme/ThemeProvider';
 import { CarteListe } from '@/ui/CarteListe';
 import { EnTete } from '@/ui/EnTete';
@@ -24,6 +26,7 @@ function Bloc({ titre, description, children }: { titre: string; description: st
 export function EcranReglages() {
   const { couleurs } = useTheme();
   const { reglages, modifier } = useReglages();
+  const [choixVille, setChoixVille] = useState(false);
   return (
     <FondEcran>
       <EnTete titre="Réglages" />
@@ -63,6 +66,21 @@ export function EcranReglages() {
           {...(Platform.OS === 'web' ? { activeThumbColor: couleurs.surAccent } : {})}
         />
       </View>
+      <CarteListe
+        icone="map-pin"
+        couleur={couleurs.accent}
+        titre="Ville par défaut"
+        sousTitre={reglages.villeParDefaut ? libelleLieu(reglages.villeParDefaut) : 'Utilisée si la localisation est désactivée'}
+        onPress={() => setChoixVille((ouvert) => !ouvert)}
+      />
+      {choixVille ? (
+        <RechercheVille
+          onChoisir={(lieu) => {
+            modifier({ villeParDefaut: lieu });
+            setChoixVille(false);
+          }}
+        />
+      ) : null}
       <CarteListe
         icone="settings"
         couleur={couleurs.accent}

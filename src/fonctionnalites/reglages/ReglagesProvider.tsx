@@ -5,17 +5,20 @@ import { CLE_REGLAGES, ecrireReglages, lireReglages, REGLAGES_DEFAUT, type Regla
 interface ContexteReglages {
   reglages: Reglages;
   modifier: (partiel: Partial<Reglages>) => void;
+  charge: boolean;
 }
 
 const Contexte = createContext<ContexteReglages | null>(null);
 
 export function ReglagesProvider({ children }: { children: ReactNode }) {
   const [reglages, setReglages] = useState<Reglages>(REGLAGES_DEFAUT);
+  const [charge, setCharge] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem(CLE_REGLAGES)
       .then((brut) => setReglages(lireReglages(brut)))
-      .catch(() => setReglages(REGLAGES_DEFAUT));
+      .catch(() => setReglages(REGLAGES_DEFAUT))
+      .finally(() => setCharge(true));
   }, []);
 
   const modifier = (partiel: Partial<Reglages>) => {
@@ -26,7 +29,7 @@ export function ReglagesProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  return <Contexte.Provider value={{ reglages, modifier }}>{children}</Contexte.Provider>;
+  return <Contexte.Provider value={{ reglages, modifier, charge }}>{children}</Contexte.Provider>;
 }
 
 export function useReglages(): ContexteReglages {

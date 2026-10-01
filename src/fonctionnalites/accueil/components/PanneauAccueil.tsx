@@ -1,15 +1,18 @@
+// src/fonctionnalites/accueil/components/PanneauAccueil.tsx
 import { router } from 'expo-router';
+import type { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeProvider';
 import { BoutonPrincipal } from '@/ui/BoutonPrincipal';
 import { Verre } from '@/ui/Verre';
 
-export function PanneauAccueil() {
+export function PanneauAccueil({ children }: { children?: ReactNode }) {
   const { couleurs } = useTheme();
   return (
     <Verre style={styles.panneau}>
       <View style={[styles.poignee, { backgroundColor: couleurs.bordure }]} />
       <BoutonPrincipal libelle="Diagnostiquer une panne" icone="stethoscope" onPress={() => router.push('/diagnostic')} />
+      {children}
       <Text style={[styles.avertissement, { color: couleurs.texteDiscret }]}>
         Conseils uniquement — ne remplace pas un professionnel.
       </Text>
