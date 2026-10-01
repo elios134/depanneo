@@ -69,13 +69,15 @@ export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
     [numero, sectionPros, carteGeste];
 
   return (
-    <View style={styles.bloc}>
-      <VerdictBadge verdict={resultat.verdict} />
-      <Text style={[styles.conseil, { color: couleurs.texte }]}>{resultat.conseil}</Text>
-      {actions}
-      <BoutonPrincipal libelle="Recommencer" icone="rotate-ccw" variante="discret" onPress={onRecommencer} />
+    <>
+      <View style={styles.bloc}>
+        <VerdictBadge verdict={resultat.verdict} />
+        <Text style={[styles.conseil, { color: couleurs.texte }]}>{resultat.conseil}</Text>
+        {actions}
+        <BoutonPrincipal libelle="Recommencer" icone="rotate-ccw" variante="discret" onPress={onRecommencer} />
+      </View>
       <FichePro pro={proOuvert} onFermer={() => setProOuvert(null)} />
-    </View>
+    </>
   );
 }
 

@@ -4,6 +4,7 @@ import { Alert, Linking, Modal, Pressable, StyleSheet, Text, View } from 'react-
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { formaterDistance } from '@/domaine/distance';
 import type { NomIcone } from '@/domaine/icones';
+import { formaterHoraires } from '@/domaine/horaires';
 import { lienAvis } from '@/domaine/lienAvis';
 import { LIBELLES_METIER, type Pro } from '@/domaine/pro';
 import { teinte } from '@/theme/teinte';
@@ -85,7 +86,7 @@ export function FichePro({ pro, onFermer }: Props) {
               </Pressable>
             </View>
             {p.adresse ? <Ligne icone="map-pin" texte={p.adresse} libelle="Adresse" /> : null}
-            {p.horaires ? <Ligne icone="clock" texte={p.horaires} libelle="Horaires" /> : null}
+            {p.horaires ? <Ligne icone="clock" texte={formaterHoraires(p.horaires)} libelle="Horaires" /> : null}
             {p.siteWeb ? <Ligne icone="globe" texte={siteAffiche ?? p.siteWeb} lien={p.siteWeb} libelle={`Ouvrir le site de ${p.nom}`} /> : null}
             {p.email ? <Ligne icone="mail" texte={p.email} lien={`mailto:${p.email}`} libelle={`Écrire à ${p.nom}`} /> : null}
             {aDesInfos ? null : (
