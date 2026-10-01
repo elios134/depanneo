@@ -14,7 +14,7 @@ Depuis l'ajout de la carte (MapLibre), l'appli contient du code natif : **Expo G
    La première fois, c'est long (plusieurs minutes). L'appli s'installe et s'ouvre sur le téléphone.
 5. Les fois suivantes : lance `npx expo start`, puis appuie sur `a` dans le terminal : l'appli déjà installée s'ouvre sur ton téléphone branché.
 
-**Si ça bloque** : la première compilation peut échouer si Windows ne trouve pas Java ou le SDK. Dans Android Studio, ouvre *Settings → Build Tools → Gradle* pour repérer le JDK, et vérifie que la variable d'environnement `ANDROID_HOME` pointe vers le SDK (souvent `C:\Users\<toi>\AppData\Local\Android\Sdk`). À noter : `npx expo run:android` crée un dossier `android/` ignoré par git (c'est normal).
+**Si ça bloque** : la première compilation peut échouer si Windows ne trouve pas Java ou le SDK. Dans Android Studio, ouvre *Settings → Build Tools → Gradle* pour repérer le JDK, et vérifie que la variable d'environnement `ANDROID_HOME` pointe vers le SDK (souvent `C:\Users\<toi>\AppData\Local\Android\Sdk`). À noter : `npx expo run:android` crée un dossier `android/` ignoré par git (c'est normal). Solution rapide : créer le fichier `android/local.properties` avec la ligne `sdk.dir=C:/Users/<toi>/AppData/Local/Android/Sdk` (barres obliques `/`).
 
 ## Option 2 — En ligne avec EAS (compte Expo gratuit, sans Android Studio)
 
