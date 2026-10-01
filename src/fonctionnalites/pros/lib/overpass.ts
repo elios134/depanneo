@@ -1,6 +1,7 @@
 import { distanceKm } from '@/domaine/distance';
 import type { Position } from '@/domaine/lieux';
 import type { Metier, Pro } from '@/domaine/pro';
+import { adresseDe, emailDe, horairesDe, siteWebDe, villeDe } from './detailsOsm';
 
 // Le serveur public principal est souvent surchargé : on essaie les suivants à la suite.
 export const SERVEURS_OVERPASS = [
@@ -58,6 +59,11 @@ export function analyserReponse(donnees: unknown, depuis: Position): Pro[] {
       lat,
       lon,
       distanceKm: distanceKm(depuis, { lat, lon }),
+      adresse: adresseDe(tags),
+      siteWeb: siteWebDe(tags),
+      email: emailDe(tags),
+      horaires: horairesDe(tags),
+      ville: villeDe(tags),
     });
   }
   return pros.sort((a, b) => a.distanceKm - b.distanceKm);

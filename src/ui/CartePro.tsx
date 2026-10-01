@@ -8,7 +8,7 @@ import { appeler } from './appeler';
 import { CarteListe } from './CarteListe';
 import { Icone } from './Icone';
 
-export function CartePro({ pro }: { pro: Pro }) {
+export function CartePro({ pro, onOuvrir }: { pro: Pro; onOuvrir?: (pro: Pro) => void }) {
   const { couleurs } = useTheme();
   const metier = pro.metiers[0];
   const telephone = pro.telephone;
@@ -17,6 +17,7 @@ export function CartePro({ pro }: { pro: Pro }) {
       icone={metier === 'plombier' ? 'wrench' : 'zap'}
       couleur={metier === 'plombier' ? couleurs.plomberie : couleurs.electricite}
       titre={pro.nom}
+      onPress={onOuvrir ? () => onOuvrir(pro) : undefined}
       sousTitre={`${LIBELLES_METIER[metier]} · ${formaterDistance(pro.distanceKm)}`}
       droite={
         telephone ? (

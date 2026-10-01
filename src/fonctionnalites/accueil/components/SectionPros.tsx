@@ -1,5 +1,6 @@
 // src/fonctionnalites/accueil/components/SectionPros.tsx
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Pro } from '@/domaine/pro';
 import { RechercheVille } from '@/fonctionnalites/pros/components/RechercheVille';
@@ -9,6 +10,7 @@ import { ageTexte } from '@/fonctionnalites/pros/lib/cachePros';
 import { useReglages } from '@/fonctionnalites/reglages/ReglagesProvider';
 import { useTheme } from '@/theme/ThemeProvider';
 import { CartePro } from '@/ui/CartePro';
+import { FichePro } from '@/ui/FichePro';
 
 interface Props {
   statut: StatutPosition;
@@ -33,6 +35,7 @@ function Lien({ texte, onPress }: { texte: string; onPress: () => void }) {
 export function SectionPros({ statut, pros, etat, date, onUtiliserPosition, peutReessayer, onReessayer }: Props) {
   const { couleurs } = useTheme();
   const { reglages, modifier } = useReglages();
+  const [proOuvert, setProOuvert] = useState<Pro | null>(null);
   const titre = (texte: string, avecToutVoir: boolean) => (
     <View style={styles.entete}>
       <Text style={[styles.titre, { color: couleurs.texteDiscret }]}>{texte}</Text>
@@ -86,8 +89,9 @@ export function SectionPros({ statut, pros, etat, date, onUtiliserPosition, peut
     <View style={styles.bloc}>
       {titre('Pros près de toi', true)}
       {pros.slice(0, 2).map((pro) => (
-        <CartePro key={pro.id} pro={pro} />
+        <CartePro key={pro.id} pro={pro} onOuvrir={setProOuvert} />
       ))}
+      <FichePro pro={proOuvert} onFermer={() => setProOuvert(null)} />
       {estEchec(etat) && date !== null ? (
         <Text style={[styles.message, { color: couleurs.texteDiscret }]}>Liste enregistrée {ageTexte(date, Date.now())}</Text>
       ) : null}

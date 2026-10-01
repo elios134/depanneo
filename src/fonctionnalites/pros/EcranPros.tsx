@@ -1,12 +1,13 @@
 // src/fonctionnalites/pros/EcranPros.tsx
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import type { Metier } from '@/domaine/pro';
+import type { Metier, Pro } from '@/domaine/pro';
 import { useReglages } from '@/fonctionnalites/reglages/ReglagesProvider';
 import { useTheme } from '@/theme/ThemeProvider';
 import { BandeauHorsLigne } from '@/ui/BandeauHorsLigne';
 import { CartePro } from '@/ui/CartePro';
 import { EnTete } from '@/ui/EnTete';
+import { FichePro } from '@/ui/FichePro';
 import { FondEcran } from '@/ui/FondEcran';
 import { Onglets } from '@/ui/Onglets';
 import { CartePros } from './components/CartePros';
@@ -23,6 +24,7 @@ export function EcranPros() {
   const { position, statut, demanderAutorisation } = usePosition({ passif: true });
   const { pros, etat, date, actualisation, reessayer } = usePros(position);
   const { carteEchec, setCarteEchec, rechargement, relancerCarte } = useCarteEchec();
+  const [proOuvert, setProOuvert] = useState<Pro | null>(null);
   const [filtre, setFiltre] = useState<Metier | 'tous'>('tous');
   const liste = filtrerPros(pros, filtre);
   const horsLigne = etat === 'hors-ligne';
@@ -51,7 +53,7 @@ export function EcranPros() {
       ) : (
         <>
           <View style={[styles.carte, { borderColor: couleurs.bordure }]}>
-            <CartePros centre={position} pros={liste} horsLigne={horsLigne} recentrage={0} interactive={false} onEchecCarte={setCarteEchec} rechargement={rechargement} />
+            <CartePros centre={position} pros={liste} horsLigne={horsLigne} recentrage={0} interactive={false} onEchecCarte={setCarteEchec} rechargement={rechargement} onOuvrirPro={setProOuvert} />
           </View>
           {sansReseau ? null : (
             <Text style={[styles.creditCarte, discret]}>© OpenFreeMap · OpenMapTiles · OpenStreetMap</Text>
@@ -86,7 +88,7 @@ export function EcranPros() {
             </Text>
           ) : null}
           {liste.map((pro) => (
-            <CartePro key={pro.id} pro={pro} />
+            <CartePro key={pro.id} pro={pro} onOuvrir={setProOuvert} />
           ))}
           {date !== null && liste.length > 0 ? (
             <Text style={[styles.credit, discret]}>Données © OpenStreetMap · mis à jour {ageTexte(date, Date.now())}</Text>
@@ -104,6 +106,7 @@ export function EcranPros() {
           ) : null}
         </>
       )}
+      <FichePro pro={proOuvert} onFermer={() => setProOuvert(null)} />
     </FondEcran>
   );
 }

@@ -26,6 +26,33 @@ describe('overpass', () => {
     expect(pros[1].telephone).toBe('+33 4 91 00 00 00');
   });
 
+  it('lit adresse, site, e-mail, horaires et ville', () => {
+    const [pro] = analyserReponse(
+      {
+        elements: [
+          {
+            type: 'node', id: 9, lat: 43.3, lon: 5.4,
+            tags: {
+              craft: 'plumber', name: 'Sodexal', 'addr:housenumber': '12', 'addr:street': 'rue de la Rose',
+              'addr:postcode': '13013', 'addr:city': 'Marseille', website: 'sodexal.fr',
+              'contact:email': 'contact@sodexal.fr', opening_hours: 'Mo-Fr 08:00-18:00',
+            },
+          },
+        ],
+      },
+      depuis,
+    );
+    expect(pro).toMatchObject({
+      adresse: '12 rue de la Rose, 13013 Marseille', siteWeb: 'https://sodexal.fr', email: 'contact@sodexal.fr',
+      horaires: 'Mo-Fr 08:00-18:00', ville: 'Marseille',
+    });
+  });
+
+  it('met null quand les infos sont absentes', () => {
+    const [pro] = analyserReponse({ elements: [{ type: 'node', id: 8, lat: 43.3, lon: 5.4, tags: { craft: 'plumber', name: 'X' } }] }, depuis);
+    expect(pro).toMatchObject({ adresse: null, siteWeb: null, email: null, horaires: null, ville: null });
+  });
+
   it('reconnaît plusieurs métiers (craft_1)', () => {
     const [pro] = analyserReponse(
       { elements: [{ type: 'node', id: 3, lat: 43.3, lon: 5.4, tags: { craft: 'plumber', craft_1: 'electrician', name: 'Multi' } }] },
