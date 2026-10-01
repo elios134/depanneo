@@ -1,0 +1,43 @@
+{
+  "id": "pression-faible",
+  "titre": "Peu de pression ou de débit",
+  "categorie": "plomberie",
+  "icone": "gauge",
+  "motsCles": ["pression", "débit", "faible", "filet", "robinet", "douche"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Le problème touche-t-il un seul robinet, ou toute la maison ?",
+      "reponses": [
+        { "texte": "Un seul robinet ou la douche", "suite": "resultat_mousseur" },
+        { "texte": "Toute la maison", "suite": "q2" }
+      ]
+    },
+    "q2": {
+      "question": "Tes voisins ont-ils le même problème ?",
+      "reponses": [
+        { "texte": "Oui", "suite": "resultat_reseau" },
+        { "texte": "Non, juste chez moi", "suite": "resultat_arret" },
+        { "texte": "Je ne sais pas", "suite": "resultat_arret", "inconnu": true }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_mousseur": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le mousseur (petit filtre au bout du robinet) ou le pommeau de douche est entartré.",
+      "tutoId": "detartrer-mousseur"
+    },
+    "resultat_reseau": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "C'est sûrement un souci sur le réseau d'eau (travaux, fuite dans la rue). Appelle le service des eaux (numéro sur ta facture)."
+    },
+    "resultat_arret": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Vérifie que le robinet général est ouvert à fond. Si c'est le cas, il peut s'agir d'un réducteur de pression ou d'une fuite cachée : appelle un plombier."
+    }
+  }
+}

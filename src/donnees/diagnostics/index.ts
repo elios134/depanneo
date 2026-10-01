@@ -6,7 +6,12 @@ import pasEauChaude from './pas-eau-chaude.json';
 import wcLentARemplir from './wc-lent-a-remplir.json';
 import chasseCoule from './chasse-coule.json';
 import chasseNeMarchePlus from './chasse-ne-marche-plus.json';
+import robinetDur from './robinet-dur.json';
+import robinetGoutte from './robinet-goutte.json';
+import pressionFaible from './pression-faible.json';
 import fuitePiedWc from './fuite-pied-wc.json';
+import flexibleDoucheFuit from './flexible-douche-fuit.json';
+import bruitTuyaux from './bruit-tuyaux.json';
 import disjoncteurSaute from './disjoncteur-saute.json';
 import plusDeCourant from './plus-de-courant.json';
 
@@ -19,7 +24,12 @@ export const diagnostics: Diagnostic[] = [
   wcLentARemplir as Diagnostic,
   chasseCoule as Diagnostic,
   chasseNeMarchePlus as Diagnostic,
+  robinetDur as Diagnostic,
+  robinetGoutte as Diagnostic,
+  pressionFaible as Diagnostic,
   fuitePiedWc as Diagnostic,
+  flexibleDoucheFuit as Diagnostic,
+  bruitTuyaux as Diagnostic,
   disjoncteurSaute as Diagnostic,
   plusDeCourant as Diagnostic,
 ];

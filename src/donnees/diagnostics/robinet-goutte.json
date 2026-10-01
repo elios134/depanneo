@@ -1,0 +1,44 @@
+{
+  "id": "robinet-goutte",
+  "titre": "Robinet qui goutte",
+  "categorie": "plomberie",
+  "icone": "droplet",
+  "motsCles": ["robinet", "goutte", "fuit", "joint"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "D'où ça goutte ?",
+      "reponses": [
+        { "texte": "Du bec, même quand le robinet est fermé", "suite": "q2" },
+        { "texte": "Du pied du robinet ou sous la manette", "suite": "resultat_pied" }
+      ]
+    },
+    "q2": {
+      "question": "C'est quel type de robinet ?",
+      "reponses": [
+        { "texte": "Deux poignées (eau chaude / eau froide)", "suite": "resultat_joint" },
+        { "texte": "Un mitigeur (une seule manette)", "suite": "resultat_cartouche" },
+        { "texte": "Je ne sais pas", "suite": "resultat_cartouche", "inconnu": true }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_joint": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le joint (clapet) à l'intérieur de la tête du robinet est usé.",
+      "tutoId": "changer-joint"
+    },
+    "resultat_cartouche": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "La cartouche du mitigeur est usée. Pas d'urgence : un plombier la change rapidement."
+    },
+    "resultat_pied": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Un joint interne ou le corps du robinet fuit. Mets un chiffon, coupe l'eau sous l'évier si ça coule beaucoup, et appelle un plombier.",
+      "gesteUrgenceId": "couper-eau"
+    }
+  }
+}

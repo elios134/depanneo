@@ -1,0 +1,38 @@
+{
+  "id": "flexible-douche-fuit",
+  "titre": "Flexible ou pommeau de douche qui fuit",
+  "categorie": "plomberie",
+  "icone": "bath",
+  "motsCles": ["douche", "flexible", "pommeau", "fuit", "joint"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "D'où vient la fuite ?",
+      "reponses": [
+        { "texte": "Au raccord du flexible (en haut ou en bas)", "suite": "resultat_joint" },
+        { "texte": "Le flexible lui-même est percé ou gonflé", "suite": "resultat_flexible" },
+        { "texte": "Du pommeau, par les côtés", "suite": "resultat_pommeau" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_joint": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le petit joint du raccord est usé. Dévisse à la main, change le joint, revisse.",
+      "tutoId": "changer-flexible-douche"
+    },
+    "resultat_flexible": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Change le flexible : il se visse à la main, en taille standard.",
+      "tutoId": "changer-flexible-douche"
+    },
+    "resultat_pommeau": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Dévisse le pommeau, change son joint et détartre-le.",
+      "tutoId": "detartrer-mousseur"
+    }
+  }
+}
