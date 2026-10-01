@@ -98,4 +98,11 @@ describe('gestes d\'urgence et tutos', () => {
   it('liste les numéros utiles gaz et 112', () => {
     expect(numerosUtiles.map((n) => n.numero)).toEqual(['0800 47 33 33', '112']);
   });
+
+  it('chaque tuto est proposé par au moins un diagnostic', () => {
+    const utilises = new Set(
+      diagnostics.flatMap((d) => Object.values(d.resultats).map((r) => r.tutoId).filter(Boolean)),
+    );
+    expect(tutos.map((t) => t.id).filter((id) => !utilises.has(id))).toEqual([]);
+  });
 });

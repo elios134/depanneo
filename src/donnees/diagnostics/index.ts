@@ -17,6 +17,10 @@ import flexibleDoucheFuit from './flexible-douche-fuit.json';
 import bruitTuyaux from './bruit-tuyaux.json';
 import disjoncteurSaute from './disjoncteur-saute.json';
 import plusDeCourant from './plus-de-courant.json';
+import courantUnePiece from './courant-une-piece.json';
+import priseHs from './prise-hs.json';
+import lumiereHs from './lumiere-hs.json';
+import ampouleClignote from './ampoule-clignote.json';
 
 // Ordre d'affichage = numéro de la panne dans docs/contenu/pannes-v2.md.
 export const diagnostics: Diagnostic[] = [
@@ -38,4 +42,8 @@ export const diagnostics: Diagnostic[] = [
   bruitTuyaux as Diagnostic,
   disjoncteurSaute as Diagnostic,
   plusDeCourant as Diagnostic,
+  courantUnePiece as Diagnostic,
+  priseHs as Diagnostic,
+  lumiereHs as Diagnostic,
+  ampouleClignote as Diagnostic,
 ];

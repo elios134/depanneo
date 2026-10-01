@@ -18,12 +18,13 @@ function graviteMax(diag: Diagnostic, id: string, vus: Set<string> = new Set()):
 // Exception assumée : « Je ne sais pas, il y a de l'eau par terre » exclut une fuite au plafond → orange.
 const EXCEPTIONS_PRUDENCE = ['fuite-eau/q1'];
 
-// Liste complétée lot par lot au chantier C (22 pannes à la fin).
+// Les 22 pannes du chantier C (16 plomberie, 6 électricité).
 const IDS_ATTENDUS = [
   'disjoncteur-saute', 'evier-bouche', 'fuite-eau', 'pas-eau-chaude', 'plus-de-courant', 'wc-bouche',
   'wc-lent-a-remplir', 'chasse-coule', 'chasse-ne-marche-plus', 'fuite-pied-wc',
   'robinet-dur', 'robinet-goutte', 'pression-faible', 'flexible-douche-fuit', 'bruit-tuyaux',
   'douche-ecoule-mal', 'odeur-egout', 'groupe-securite-goutte',
+  'courant-une-piece', 'prise-hs', 'lumiere-hs', 'ampoule-clignote',
 ];
 
 const tousLesResultats = () =>
@@ -111,5 +112,17 @@ describe('données de diagnostics', () => {
     expect(gaz.numeroUtile).toBe('0800 47 33 33');
     expect(gaz.renvoi).toEqual({ type: 'urgence', id: 'couper-gaz' });
     expect(gaz.tutoId).toBeUndefined();
+  });
+
+  it('compte 16 pannes de plomberie et 6 d\'électricité', () => {
+    expect(diagnostics.filter((d) => d.categorie === 'plomberie')).toHaveLength(16);
+    expect(diagnostics.filter((d) => d.categorie === 'electricite')).toHaveLength(6);
+  });
+
+  it('prise et lumière renvoient vers « Plus de courant dans une seule pièce »', () => {
+    for (const id of ['prise-hs', 'lumiere-hs']) {
+      const diag = diagnostics.find((d) => d.id === id)!;
+      expect(diag.resultats.resultat_piece.renvoi).toEqual({ type: 'diagnostic', id: 'courant-une-piece' });
+    }
   });
 });
