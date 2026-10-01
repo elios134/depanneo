@@ -29,7 +29,7 @@
 - **Gaz :** le résultat gaz (panne 12) porte `renvoi: { type: 'urgence', id: 'couper-gaz' }` + `numeroUtile: "0800 47 33 33"`, sans `gesteUrgenceId` (sinon deux cartes « Odeur de gaz ? »). Le bouton d'appel du numéro s'affiche sous la carte de renvoi (règle CLAUDE.md, petit ajout par rapport à la maquette 8). Sur un verdict rouge avec renvoi vers Urgences, **les pros ne sont pas proposés** (un plombier n'est pas le bon interlocuteur pour le gaz).
 - **Schémas :** dessins `react-native-svg` dont les attributs (`y`, `cy`, `opacity`) sont recalculés ~30 fois par seconde à partir d'un temps `t ∈ [0, 1[` (hook `useTempsBoucle`, `requestAnimationFrame`). Choisi plutôt que `Animated` car animer des attributs SVG avec `Animated` n'est pas fiable sur le web ; ici rien ne dépend de la plateforme. Si « réduire les animations » est activé (`AccessibilityInfo.isReduceMotionEnabled`), le schéma est figé sur son état final (siphon plein ; levier en haut + coche).
 - **Titres des résultats** (champ obligatoire mais non affiché, le badge de verdict le remplace) : vert « Tu peux réparer ça toi-même », orange « Sécurise en attendant un pro », rouge « Appelle un pro tout de suite ».
-- **Conversion fidèle au brouillon**, avec ces arbitrages : panne 12 « Oui, ou je ne suis pas sûr » séparée en « Oui » + « Je ne suis pas sûr » (pointillé), les deux vers le gaz ; panne 17 « Non / je ne sais pas » séparée en « Non » + « Je ne sais pas » (les deux vers Q3) ; panne 22 « Je ne sais pas / pas sûr » devient « Non, ou je ne suis pas sûr » (réponse normale, mène au tuto ampoule) ; conseils « R-piece » (pannes 20 et 21) repris de la maquette 8 ; conseils ampoule (pannes 21, 22) précisent « disjoncteur de la pièce coupé » (décision 4). Toute réponse dont le texte commence par « Je ne sais pas » porte `"inconnu": true` (testé), ainsi que « Je ne le trouve pas » et « Je ne suis pas sûr ».
+- **Conversion fidèle au brouillon**, avec ces arbitrages : panne 12 « Oui, ou je ne suis pas sûr » séparée en « Oui » + « Je ne suis pas sûr » (pointillé), les deux vers le gaz ; panne 17 « Non / je ne sais pas » séparée en « Non » + « Je ne sais pas » (les deux vers Q3) ; panne 22 « Je ne sais pas / pas sûr » devient « Non, ou je ne suis pas sûr » (réponse normale, mène au tuto ampoule) ; conseils « R-piece » (pannes 20 et 21) repris de la maquette 8 ; conseils ampoule (pannes 21, 22) précisent « disjoncteur de la pièce coupé » (décision 4). Toute réponse dont le texte commence par « Je ne sais pas » porte `"inconnu": true` (testé), ainsi que « Je ne le trouve pas » et « Je ne suis pas sûr ». Règle de prudence appliquée (décision de coordination du 01/10) : une réponse `inconnu` mène au verdict le plus grave atteignable depuis sa question — d'où pannes 2 (Q2) et 3 (Q2) → canalisation (orange), panne 5 (Q1 « Je ne sais pas où il est ») → plombier (orange, conseil complété). Test générique avec une seule exception assumée : panne 1 Q1 (« il y a de l'eau par terre » exclut le plafond → orange). Panne 18 : « fais le diagnostic Disjoncteur qui saute » devient un renvoi vers `disjoncteur-saute`.
 - **Écran « Quelle panne ? » :** aucun changement. `FondEcran` défile déjà et les onglets Plomberie / Électricité filtrent ; la maquette 2 prévoit une liste qui défile (16 / 6). Un test vérifie les comptes.
 
 ---
@@ -203,9 +203,25 @@ import { validerDiagnostic, validerRenvois } from '@/domaine/validateDiagnostic'
 Remplacer **tout** `src/donnees/diagnostics.data.test.ts` par :
 
 ```ts
+import type { Diagnostic } from '@/domaine/types';
 import { validerDiagnostic, validerRenvois } from '@/domaine/validateDiagnostic';
 import { diagnostics } from '@/donnees/diagnostics';
 import { gestesUrgence } from '@/donnees/gestesUrgence';
+
+const GRAVITE = { vert: 0, orange: 1, rouge: 2 } as const;
+
+/** Verdict le plus grave qu'on peut atteindre depuis une étape (ou un résultat). */
+function graviteMax(diag: Diagnostic, id: string, vus: Set<string> = new Set()): number {
+  const resultat = diag.resultats[id];
+  if (resultat) return GRAVITE[resultat.verdict];
+  const etape = diag.etapes[id];
+  if (!etape || vus.has(id)) return 0;
+  vus.add(id);
+  return Math.max(...etape.reponses.map((r) => graviteMax(diag, r.suite, vus)));
+}
+
+// Exception assumée : « Je ne sais pas, il y a de l'eau par terre » exclut une fuite au plafond → orange.
+const EXCEPTIONS_PRUDENCE = ['fuite-eau/q1'];
 
 // Liste complétée lot par lot au chantier C (22 pannes à la fin).
 const IDS_ATTENDUS = [
@@ -264,6 +280,18 @@ describe('données de diagnostics', () => {
           if (reponse.texte.startsWith('Je ne sais pas')) {
             expect(`${d.id}/${etapeId} ${reponse.inconnu}`).toBe(`${d.id}/${etapeId} true`);
           }
+        }
+      }
+    }
+  });
+
+  it('« Je ne sais pas » mène au verdict le plus prudent atteignable depuis la question', () => {
+    for (const d of diagnostics) {
+      for (const [etapeId, etape] of Object.entries(d.etapes)) {
+        if (EXCEPTIONS_PRUDENCE.includes(`${d.id}/${etapeId}`)) continue;
+        const plusPrudent = graviteMax(d, etapeId);
+        for (const reponse of etape.reponses.filter((r) => r.inconnu)) {
+          expect(`${d.id}/${etapeId} → ${graviteMax(d, reponse.suite)}`).toBe(`${d.id}/${etapeId} → ${plusPrudent}`);
         }
       }
     }
@@ -1684,7 +1712,7 @@ Expected: FAIL — `etapeInitiale` vaut `q1`.
       "reponses": [
         { "texte": "Non, seulement les WC", "suite": "resultat_ventouse" },
         { "texte": "Oui", "suite": "resultat_canalisation" },
-        { "texte": "Je ne sais pas", "suite": "resultat_ventouse", "inconnu": true }
+        { "texte": "Je ne sais pas", "suite": "resultat_canalisation", "inconnu": true }
       ]
     }
   },
@@ -1733,7 +1761,7 @@ Expected: FAIL — `etapeInitiale` vaut `q1`.
       "reponses": [
         { "texte": "Non, seulement celui-ci", "suite": "resultat_siphon" },
         { "texte": "Oui", "suite": "resultat_canalisation" },
-        { "texte": "Je ne sais pas", "suite": "resultat_siphon", "inconnu": true }
+        { "texte": "Je ne sais pas", "suite": "resultat_canalisation", "inconnu": true }
       ]
     }
   },
@@ -1926,8 +1954,9 @@ Expected: FAIL — `etapeInitiale` vaut `q1`.
     "resultat_reenclencher": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Remets-le en position haute. S'il re-saute, fais le diagnostic « Disjoncteur qui saute ».",
-      "tutoId": "reparer-disjoncteur"
+      "conseil": "Remets-le en position haute. S'il re-saute, continue avec le diagnostic « Disjoncteur qui saute ».",
+      "tutoId": "reparer-disjoncteur",
+      "renvoi": { "type": "diagnostic", "id": "disjoncteur-saute" }
     },
     "resultat_pro": {
       "verdict": "rouge",
@@ -2004,7 +2033,7 @@ Expected: FAIL — les 4 nouveaux ids manquent.
       "reponses": [
         { "texte": "Oui, à fond", "suite": "q2" },
         { "texte": "Non, ou je ne suis pas sûr", "suite": "resultat_ouvrir" },
-        { "texte": "Je ne sais pas où il est", "suite": "resultat_ouvrir", "inconnu": true }
+        { "texte": "Je ne sais pas où il est", "suite": "resultat_pro", "inconnu": true }
       ]
     },
     "q2": {
@@ -2030,7 +2059,7 @@ Expected: FAIL — les 4 nouveaux ids manquent.
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Pas de danger. Le robinet flotteur est peut-être cassé : un plombier le remplacera rapidement."
+      "conseil": "Pas de danger. Le robinet flotteur est peut-être cassé : un plombier le remplacera rapidement. Si tu ne trouves pas le petit robinet d'arrivée, il le repérera aussi."
     }
   }
 }
@@ -3130,7 +3159,7 @@ par :
 
 ```markdown
 **Réalisé au chantier C (01/10)** : les 22 pannes et 16 tutos sont dans `src/donnees/` (le brouillon reste la trace de relecture ; André relit dans l'appli et les corrections se font dans les données). Ajouts validés par la maquette `8-renvois-schemas.html` :
-- **Renvois** : un résultat peut afficher une carte « Continuer avec ce diagnostic » (bleue, `stethoscope`) ou « Odeur de gaz ? — Consignes et numéro d'urgence » (rouge, `flame`). Utilisés par les pannes 4 (chaudière → gaz), 7 (réservoir vide → WC lent à se remplir), 12 (gaz), 20 et 21 (toute la pièce → Plus de courant dans une seule pièce). Sur un verdict rouge avec renvoi vers Urgences, aucun pro n'est proposé.
+- **Renvois** : un résultat peut afficher une carte « Continuer avec ce diagnostic » (bleue, `stethoscope`) ou « Odeur de gaz ? — Consignes et numéro d'urgence » (rouge, `flame`). Utilisés par les pannes 4 (chaudière → gaz), 7 (réservoir vide → WC lent à se remplir), 12 (gaz), 18 (disjoncteur général qui re-saute → Disjoncteur qui saute), 20 et 21 (toute la pièce → Plus de courant dans une seule pièce). Sur un verdict rouge avec renvoi vers Urgences, aucun pro n'est proposé.
 - **Schémas animés** : petits dessins en boucle sous certaines étapes de tuto (siphon qui se remplit, disjoncteur qui remonte), dessinés avec `react-native-svg` et les couleurs du thème, figés si le téléphone demande de réduire les animations. D'autres schémas pourront être ajoutés sur le même modèle (`src/ui/schemas/`).
 ```
 
@@ -3197,5 +3226,5 @@ git commit -m "Met à jour la spec, CLAUDE.md et le brouillon : 22 pannes, renvo
 ## Hors périmètre (à signaler à André, pas à coder)
 
 - **En-tête du résultat** : la maquette 8 montre le titre de la panne en haut du résultat, l'appli affiche « Résultat » (maquette 2). Inchangé ici.
-- **Arbres à relire** (conversion fidèle au brouillon, à trancher par André dans l'appli) : dans les pannes 2 (Q2), 3 (Q2) et 5 (Q1), « Je ne sais pas » mène à un verdict vert alors qu'une réponse sœur mène à de l'orange ; panne 11 : pas de réponse pour « plus du tout, mais seulement la douche » ; pannes 8, 15, 16 et 20 (Q1) n'ont pas de « Je ne sais pas » ; panne 18 « S'il re-saute, fais le diagnostic Disjoncteur qui saute » pourrait devenir un renvoi.
+- **Mineur, laissé tel quel** (pas d'invention) : panne 11 sans réponse « plus du tout, mais seulement la douche » ; pannes 8, 15, 16 et 20 (Q1) sans « Je ne sais pas ».
 - **Nouveaux schémas** : seulement `siphon` et `disjoncteur` ; André en ajoutera d'autres plus tard (même modèle : nom dans `NOMS_SCHEMAS`, calculs dans `animation.ts`, dessin dans `src/ui/schemas/`).
