@@ -1,0 +1,43 @@
+{
+  "id": "wc-lent-a-remplir",
+  "titre": "WC lent à se remplir",
+  "categorie": "plomberie",
+  "icone": "hourglass",
+  "motsCles": ["wc", "chasse", "réservoir", "lent", "remplir", "flotteur"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Le petit robinet d'arrivée d'eau des WC (sur le tuyau, derrière ou à côté) est-il ouvert à fond ?",
+      "reponses": [
+        { "texte": "Oui, à fond", "suite": "q2" },
+        { "texte": "Non, ou je ne suis pas sûr", "suite": "resultat_ouvrir" },
+        { "texte": "Je ne sais pas où il est", "suite": "resultat_pro", "inconnu": true }
+      ]
+    },
+    "q2": {
+      "question": "Le problème est-il apparu petit à petit ?",
+      "reponses": [
+        { "texte": "Oui, c'est de plus en plus lent", "suite": "resultat_calcaire" },
+        { "texte": "Non, d'un coup", "suite": "resultat_pro" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_ouvrir": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le petit robinet d'arrivée se trouve sur le tuyau qui arrive au réservoir, derrière ou à côté des WC. Tourne-le dans le sens inverse des aiguilles d'une montre jusqu'en butée. Souvent, il a été fermé à moitié lors d'une réparation."
+    },
+    "resultat_calcaire": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le robinet flotteur (la pièce qui remplit le réservoir) est entartré.",
+      "tutoId": "detartrer-flotteur"
+    },
+    "resultat_pro": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Pas de danger. Le robinet flotteur est peut-être cassé : un plombier le remplacera rapidement. Si tu ne trouves pas le petit robinet d'arrivée, il le repérera aussi."
+    }
+  }
+}

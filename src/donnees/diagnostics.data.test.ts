@@ -21,6 +21,7 @@ const EXCEPTIONS_PRUDENCE = ['fuite-eau/q1'];
 // Liste complétée lot par lot au chantier C (22 pannes à la fin).
 const IDS_ATTENDUS = [
   'disjoncteur-saute', 'evier-bouche', 'fuite-eau', 'pas-eau-chaude', 'plus-de-courant', 'wc-bouche',
+  'wc-lent-a-remplir', 'chasse-coule', 'chasse-ne-marche-plus', 'fuite-pied-wc',
 ];
 
 const tousLesResultats = () =>

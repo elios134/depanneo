@@ -1,0 +1,37 @@
+{
+  "id": "chasse-coule",
+  "titre": "Chasse d'eau qui coule en continu",
+  "categorie": "plomberie",
+  "icone": "rotate-cw",
+  "motsCles": ["chasse", "coule", "fuit", "réservoir", "wc", "clapet"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Soulève le couvercle du réservoir. L'eau déborde-t-elle par le tube au milieu (le trop-plein) ?",
+      "reponses": [
+        { "texte": "Oui, elle coule par le tube", "suite": "resultat_flotteur" },
+        { "texte": "Non, elle coule au fond vers la cuvette", "suite": "resultat_clapet" },
+        { "texte": "Je ne sais pas", "suite": "resultat_couper", "inconnu": true }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_flotteur": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le robinet flotteur ne coupe plus l'eau : il faut régler le niveau (souvent une vis ou un clip).",
+      "tutoId": "regler-flotteur"
+    },
+    "resultat_clapet": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le joint du clapet, au fond du réservoir, est usé ou entartré.",
+      "tutoId": "changer-joint-clapet"
+    },
+    "resultat_couper": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Ferme le petit robinet d'arrivée des WC pour arrêter le gaspillage (une chasse qui coule peut consommer des centaines de litres par jour), puis appelle un plombier."
+    }
+  }
+}
