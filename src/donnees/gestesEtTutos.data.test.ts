@@ -1,4 +1,4 @@
-import { schemaEtape } from '@/domaine/etapes';
+import { estNomSchema, schemaEtape, texteEtape } from '@/domaine/etapes';
 import { estNomIcone } from '@/domaine/icones';
 import { CATEGORIES } from '@/domaine/types';
 import { gestesUrgence } from '@/donnees/gestesUrgence';
@@ -12,9 +12,37 @@ describe('gestes d\'urgence et tutos', () => {
     expect(ids).toEqual(['couper-courant', 'couper-eau', 'couper-gaz']);
   });
 
-  it('contient les 4 mini-tutos attendus', () => {
+  it('contient les 16 tutos attendus', () => {
     const ids = tutos.map((t) => t.id).sort();
-    expect(ids).toEqual(['changer-joint', 'deboucher-evier', 'deboucher-wc', 'reparer-disjoncteur']);
+    expect(ids).toEqual([
+      'changer-ampoule', 'changer-flexible-douche', 'changer-joint', 'changer-joint-clapet',
+      'deboucher-evier', 'deboucher-wc', 'detartrer-flotteur', 'detartrer-mousseur',
+      'detartrer-tete-robinet', 'entretenir-groupe-securite', 'nettoyer-bonde', 'nettoyer-siphon',
+      'raccrocher-tringle', 'regler-flotteur', 'remplir-siphon', 'reparer-disjoncteur',
+    ]);
+  });
+
+  it('chaque étape de tuto a un texte et un schéma connu s\'il y en a un', () => {
+    for (const t of tutos) {
+      expect(t.etapes.length).toBeGreaterThan(0);
+      for (const e of t.etapes) {
+        expect(texteEtape(e).length).toBeGreaterThan(0);
+        const schema = schemaEtape(e);
+        if (schema !== undefined) expect(estNomSchema(schema)).toBe(true);
+      }
+    }
+  });
+
+  it('« Remplir un siphon » montre le schéma du siphon', () => {
+    const tuto = tutos.find((t) => t.id === 'remplir-siphon')!;
+    expect(tuto.etapes.map(schemaEtape)).toContain('siphon');
+  });
+
+  it('« Changer une ampoule » commence par la sécurité (pro, disjoncteur, escabeau)', () => {
+    const textes = tutos.find((t) => t.id === 'changer-ampoule')!.etapes.map(texteEtape);
+    expect(textes[0]).toContain('électricien');
+    expect(textes[1]).toContain('disjoncteur');
+    expect(textes.join(' ')).toContain('escabeau stable');
   });
 
   it('« Réarmer un disjoncteur » montre le schéma du disjoncteur', () => {
