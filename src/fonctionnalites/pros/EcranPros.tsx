@@ -88,7 +88,7 @@ export function EcranPros() {
             </Text>
           ) : null}
           {liste.map((pro) => (
-            <CartePro key={pro.id} pro={pro} onOuvrir={setProOuvert} />
+            <CartePro key={pro.id} pro={pro} metier={filtre === 'tous' ? undefined : filtre} onOuvrir={setProOuvert} />
           ))}
           {date !== null && liste.length > 0 ? (
             <Text style={[styles.credit, discret]}>Données © OpenStreetMap · mis à jour {ageTexte(date, Date.now())}</Text>

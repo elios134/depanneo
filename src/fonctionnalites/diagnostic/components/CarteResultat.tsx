@@ -63,7 +63,7 @@ export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
           {resultat.verdict === 'vert' ? 'Si tu préfères un pro' : `${LIBELLES_METIER[metier]}s près de toi`}
         </Text>
         {prosMetier.map((pro) => (
-          <CartePro key={pro.id} pro={pro} onOuvrir={setProOuvert} />
+          <CartePro key={pro.id} pro={pro} metier={metier} onOuvrir={setProOuvert} />
         ))}
       </View>
     ) : null;
