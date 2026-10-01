@@ -1,12 +1,14 @@
 // src/fonctionnalites/pros/hooks/usePros.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { AppState } from 'react-native';
 import { distanceKm } from '@/domaine/distance';
 import type { Position } from '@/domaine/lieux';
 import type { Pro } from '@/domaine/pro';
 import { useReglages } from '@/fonctionnalites/reglages/ReglagesProvider';
 import { chercherPros } from '../api/chercherPros';
 import { CLE_CACHE_PROS, doitRafraichir, ecrireCache, lireCache, type CachePros } from '../lib/cachePros';
+import { recalerPros } from '../lib/recalerPros';
 
 export type EtatPros = 'attente' | 'chargement' | 'ok' | 'hors-ligne';
 
@@ -28,52 +30,71 @@ async function enregistrer(cache: CachePros): Promise<void> {
   await AsyncStorage.setItem(CLE_CACHE_PROS, ecrireCache(cache)).catch(() => undefined);
 }
 
-export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPros; date: number | null } {
+// Résultat valable pour un lieu et un rayon précis : on ne l'expose jamais pour un autre lieu.
+interface Resultat {
+  cle: string;
+  pros: Pro[];
+  date: number | null;
+  etat: 'ok' | 'hors-ligne';
+}
+
+export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPros; date: number | null; reessayer: () => void } {
   const { reglages } = useReglages();
   const rayonKm = reglages.rayonKm;
-  const [etat, setEtat] = useState<EtatPros>('attente');
-  const [pros, setPros] = useState<Pro[]>(cacheMemoire?.pros ?? []);
-  const [date, setDate] = useState<number | null>(cacheMemoire?.date ?? null);
+  const [resultat, setResultat] = useState<Resultat | null>(null);
+  const [essai, setEssai] = useState(0);
   const lat = position?.lat;
   const lon = position?.lon;
+  const cleActuelle = lat === undefined || lon === undefined ? null : `${lat},${lon},${rayonKm}`;
+  const valide = resultat !== null && resultat.cle === cleActuelle ? resultat : null;
+  const etat: EtatPros = cleActuelle === null ? 'attente' : (valide?.etat ?? 'chargement');
+  const etatActuel = useRef(etat);
+  etatActuel.current = etat;
+
+  const reessayer = useCallback(() => setEssai((n) => n + 1), []);
+
+  // Au retour dans l'appli, on relance la recherche si on était hors connexion.
+  useEffect(() => {
+    const abonnement = AppState.addEventListener('change', (statut) => {
+      if (statut === 'active' && etatActuel.current === 'hors-ligne') setEssai((n) => n + 1);
+    });
+    return () => abonnement.remove();
+  }, []);
 
   useEffect(() => {
-    if (lat === undefined || lon === undefined) {
-      setEtat('attente');
-      return;
-    }
+    if (lat === undefined || lon === undefined) return;
     const ici = { lat, lon };
+    const cle = `${lat},${lon},${rayonKm}`;
     let annule = false;
     (async () => {
       const cache = await lireCacheStocke();
       if (annule) return;
       if (cache && !doitRafraichir(cache, ici, rayonKm, Date.now())) {
-        setPros(cache.pros);
-        setDate(cache.date);
-        setEtat('ok');
+        setResultat({ cle, pros: recalerPros(cache.pros, ici, rayonKm), date: cache.date, etat: 'ok' });
         return;
       }
-      setEtat('chargement');
+      setResultat(null);
       try {
         const trouves = await chercherPros(ici, rayonKm);
         const nouveau: CachePros = { pros: trouves, centre: ici, rayonKm, date: Date.now() };
         await enregistrer(nouveau);
         if (annule) return;
-        setPros(trouves);
-        setDate(nouveau.date);
-        setEtat('ok');
+        setResultat({ cle, pros: trouves, date: nouveau.date, etat: 'ok' });
       } catch {
         if (annule) return;
         const proche = cache !== null && distanceKm(cache.centre, ici) <= rayonKm;
-        setPros(proche ? cache.pros : []);
-        setDate(proche ? cache.date : null);
-        setEtat('hors-ligne');
+        setResultat({
+          cle,
+          pros: proche ? recalerPros(cache.pros, ici, rayonKm) : [],
+          date: proche ? cache.date : null,
+          etat: 'hors-ligne',
+        });
       }
     })();
     return () => {
       annule = true;
     };
-  }, [lat, lon, rayonKm]);
+  }, [lat, lon, rayonKm, essai]);
 
-  return { pros, etat, date };
+  return { pros: valide?.pros ?? [], etat, date: valide?.date ?? null, reessayer };
 }
