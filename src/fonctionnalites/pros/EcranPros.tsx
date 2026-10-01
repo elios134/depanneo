@@ -27,13 +27,19 @@ export function EcranPros() {
   const liste = filtrerPros(pros, filtre);
   const horsLigne = etat === 'hors-ligne';
   // Le fond de carte n'existe pas dans l'état « aucune » : son échec précédent est ignoré.
+  const indisponible = etat === 'indisponible';
+  const echec = horsLigne || indisponible;
   const sansReseau = horsLigne || (carteEchec && statut !== 'aucune');
   const discret = { color: couleurs.texteDiscret };
 
   return (
     <FondEcran>
       <EnTete titre="Pros près de toi" />
-      {sansReseau ? <View style={styles.centre}><BandeauHorsLigne /></View> : null}
+      {sansReseau ? (
+        <View style={styles.centre}><BandeauHorsLigne /></View>
+      ) : indisponible ? (
+        <View style={styles.centre}><BandeauHorsLigne texte="Service des pros indisponible" /></View>
+      ) : null}
       {statut === 'aucune' ? (
         <>
           <Text style={[styles.message, discret]}>Indique ta ville pour trouver les pros autour de toi.</Text>
@@ -67,13 +73,17 @@ export function EcranPros() {
               Aucun pro trouvé dans un rayon de {reglages.rayonKm} km. Les données d'OpenStreetMap peuvent être incomplètes.
             </Text>
           ) : null}
-          {(etat === 'ok' || horsLigne) && pros.length > 0 && liste.length === 0 ? (
+          {(etat === 'ok' || echec) && pros.length > 0 && liste.length === 0 ? (
             <Text style={[styles.message, discret]}>
               Aucun {filtre === 'plombier' ? 'plombier' : 'électricien'} dans la liste. Essaie « Tous ».
             </Text>
           ) : null}
-          {horsLigne && pros.length === 0 ? (
-            <Text style={[styles.message, discret]}>Pas de liste enregistrée. Reconnecte-toi pour trouver les pros autour de toi.</Text>
+          {echec && pros.length === 0 ? (
+            <Text style={[styles.message, discret]}>
+              {indisponible
+                ? 'Pas de liste enregistrée. Le service des pros ne répond pas. Réessaie dans quelques minutes.'
+                : 'Pas de liste enregistrée. Reconnecte-toi pour trouver les pros autour de toi.'}
+            </Text>
           ) : null}
           {liste.map((pro) => (
             <CartePro key={pro.id} pro={pro} />
@@ -81,7 +91,7 @@ export function EcranPros() {
           {date !== null && liste.length > 0 ? (
             <Text style={[styles.credit, discret]}>Données © OpenStreetMap · mis à jour {ageTexte(date, Date.now())}</Text>
           ) : null}
-          {sansReseau ? (
+          {sansReseau || indisponible ? (
             <Pressable
               accessibilityRole="button"
               hitSlop={8}

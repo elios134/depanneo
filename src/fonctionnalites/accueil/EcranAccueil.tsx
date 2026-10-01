@@ -25,13 +25,14 @@ export function EcranAccueil() {
   const horsLigne = etat === 'hors-ligne';
   // Fond de carte non chargé (mode avion avec liste en cache) : même bandeau que hors connexion.
   const sansReseau = horsLigne || carteEchec;
+  const indisponible = etat === 'indisponible';
 
   return (
     <View style={[styles.racine, { backgroundColor: couleurs.carteSol }]}>
       <CartePros centre={position} pros={pros} horsLigne={horsLigne} recentrage={recentrage} onEchecCarte={setCarteEchec} rechargement={rechargement} />
       <View style={[styles.haut, { top: top + 12 }]}>
         <Logo />
-        {sansReseau ? <BandeauHorsLigne /> : null}
+        {sansReseau ? <BandeauHorsLigne /> : indisponible ? <BandeauHorsLigne texte="Service des pros indisponible" /> : null}
         {statut === 'gps' && !sansReseau ? (
           <BoutonRecentrer onPress={() => setRecentrage((n) => n + 1)} />
         ) : (
@@ -43,7 +44,7 @@ export function EcranAccueil() {
       ) : null}
       <View style={[styles.panneau, { bottom: margeBarre - 8 }]}>
         <PanneauAccueil>
-          <SectionPros statut={statut} pros={pros} etat={etat} date={date} onUtiliserPosition={demanderAutorisation} peutReessayer={sansReseau}
+          <SectionPros statut={statut} pros={pros} etat={etat} date={date} onUtiliserPosition={demanderAutorisation} peutReessayer={sansReseau || indisponible}
             onReessayer={() => {
               reessayer();
               relancerCarte();

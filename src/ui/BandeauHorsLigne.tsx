@@ -5,12 +5,12 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { Icone } from './Icone';
 import { Verre } from './Verre';
 
-export function BandeauHorsLigne() {
+export function BandeauHorsLigne({ texte = 'Hors connexion' }: { texte?: string }) {
   const { couleurs } = useTheme();
   return (
     <Verre style={[styles.bandeau, { borderColor: teinte(couleurs.electricite, 0.45) }]}>
       <Icone nom="zap-off" couleur={couleurs.electricite} taille={14} />
-      <Text style={[styles.texte, { color: couleurs.electricite }]}>Hors connexion</Text>
+      <Text style={[styles.texte, { color: couleurs.electricite }]}>{texte}</Text>
     </Verre>
   );
 }

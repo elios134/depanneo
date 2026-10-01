@@ -133,8 +133,10 @@ Validation (`validerDiagnostic` + tests) étendue : `categorie` valide, nom d'ic
   - Sur le web (prévisualisation), la carte est remplacée par le fond factice du chantier A.
 - **Position** : `expo-location`, permission « pendant l'utilisation » uniquement. La position reste sur le téléphone (jamais envoyée ailleurs que dans la requête de recherche des pros).
 - **Pros** : API **Overpass** (OpenStreetMap), recherche dans le rayon choisi des lieux tagués `craft=plumber` et `craft=electrician` ; nom, distance (calcul de Haversine), numéro (`phone` ou `contact:phone`). Bouton d'appel seulement si un numéro existe. Tri par distance.
+  - **Serveurs de secours** : la recherche essaie à la suite `overpass-api.de`, `maps.mail.ru` puis `overpass.private.coffee` (12 s max par serveur, 30 s au total) et s'arrête au premier succès.
   - Économie de requêtes : nouvelle recherche seulement si la position a bougé de plus de 1 km, si le rayon ou le filtre change, ou si le cache a plus de 24 h.
 - **Hors-ligne** : dernière liste de pros + position + date gardées en mémoire (AsyncStorage). Sans réseau : fond de carte neutre + bandeau « Hors connexion », liste en cache avec « mis à jour il y a X ». Le diagnostic, les gestes et les tutos marchent toujours hors-ligne (données embarquées).
+- **Service des pros indisponible** : si le réseau marche mais que tous les serveurs Overpass échouent (erreur HTTP, délai dépassé, réponse illisible), la vraie carte reste affichée avec le bandeau « Service des pros indisponible », la liste en cache s'il y en a une, et un bouton « Réessayer ». « Hors connexion » est réservé à l'absence de réseau (toutes les tentatives échouent par erreur réseau) et à l'échec du fond de carte.
 - **Localisation refusée ou désactivée** : carte centrée sur la France + champ « Ta ville ou ton code postal », recherche via le géocodage de la **Géoplateforme** (`https://data.geopf.fr/geocodage/search`, gratuit, 50 requêtes/s), la ville choisie devient la « ville par défaut ».
 
 ## 8. Contenu des 22 pannes (chantier C)

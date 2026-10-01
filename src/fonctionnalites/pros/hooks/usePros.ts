@@ -8,9 +8,13 @@ import type { Pro } from '@/domaine/pro';
 import { useReglages } from '@/fonctionnalites/reglages/ReglagesProvider';
 import { chercherPros } from '../api/chercherPros';
 import { CLE_CACHE_PROS, doitRafraichir, ecrireCache, lireCache, type CachePros } from '../lib/cachePros';
+import { raisonDe } from '../lib/echecPros';
 import { recalerPros } from '../lib/recalerPros';
 
-export type EtatPros = 'attente' | 'chargement' | 'ok' | 'hors-ligne';
+// hors-ligne : pas de réseau ; indisponible : le réseau marche mais les serveurs Overpass ne répondent pas.
+export type EtatPros = 'attente' | 'chargement' | 'ok' | 'hors-ligne' | 'indisponible';
+
+export const estEchec = (etat: EtatPros) => etat === 'hors-ligne' || etat === 'indisponible';
 
 // undefined = pas encore lu sur le téléphone ; partagé entre les écrans.
 let cacheMemoire: CachePros | null | undefined;
@@ -35,7 +39,7 @@ interface Resultat {
   cle: string;
   pros: Pro[];
   date: number | null;
-  etat: 'ok' | 'hors-ligne';
+  etat: 'ok' | 'hors-ligne' | 'indisponible';
   // Nouvelle recherche en cours : on garde la liste déjà affichée.
   actualisation: boolean;
 }
@@ -58,7 +62,7 @@ export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPro
   // Au retour dans l'appli, on relance la recherche si on était hors connexion.
   useEffect(() => {
     const abonnement = AppState.addEventListener('change', (statut) => {
-      if (statut === 'active' && etatActuel.current === 'hors-ligne') setEssai((n) => n + 1);
+      if (statut === 'active' && estEchec(etatActuel.current)) setEssai((n) => n + 1);
     });
     return () => abonnement.remove();
   }, []);
@@ -83,14 +87,14 @@ export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPro
         await enregistrer(nouveau);
         if (annule) return;
         setResultat({ cle, pros: trouves, date: nouveau.date, etat: 'ok', actualisation: false });
-      } catch {
+      } catch (erreur) {
         if (annule) return;
         const proche = cache !== null && distanceKm(cache.centre, ici) <= rayonKm;
         setResultat({
           cle,
           pros: proche ? recalerPros(cache.pros, ici, rayonKm) : [],
           date: proche ? cache.date : null,
-          etat: 'hors-ligne',
+          etat: raisonDe(erreur),
           actualisation: false,
         });
       }

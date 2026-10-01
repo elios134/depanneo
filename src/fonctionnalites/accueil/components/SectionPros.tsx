@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Pro } from '@/domaine/pro';
 import { RechercheVille } from '@/fonctionnalites/pros/components/RechercheVille';
 import type { StatutPosition } from '@/fonctionnalites/pros/hooks/usePosition';
-import type { EtatPros } from '@/fonctionnalites/pros/hooks/usePros';
+import { estEchec, type EtatPros } from '@/fonctionnalites/pros/hooks/usePros';
 import { ageTexte } from '@/fonctionnalites/pros/lib/cachePros';
 import { useReglages } from '@/fonctionnalites/reglages/ReglagesProvider';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -62,7 +62,7 @@ export function SectionPros({ statut, pros, etat, date, onUtiliserPosition, peut
   }
 
   if (pros.length === 0) {
-    const horsLigne = etat === 'hors-ligne';
+    const horsLigne = estEchec(etat);
     return (
       <View style={styles.bloc}>
         {titre('Pros près de toi', false)}
@@ -70,7 +70,9 @@ export function SectionPros({ statut, pros, etat, date, onUtiliserPosition, peut
           {horsLigne ? 'Pas de liste enregistrée' : `Aucun pro trouvé dans un rayon de ${reglages.rayonKm} km`}
         </Text>
         <Text style={[styles.message, { color: couleurs.texteDiscret }]}>
-          {horsLigne
+          {etat === 'indisponible'
+            ? 'Le service des pros ne répond pas. Réessaie dans quelques minutes.'
+            : horsLigne
             ? 'Reconnecte-toi pour trouver les pros autour de toi.'
             : "Les données viennent d'OpenStreetMap et peuvent être incomplètes."}
         </Text>
@@ -86,7 +88,7 @@ export function SectionPros({ statut, pros, etat, date, onUtiliserPosition, peut
       {pros.slice(0, 2).map((pro) => (
         <CartePro key={pro.id} pro={pro} />
       ))}
-      {etat === 'hors-ligne' && date !== null ? (
+      {estEchec(etat) && date !== null ? (
         <Text style={[styles.message, { color: couleurs.texteDiscret }]}>Liste enregistrée {ageTexte(date, Date.now())}</Text>
       ) : null}
       {peutReessayer ? <Lien texte="Réessayer" onPress={onReessayer} /> : null}
