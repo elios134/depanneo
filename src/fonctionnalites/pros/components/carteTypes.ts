@@ -11,4 +11,6 @@ export interface PropsCartePros {
   // Change pour remonter la carte et retenter le chargement du fond.
   rechargement?: number;
   onEchecCarte?: (echec: boolean) => void;
+  // Appui sur l'épingle d'un pro (carte native).
+  onOuvrirPro?: (pro: Pro) => void;
 }

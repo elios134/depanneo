@@ -1,6 +1,7 @@
 // src/ui/BoutonPrincipal.tsx
 import { Pressable, StyleSheet, Text } from 'react-native';
 import type { NomIcone } from '@/domaine/icones';
+import { teinte } from '@/theme/teinte';
 import { useTheme } from '@/theme/ThemeProvider';
 import { Icone } from './Icone';
 
@@ -8,21 +9,26 @@ interface Props {
   libelle: string;
   icone?: NomIcone;
   onPress: () => void;
-  variante?: 'accent' | 'danger' | 'discret';
+  variante?: 'accent' | 'danger' | 'discret' | 'teinte';
+  accessibilityLabel?: string;
 }
 
-export function BoutonPrincipal({ libelle, icone, onPress, variante = 'accent' }: Props) {
+export function BoutonPrincipal({ libelle, icone, onPress, variante = 'accent', accessibilityLabel }: Props) {
   const { couleurs } = useTheme();
-  const plein = variante !== 'discret';
+  const teinte_ = variante === 'teinte';
+  const plein = variante === 'accent' || variante === 'danger';
   const fond = variante === 'accent' ? couleurs.accent : variante === 'danger' ? couleurs.danger : couleurs.carte;
-  const texte = plein ? couleurs.surAccent : couleurs.texte;
+  const texte = plein ? couleurs.surAccent : teinte_ ? couleurs.accent : couleurs.texte;
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
       style={[
         styles.bouton,
-        { backgroundColor: fond, borderColor: plein ? fond : couleurs.bordure, shadowColor: fond },
+        teinte_
+          ? { backgroundColor: teinte(couleurs.accent, 0.14), borderColor: 'transparent' }
+          : { backgroundColor: fond, borderColor: plein ? fond : couleurs.bordure, shadowColor: fond },
         plein && styles.ombre,
       ]}
     >

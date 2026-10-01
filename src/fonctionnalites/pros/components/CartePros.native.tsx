@@ -1,6 +1,6 @@
 import { Camera, Map, ViewAnnotation, type CameraRef } from '@maplibre/maplibre-react-native';
 import { useEffect, useRef, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '@/theme/ThemeProvider';
 import type { PropsCartePros } from './carteTypes';
 import { FondCarte } from './FondCarte';
@@ -14,7 +14,7 @@ const FRANCE: [number, number] = [2.4, 46.6];
 const ZOOM_PROCHE = 13;
 const MAX_EPINGLES = 50;
 
-export function CartePros({ centre, pros, horsLigne, recentrage, interactive = true, onEchecCarte, rechargement = 0 }: PropsCartePros) {
+export function CartePros({ centre, pros, horsLigne, recentrage, interactive = true, onEchecCarte, rechargement = 0, onOuvrirPro }: PropsCartePros) {
   const { nom } = useTheme();
   const camera = useRef<CameraRef>(null);
   const [echec, setEchec] = useState(false);
@@ -80,7 +80,15 @@ export function CartePros({ centre, pros, horsLigne, recentrage, interactive = t
         ) : null}
         {pros.slice(0, MAX_EPINGLES).map((pro) => (
           <ViewAnnotation key={pro.id} id={pro.id} lngLat={[pro.lon, pro.lat]} anchor="bottom">
-            <EpinglePro metier={pro.metiers[0]} />
+            <Pressable
+              onPress={() => onOuvrirPro?.(pro)}
+              disabled={!onOuvrirPro}
+              accessibilityRole="button"
+              accessibilityLabel={`Voir la fiche de ${pro.nom}`}
+              hitSlop={8}
+            >
+              <EpinglePro metier={pro.metiers[0]} />
+            </Pressable>
           </ViewAnnotation>
         ))}
       </Map>
