@@ -5,8 +5,9 @@ import { recalerPros } from '../lib/recalerPros';
 import { analyserReponse, construireRequete, SERVEURS_OVERPASS } from '../lib/overpass';
 import { classerEchec, EchecPros } from '../lib/echecPros';
 
-const DELAI_PAR_SERVEUR_MS = 12000;
-const BUDGET_TOTAL_MS = 30000;
+// Les serveurs de secours mettent parfois plus de 15 s à répondre.
+const DELAI_PAR_SERVEUR_MS = 20000;
+const BUDGET_TOTAL_MS = 45000;
 let enCours: { cle: string; promesse: Promise<Pro[]> } | null = null;
 
 async function interrogerServeur(url: string, position: Position, rayonKm: number, delaiMs: number): Promise<Pro[]> {
