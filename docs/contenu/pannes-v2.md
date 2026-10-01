@@ -6,6 +6,7 @@
 > - Jamais d'intervention sur le tableau électrique ouvert, le gaz ou en hauteur : ces cas renvoient toujours vers un pro.
 > - La réponse « Je ne sais pas » mène toujours au verdict **le plus prudent** de la question.
 > - Pas de tuto sur un verdict 🔴.
+> - `— renvoi *…*` = bouton sur le résultat qui ouvre directement un autre diagnostic ou l'onglet Urgences.
 > - Tutoiement, mots simples, aucune connaissance technique supposée.
 >
 > **Légende :** 🟢 tu peux réparer · 🟠 sécurise en attendant un pro · 🔴 appelle un pro tout de suite. `→ Qn` = question suivante, `→ R` = résultat.
@@ -97,8 +98,10 @@ Mots-clés : évier, lavabo, bouché, écoulement, siphon
 ### 4. Pas d'eau chaude (chauffe-eau électrique)
 Mots-clés : eau chaude, chauffe-eau, ballon, cumulus, froide
 
-> ⚠️ Changement : la question « chauffe-eau ou chaudière ? » est retirée (la chaudière est hors périmètre). Si l'utilisateur a une chaudière, il ne trouvera pas ce cas : à confirmer.
-
+- **Q0 — Ton eau chaude vient-elle d'un chauffe-eau électrique (un ballon) ou d'une chaudière (souvent au gaz) ?**
+  - Un chauffe-eau électrique → Q1
+  - Une chaudière → R-chauffagiste
+  - Je ne sais pas → R-chauffagiste
 - **Q1 — Y a-t-il de l'eau chaude à un autre robinet de la maison ?**
   - Oui, seulement ce robinet est froid → R-mitigeur
   - Non, nulle part → Q2
@@ -113,9 +116,8 @@ Mots-clés : eau chaude, chauffe-eau, ballon, cumulus, froide
   - R-mitigeur 🟢 : Le problème vient du robinet (cartouche du mitigeur entartrée), pas du chauffe-eau. — tuto *Détartrer un mousseur* (si débit faible) ; sinon plombier
   - R-rearmer 🟢 : Réarme le disjoncteur. L'eau mettra plusieurs heures à chauffer. S'il re-saute, n'insiste pas et appelle un pro. — tuto *Réarmer un disjoncteur*
   - R-attendre 🟢 : Le ballon est simplement vide. Attends la nuit (heures creuses) : l'eau sera chaude demain matin.
-  - R-pro 🔴 : Le chauffe-eau est probablement en panne (résistance, thermostat ou contacteur). N'ouvre jamais le capot du chauffe-eau : il y a du courant. Appelle un plombier-chauffagiste.
-
-> Question pour André : 🔴 est-il trop fort pour une simple absence d'eau chaude (pas de danger immédiat) ? 🟠 « pas de danger, mais c'est un travail de pro » serait peut-être plus juste.
+  - R-pro 🟠 : Pas de danger immédiat, mais le chauffe-eau est probablement en panne (résistance, thermostat ou contacteur). N'ouvre jamais le capot du chauffe-eau : il y a du courant. Appelle un plombier-chauffagiste.
+  - R-chauffagiste 🟠 : Les chaudières ne sont pas traitées par l'appli. N'ouvre pas la chaudière et appelle ton chauffagiste (ou ton bailleur si tu es locataire). Si tu sens le gaz, va tout de suite dans l'onglet Urgences. — renvoi *Urgences › Odeur de gaz ?*
 
 ### 5. WC lent à se remplir
 Mots-clés : wc, chasse, réservoir, lent, remplir, flotteur
@@ -155,7 +157,7 @@ Mots-clés : chasse, bouton, tirette, wc, ne marche pas
   - Oui, mais rien ne se passe → R-mecanisme
   - Je ne sais pas → R-mecanisme
 - **Résultats**
-  - R-vide 🟢 : L'eau n'arrive pas dans le réservoir : vérifie que le petit robinet d'arrivée est ouvert à fond. Sinon, fais le diagnostic « WC lent à se remplir ».
+  - R-vide 🟢 : L'eau n'arrive pas dans le réservoir : vérifie que le petit robinet d'arrivée est ouvert à fond. Sinon, fais le diagnostic « WC lent à se remplir ». — renvoi *diagnostic 5*
   - R-tringle 🟢 : La petite tige ou le câble entre le bouton et le mécanisme s'est décroché. Soulève le couvercle et raccroche-le. — tuto *Raccrocher la tringle de chasse*
   - R-mecanisme 🟠 : Le mécanisme est bloqué ou cassé. En attendant, tu peux vider la cuvette avec un seau d'eau. Un plombier changera le mécanisme.
 
@@ -214,6 +216,9 @@ Mots-clés : douche, baignoire, bonde, écoulement, cheveux, bouché
 ### 12. Mauvaise odeur d'égout
 Mots-clés : odeur, égout, mauvaise odeur, siphon, sent
 
+- **Q0 — Est-ce plutôt une odeur de gaz (œuf pourri, odeur « chimique ») ?**
+  - Oui, ou je ne suis pas sûr → R-gaz
+  - Non, ça sent l'égout → Q1
 - **Q1 — L'odeur vient-elle d'une évacuation peu utilisée (douche d'amis, lavabo, siphon de sol) ?**
   - Oui → R-siphon-sec
   - Non, d'un évier ou d'une douche utilisés tous les jours → R-nettoyer
@@ -222,8 +227,7 @@ Mots-clés : odeur, égout, mauvaise odeur, siphon, sent
   - R-siphon-sec 🟢 : L'eau du siphon s'est évaporée et laisse passer l'odeur. Fais couler l'eau une minute. — tuto *Remplir un siphon*
   - R-nettoyer 🟢 : Le siphon est encrassé. — tuto *Nettoyer un siphon*
   - R-pro 🟠 : Une odeur d'égout persistante sans origine visible peut venir d'une ventilation ou d'une canalisation abîmée. Aère et appelle un plombier.
-
-> Note : une odeur de **gaz** (œuf pourri) n'est pas une odeur d'égout. Ajouter en tête de ce diagnostic : « Tu sens le gaz ? → onglet Urgences » ? À valider.
+  - R-gaz 🔴 : Ne touche à aucun interrupteur, n'allume rien, ouvre les fenêtres, sors et appelle le numéro d'urgence gaz depuis l'extérieur. — renvoi *Urgences › Odeur de gaz ?*
 
 ### 13. Groupe de sécurité du chauffe-eau qui goutte
 Mots-clés : groupe de sécurité, chauffe-eau, goutte, ballon, cumulus, soupape
@@ -334,7 +338,7 @@ Mots-clés : prise, courant, marche pas, brûlé, noir
 - **Résultats**
   - R-danger 🔴 : N'utilise plus cette prise et ne la touche pas. Coupe son disjoncteur si tu sais lequel c'est, sinon le disjoncteur général. Appelle un électricien. — geste *Couper le courant*
   - R-appareil 🟢 : La prise va bien : c'est l'appareil (ou sa rallonge) qui est en panne.
-  - R-piece 🟢 : Fais le diagnostic « Plus de courant dans une seule pièce ».
+  - R-piece 🟢 : Le problème touche toute la pièce : fais le diagnostic « Plus de courant dans une seule pièce ». — renvoi *diagnostic 19*
   - R-pro 🟠 : Un fil est sûrement desserré derrière la prise. Ne la démonte pas : appelle un électricien.
 
 ### 21. Interrupteur ou lumière qui ne marche plus
@@ -348,7 +352,7 @@ Mots-clés : interrupteur, lumière, lampe, plafonnier, marche pas
   - Oui → R-pro
 - **Résultats**
   - R-ampoule 🟢 : Commence par changer l'ampoule, interrupteur éteint. — tuto *Changer une ampoule*
-  - R-piece 🟢 : Fais le diagnostic « Plus de courant dans une seule pièce ».
+  - R-piece 🟢 : Le problème touche toute la pièce : fais le diagnostic « Plus de courant dans une seule pièce ». — renvoi *diagnostic 19*
   - R-pro 🟠 : L'interrupteur ou un fil est défectueux. Ne démonte rien : appelle un électricien.
 
 ### 22. Ampoule qui grille souvent ou lumière qui clignote
@@ -390,11 +394,12 @@ Mots-clés : ampoule, grille, clignote, scintille, lumière
 
 Les étapes des 12 nouveaux tutos seront rédigées après validation des pannes, pour que tu ne relises que ce qui sert.
 
-> Sécurité « Changer une ampoule » : interrupteur éteint et ampoule froide. Utiliser un escabeau stable ; pas de chaise. Si le plafond est trop haut pour un escabeau bas → pro. Est-ce que ça reste dans la règle « pas de travaux en hauteur » selon toi ?
+> Sécurité « Changer une ampoule » (validé avec avertissement) : coupe le disjoncteur de la pièce (pas seulement l'interrupteur), attends que l'ampoule refroidisse, escabeau stable (jamais de chaise). Plafond trop haut pour un escabeau bas ou lustre lourd → appelle un électricien.
 
-## Questions ouvertes pour André
-1. Panne 4 : 🔴 ou 🟠 pour « chauffe-eau en panne » (pas de danger immédiat) ?
-2. Panne 4 : on retire bien la branche « chaudière » (hors périmètre) ?
-3. Panne 12 : ajoute-t-on un renvoi « Tu sens le gaz ? → Urgences » en tête ?
-4. Tuto « Changer une ampoule » : acceptable vis-à-vis de la règle « pas de travaux en hauteur » ?
-5. Pannes 7, 20, 21 : les renvois vers une autre panne affichent un conseil « fais le diagnostic X ». Veux-tu plutôt un bouton qui ouvre directement l'autre diagnostic ? (petit ajout d'écran → maquette)
+## Décisions d'André (01/10)
+1. Panne 4 : chauffe-eau en panne → 🟠 (pas de danger immédiat, travail de pro).
+2. Panne 4 : branche « chaudière » retirée du diagnostic ; une réponse « chaudière » mène à « appelle ton chauffagiste » (🟠) avec renvoi Urgences si odeur de gaz.
+3. Panne 12 : question gaz en tête → 🔴 + renvoi vers Urgences › Odeur de gaz ?
+4. Tuto « Changer une ampoule » : gardé, avec avertissement (disjoncteur coupé, escabeau stable, plafond haut ou lustre lourd → pro).
+5. Renvois (pannes 7, 20, 21) : un **bouton** sur le résultat ouvre directement l'autre diagnostic (même bouton pour « Urgences › Odeur de gaz ? »). Maquette à valider.
+6. Relecture complète des arbres : André relira dans l'appli ; on corrigera ensuite.
