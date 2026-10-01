@@ -1,11 +1,34 @@
-import { validerDiagnostic } from '@/domaine/validateDiagnostic';
+import type { Diagnostic } from '@/domaine/types';
+import { validerDiagnostic, validerRenvois } from '@/domaine/validateDiagnostic';
 import { diagnostics } from '@/donnees/diagnostics';
+import { gestesUrgence } from '@/donnees/gestesUrgence';
+
+const GRAVITE = { vert: 0, orange: 1, rouge: 2 } as const;
+
+/** Verdict le plus grave qu'on peut atteindre depuis une étape (ou un résultat). */
+function graviteMax(diag: Diagnostic, id: string, vus: Set<string> = new Set()): number {
+  const resultat = diag.resultats[id];
+  if (resultat) return GRAVITE[resultat.verdict];
+  const etape = diag.etapes[id];
+  if (!etape || vus.has(id)) return 0;
+  vus.add(id);
+  return Math.max(...etape.reponses.map((r) => graviteMax(diag, r.suite, vus)));
+}
+
+// Exception assumée : « Je ne sais pas, il y a de l'eau par terre » exclut une fuite au plafond → orange.
+const EXCEPTIONS_PRUDENCE = ['fuite-eau/q1'];
+
+// Liste complétée lot par lot au chantier C (22 pannes à la fin).
+const IDS_ATTENDUS = [
+  'disjoncteur-saute', 'evier-bouche', 'fuite-eau', 'pas-eau-chaude', 'plus-de-courant', 'wc-bouche',
+];
+
+const tousLesResultats = () =>
+  diagnostics.flatMap((d) => Object.entries(d.resultats).map(([id, r]) => ({ diag: d.id, id, r })));
 
 describe('données de diagnostics', () => {
-  it('contient les 6 diagnostics conservés, sans gaz ni chaudière', () => {
-    expect(diagnostics.map((d) => d.id).sort()).toEqual([
-      'disjoncteur-saute', 'evier-bouche', 'fuite-eau', 'pas-eau-chaude', 'plus-de-courant', 'wc-bouche',
-    ]);
+  it('contient exactement les diagnostics de la liste attendue', () => {
+    expect(diagnostics.map((d) => d.id).sort()).toEqual([...IDS_ATTENDUS].sort());
   });
 
   it.each(diagnostics.map((d) => [d.id, d] as const))(
@@ -15,12 +38,55 @@ describe('données de diagnostics', () => {
     }
   );
 
+  it('chaque renvoi pointe vers un diagnostic ou un geste existant', () => {
+    expect(validerRenvois(diagnostics, gestesUrgence.map((g) => g.id))).toEqual([]);
+  });
+
   it('tout résultat qui renvoie vers le geste "couper-gaz" est rouge avec un numéro utile', () => {
-    for (const diag of diagnostics) {
-      for (const resultat of Object.values(diag.resultats)) {
-        if (resultat.gesteUrgenceId === 'couper-gaz') {
-          expect(resultat.verdict).toBe('rouge');
-          expect(Boolean(resultat.numeroUtile)).toBe(true);
+    for (const { r } of tousLesResultats()) {
+      if (r.gesteUrgenceId === 'couper-gaz') {
+        expect(r.verdict).toBe('rouge');
+        expect(Boolean(r.numeroUtile)).toBe(true);
+      }
+    }
+  });
+
+  it('tout résultat qui parle de gaz renvoie vers « Odeur de gaz ? »', () => {
+    for (const { diag, id, r } of tousLesResultats()) {
+      if (/gaz/i.test(r.conseil)) {
+        const cible = r.renvoi?.type === 'urgence' ? r.renvoi.id : r.gesteUrgenceId;
+        expect(`${diag}/${id} → ${cible}`).toBe(`${diag}/${id} → couper-gaz`);
+      }
+    }
+  });
+
+  it('un résultat rouge qui renvoie vers « Odeur de gaz ? » donne le numéro d\'urgence gaz', () => {
+    for (const { diag, id, r } of tousLesResultats()) {
+      if (r.verdict === 'rouge' && r.renvoi?.type === 'urgence' && r.renvoi.id === 'couper-gaz') {
+        expect(`${diag}/${id} → ${r.numeroUtile}`).toBe(`${diag}/${id} → 0800 47 33 33`);
+      }
+    }
+  });
+
+  it('chaque réponse « Je ne sais pas » est affichée en pointillé (inconnu)', () => {
+    for (const d of diagnostics) {
+      for (const [etapeId, etape] of Object.entries(d.etapes)) {
+        for (const reponse of etape.reponses) {
+          if (reponse.texte.startsWith('Je ne sais pas')) {
+            expect(`${d.id}/${etapeId} ${reponse.inconnu}`).toBe(`${d.id}/${etapeId} true`);
+          }
+        }
+      }
+    }
+  });
+
+  it('« Je ne sais pas » mène au verdict le plus prudent atteignable depuis la question', () => {
+    for (const d of diagnostics) {
+      for (const [etapeId, etape] of Object.entries(d.etapes)) {
+        if (EXCEPTIONS_PRUDENCE.includes(`${d.id}/${etapeId}`)) continue;
+        const plusPrudent = graviteMax(d, etapeId);
+        for (const reponse of etape.reponses.filter((r) => r.inconnu)) {
+          expect(`${d.id}/${etapeId} → ${graviteMax(d, reponse.suite)}`).toBe(`${d.id}/${etapeId} → ${plusPrudent}`);
         }
       }
     }

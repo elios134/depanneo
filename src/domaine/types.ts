@@ -17,6 +17,9 @@ export interface Etape {
   reponses: Reponse[];
 }
 
+/** Bouton sur un résultat : ouvre un autre diagnostic (depuis le début) ou un geste de l'onglet Urgences. */
+export type Renvoi = { type: 'diagnostic'; id: string } | { type: 'urgence'; id: string };
+
 export interface Resultat {
   verdict: Verdict;
   titre: string;
@@ -24,6 +27,7 @@ export interface Resultat {
   tutoId?: string;
   gesteUrgenceId?: string;
   numeroUtile?: string;
+  renvoi?: Renvoi;
 }
 
 export interface Diagnostic {

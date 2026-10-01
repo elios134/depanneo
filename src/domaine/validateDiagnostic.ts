@@ -1,11 +1,24 @@
 import { estNomIcone } from './icones';
-import type { Diagnostic, Verdict } from './types';
+import type { Diagnostic, Resultat, Verdict } from './types';
 import { CATEGORIES } from './types';
 
 const aClePropre = (obj: object, cle: string): boolean =>
   Object.prototype.hasOwnProperty.call(obj, cle);
 
 const VERDICTS_VALIDES: Verdict[] = ['vert', 'orange', 'rouge'];
+const TYPES_RENVOI: string[] = ['diagnostic', 'urgence'];
+
+function erreurRenvoi(diag: Diagnostic, resultat: Resultat): string | null {
+  const renvoi = resultat.renvoi;
+  if (renvoi === undefined) return null;
+  if (!TYPES_RENVOI.includes(renvoi.type) || typeof renvoi.id !== 'string' || renvoi.id.length === 0) {
+    return 'renvoi invalide (type "diagnostic" ou "urgence" et id obligatoires)';
+  }
+  if (renvoi.type === 'diagnostic' && renvoi.id === diag.id) {
+    return 'renvoi vers lui-même';
+  }
+  return null;
+}
 
 export function validerDiagnostic(diag: Diagnostic): string[] {
   const erreurs: string[] = [];
@@ -45,6 +58,10 @@ export function validerDiagnostic(diag: Diagnostic): string[] {
     if (typeof resultat.conseil !== 'string' || resultat.conseil.length === 0) {
       erreurs.push(`Diagnostic "${diag.id}", résultat "${resultatId}": conseil manquant`);
     }
+    const renvoi = erreurRenvoi(diag, resultat);
+    if (renvoi) {
+      erreurs.push(`Diagnostic "${diag.id}", résultat "${resultatId}": ${renvoi}`);
+    }
   }
 
   if (!CATEGORIES.includes(diag.categorie)) {
@@ -57,5 +74,25 @@ export function validerDiagnostic(diag: Diagnostic): string[] {
     erreurs.push(`Diagnostic "${diag.id}": mots-clés manquants`);
   }
 
+  return erreurs;
+}
+
+/** Vérifie que chaque renvoi vise un diagnostic ou un geste d'urgence qui existe vraiment. */
+export function validerRenvois(diags: Diagnostic[], idsUrgences: string[]): string[] {
+  const idsDiagnostics = new Set(diags.map((d) => d.id));
+  const urgences = new Set(idsUrgences);
+  const erreurs: string[] = [];
+  for (const diag of diags) {
+    for (const [resultatId, resultat] of Object.entries(diag.resultats)) {
+      const renvoi = resultat.renvoi;
+      if (!renvoi) continue;
+      const existe = renvoi.type === 'diagnostic' ? idsDiagnostics.has(renvoi.id) : urgences.has(renvoi.id);
+      if (!existe) {
+        erreurs.push(
+          `Diagnostic "${diag.id}", résultat "${resultatId}": renvoi vers ${renvoi.type} "${renvoi.id}" introuvable`
+        );
+      }
+    }
+  }
   return erreurs;
 }
