@@ -10,6 +10,12 @@ export interface Pro {
   lat: number;
   lon: number;
   distanceKm: number;
+  // Facultatifs : absents des listes déjà enregistrées sur le téléphone.
+  adresse?: string | null;
+  siteWeb?: string | null;
+  email?: string | null;
+  horaires?: string | null;
+  ville?: string | null;
 }
 
 export const LIBELLES_METIER: Record<Metier, string> = {
