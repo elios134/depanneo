@@ -11,6 +11,7 @@ const TYPES_RENVOI: string[] = ['diagnostic', 'urgence'];
 function erreurRenvoi(diag: Diagnostic, resultat: Resultat): string | null {
   const renvoi = resultat.renvoi;
   if (renvoi === undefined) return null;
+  if (renvoi === null) return 'renvoi ne peut pas être null';
   if (!TYPES_RENVOI.includes(renvoi.type) || typeof renvoi.id !== 'string' || renvoi.id.length === 0) {
     return 'renvoi invalide (type "diagnostic" ou "urgence" et id obligatoires)';
   }

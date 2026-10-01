@@ -142,6 +142,7 @@ describe('validerDiagnostic', () => {
   it('accepte un diagnostic complet', () => {
     expect(validerDiagnostic(base())).toEqual([]);
   });
+
   it('accepte un renvoi vers un autre diagnostic', () => {
     const diag = base();
     diag.resultats = { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', renvoi: { type: 'diagnostic', id: 'autre' } } };
@@ -154,6 +155,14 @@ describe('validerDiagnostic', () => {
       r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', renvoi: { type: 'tuto', id: 'x' } as unknown as Resultat['renvoi'] },
     };
     expect(validerDiagnostic(diag).join(' ')).toContain('renvoi');
+  });
+
+  it('refuse un renvoi null', () => {
+    const diag = base();
+    diag.resultats = {
+      r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', renvoi: null as unknown as Resultat['renvoi'] },
+    };
+    expect(validerDiagnostic(diag).join(' ')).toContain('renvoi ne peut pas être null');
   });
 
   it('refuse un renvoi sans identifiant', () => {
