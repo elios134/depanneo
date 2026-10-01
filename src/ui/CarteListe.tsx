@@ -16,12 +16,17 @@ interface Props {
   droite?: ReactNode;
   danger?: boolean;
   grande?: boolean;
+  couleurBordure?: string;
 }
 
-export function CarteListe({ icone, couleur, titre, sousTitre, onPress, droite, danger, grande }: Props) {
+export function CarteListe({ icone, couleur, titre, sousTitre, onPress, droite, danger, grande, couleurBordure }: Props) {
   const { couleurs } = useTheme();
   const fond = danger ? teinte(couleurs.danger, 0.12) : couleurs.carte;
-  const bordure = danger ? teinte(couleurs.danger, 0.45) : couleurs.bordure;
+  const bordure = danger
+    ? teinte(couleurs.danger, 0.45)
+    : couleurBordure
+      ? teinte(couleurBordure, 0.4)
+      : couleurs.bordure;
   const couleurTitre = danger ? couleurs.dangerTexte : couleurs.texte;
   return (
     <Pressable
