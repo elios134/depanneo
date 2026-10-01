@@ -2,7 +2,12 @@ import { distanceKm } from '@/domaine/distance';
 import type { Position } from '@/domaine/lieux';
 import type { Metier, Pro } from '@/domaine/pro';
 
-export const URL_OVERPASS = 'https://overpass-api.de/api/interpreter';
+// Le serveur public principal est souvent surchargé : on essaie les suivants à la suite.
+export const SERVEURS_OVERPASS = [
+  'https://overpass-api.de/api/interpreter',
+  'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
+  'https://overpass.private.coffee/api/interpreter',
+];
 
 const METIERS: Record<string, Metier> = { plumber: 'plombier', electrician: 'electricien' };
 
