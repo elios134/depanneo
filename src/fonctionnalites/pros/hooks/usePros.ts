@@ -36,9 +36,11 @@ interface Resultat {
   pros: Pro[];
   date: number | null;
   etat: 'ok' | 'hors-ligne';
+  // Nouvelle recherche en cours : on garde la liste déjà affichée.
+  actualisation: boolean;
 }
 
-export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPros; date: number | null; reessayer: () => void } {
+export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPros; date: number | null; actualisation: boolean; reessayer: () => void } {
   const { reglages } = useReglages();
   const rayonKm = reglages.rayonKm;
   const [resultat, setResultat] = useState<Resultat | null>(null);
@@ -70,16 +72,17 @@ export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPro
       const cache = await lireCacheStocke();
       if (annule) return;
       if (cache && !doitRafraichir(cache, ici, rayonKm, Date.now())) {
-        setResultat({ cle, pros: recalerPros(cache.pros, ici, rayonKm), date: cache.date, etat: 'ok' });
+        setResultat({ cle, pros: recalerPros(cache.pros, ici, rayonKm), date: cache.date, etat: 'ok', actualisation: false });
         return;
       }
-      setResultat(null);
+      setResultat((r) => (r?.cle === cle ? { ...r, actualisation: true } : null));
       try {
         const trouves = await chercherPros(ici, rayonKm);
         const nouveau: CachePros = { pros: trouves, centre: ici, rayonKm, date: Date.now() };
+        if (annule) return;
         await enregistrer(nouveau);
         if (annule) return;
-        setResultat({ cle, pros: trouves, date: nouveau.date, etat: 'ok' });
+        setResultat({ cle, pros: trouves, date: nouveau.date, etat: 'ok', actualisation: false });
       } catch {
         if (annule) return;
         const proche = cache !== null && distanceKm(cache.centre, ici) <= rayonKm;
@@ -88,6 +91,7 @@ export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPro
           pros: proche ? recalerPros(cache.pros, ici, rayonKm) : [],
           date: proche ? cache.date : null,
           etat: 'hors-ligne',
+          actualisation: false,
         });
       }
     })();
@@ -96,5 +100,5 @@ export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPro
     };
   }, [lat, lon, rayonKm, essai]);
 
-  return { pros: valide?.pros ?? [], etat, date: valide?.date ?? null, reessayer };
+  return { pros: valide?.pros ?? [], etat, date: valide?.date ?? null, actualisation: valide?.actualisation ?? false, reessayer };
 }

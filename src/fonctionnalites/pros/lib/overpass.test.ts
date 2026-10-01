@@ -69,6 +69,20 @@ describe('overpass', () => {
     expect(pros.map((p) => p.id)).toEqual(['node/9']);
   });
 
+  it('ignore les éléments sans type ni id valides', () => {
+    const pros = analyserReponse(
+      {
+        elements: [
+          { id: 11, lat: 43.3, lon: 5.4, tags: { craft: 'plumber', name: 'Sans type' } },
+          { type: 'node', lat: 43.3, lon: 5.4, tags: { craft: 'plumber', name: 'Sans id' } },
+          { type: 'node', id: 12, lat: 43.3, lon: 5.4, tags: { craft: 'plumber', name: 'Bon' } },
+        ],
+      },
+      depuis,
+    );
+    expect(pros.map((p) => p.id)).toEqual(['node/12']);
+  });
+
   it('met un téléphone vide à null', () => {
     const [pro] = analyserReponse(
       { elements: [{ type: 'node', id: 10, lat: 43.3, lon: 5.4, tags: { craft: 'plumber', name: 'Vide', phone: ' ; 06' } }] },

@@ -35,6 +35,7 @@ export function analyserReponse(donnees: unknown, depuis: Position): Pro[] {
   const pros: Pro[] = [];
   for (const el of elements as (ElementOverpass | null)[]) {
     if (!el || typeof el !== 'object') continue;
+    if (typeof el.type !== 'string' || (typeof el.id !== 'number' && typeof el.id !== 'string')) continue;
     const lat = el.lat ?? el.center?.lat;
     const lon = el.lon ?? el.center?.lon;
     if (typeof lat !== 'number' || typeof lon !== 'number' || !Number.isFinite(lat) || !Number.isFinite(lon)) continue;
