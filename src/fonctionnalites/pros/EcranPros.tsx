@@ -11,6 +11,7 @@ import { FondEcran } from '@/ui/FondEcran';
 import { Onglets } from '@/ui/Onglets';
 import { CartePros } from './components/CartePros';
 import { RechercheVille } from './components/RechercheVille';
+import { useCarteEchec } from './hooks/useCarteEchec';
 import { usePosition } from './hooks/usePosition';
 import { usePros } from './hooks/usePros';
 import { ageTexte } from './lib/cachePros';
@@ -20,12 +21,13 @@ export function EcranPros() {
   const { couleurs } = useTheme();
   const { reglages, modifier } = useReglages();
   const { position, statut, demanderAutorisation } = usePosition({ passif: true });
-  const { pros, etat, date, reessayer } = usePros(position);
-  const [carteEchec, setCarteEchec] = useState(false);
+  const { pros, etat, date, actualisation, reessayer } = usePros(position);
+  const { carteEchec, setCarteEchec, rechargement, relancerCarte } = useCarteEchec();
   const [filtre, setFiltre] = useState<Metier | 'tous'>('tous');
   const liste = filtrerPros(pros, filtre);
   const horsLigne = etat === 'hors-ligne';
-  const sansReseau = horsLigne || carteEchec;
+  // Le fond de carte n'existe pas dans l'état « aucune » : son échec précédent est ignoré.
+  const sansReseau = horsLigne || (carteEchec && statut !== 'aucune');
   const discret = { color: couleurs.texteDiscret };
 
   return (
@@ -43,7 +45,7 @@ export function EcranPros() {
       ) : (
         <>
           <View style={[styles.carte, { borderColor: couleurs.bordure }]}>
-            <CartePros centre={position} pros={liste} horsLigne={horsLigne} recentrage={0} interactive={false} onEchecCarte={setCarteEchec} />
+            <CartePros centre={position} pros={liste} horsLigne={horsLigne} recentrage={0} interactive={false} onEchecCarte={setCarteEchec} rechargement={rechargement} />
           </View>
           {sansReseau ? null : (
             <Text style={[styles.creditCarte, discret]}>© OpenFreeMap · OpenMapTiles · OpenStreetMap</Text>
@@ -57,12 +59,17 @@ export function EcranPros() {
             valeur={filtre}
             onChange={setFiltre}
           />
-          {etat === 'attente' || etat === 'chargement' ? (
+          {etat === 'attente' || etat === 'chargement' || actualisation ? (
             <Text style={[styles.message, discret]}>Recherche des pros autour de toi…</Text>
           ) : null}
-          {etat === 'ok' && liste.length === 0 ? (
+          {etat === 'ok' && pros.length === 0 ? (
             <Text style={[styles.message, discret]}>
               Aucun pro trouvé dans un rayon de {reglages.rayonKm} km. Les données d'OpenStreetMap peuvent être incomplètes.
+            </Text>
+          ) : null}
+          {(etat === 'ok' || horsLigne) && pros.length > 0 && liste.length === 0 ? (
+            <Text style={[styles.message, discret]}>
+              Aucun {filtre === 'plombier' ? 'plombier' : 'électricien'} dans la liste. Essaie « Tous ».
             </Text>
           ) : null}
           {horsLigne && pros.length === 0 ? (
@@ -74,8 +81,14 @@ export function EcranPros() {
           {date !== null && liste.length > 0 ? (
             <Text style={[styles.credit, discret]}>Données © OpenStreetMap · mis à jour {ageTexte(date, Date.now())}</Text>
           ) : null}
-          {horsLigne ? (
-            <Pressable accessibilityRole="button" hitSlop={8} onPress={reessayer} style={styles.lienZone}>
+          {sansReseau ? (
+            <Pressable
+              accessibilityRole="button"
+              hitSlop={8}
+              onPress={() => {
+                reessayer();
+                relancerCarte();
+              }} style={styles.lienZone}>
               <Text style={[styles.lien, { color: couleurs.accent }]}>Réessayer</Text>
             </Pressable>
           ) : null}

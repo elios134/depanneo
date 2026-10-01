@@ -14,7 +14,7 @@ const FRANCE: [number, number] = [2.4, 46.6];
 const ZOOM_PROCHE = 13;
 const MAX_EPINGLES = 50;
 
-export function CartePros({ centre, pros, horsLigne, recentrage, interactive = true, onEchecCarte }: PropsCartePros) {
+export function CartePros({ centre, pros, horsLigne, recentrage, interactive = true, onEchecCarte, rechargement = 0 }: PropsCartePros) {
   const { nom } = useTheme();
   const camera = useRef<CameraRef>(null);
   const [echec, setEchec] = useState(false);
@@ -43,11 +43,19 @@ export function CartePros({ centre, pros, horsLigne, recentrage, interactive = t
     onEchecCarte?.(valeur);
   };
 
+  // La carte est remontée (key) : l'échec précédent n'est plus valable.
+  useEffect(() => {
+    if (rechargement === 0) return;
+    setEchec(false);
+    onEchecCarte?.(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rechargement]);
+
   if (horsLigne) return <FondCarte neutre />;
 
   return (
     <>
-      <Map style={StyleSheet.absoluteFill} mapStyle={STYLES[nom]} attribution={false} logo={false} compass={false}
+      <Map key={rechargement} style={StyleSheet.absoluteFill} mapStyle={STYLES[nom]} attribution={false} logo={false} compass={false}
         dragPan={interactive}
         touchZoom={interactive}
         doubleTapZoom={interactive}

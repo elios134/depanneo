@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CartePros } from '@/fonctionnalites/pros/components/CartePros';
+import { useCarteEchec } from '@/fonctionnalites/pros/hooks/useCarteEchec';
 import { usePosition } from '@/fonctionnalites/pros/hooks/usePosition';
 import { usePros } from '@/fonctionnalites/pros/hooks/usePros';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -19,7 +20,7 @@ export function EcranAccueil() {
   const margeBarre = useMargeBarre();
   const { position, statut, demanderAutorisation } = usePosition();
   const { pros, etat, date, reessayer } = usePros(position);
-  const [carteEchec, setCarteEchec] = useState(false);
+  const { carteEchec, setCarteEchec, rechargement, relancerCarte } = useCarteEchec();
   const [recentrage, setRecentrage] = useState(0);
   const horsLigne = etat === 'hors-ligne';
   // Fond de carte non chargé (mode avion avec liste en cache) : même bandeau que hors connexion.
@@ -27,7 +28,7 @@ export function EcranAccueil() {
 
   return (
     <View style={[styles.racine, { backgroundColor: couleurs.carteSol }]}>
-      <CartePros centre={position} pros={pros} horsLigne={horsLigne} recentrage={recentrage} onEchecCarte={setCarteEchec} />
+      <CartePros centre={position} pros={pros} horsLigne={horsLigne} recentrage={recentrage} onEchecCarte={setCarteEchec} rechargement={rechargement} />
       <View style={[styles.haut, { top: top + 12 }]}>
         <Logo />
         {sansReseau ? <BandeauHorsLigne /> : null}
@@ -42,7 +43,12 @@ export function EcranAccueil() {
       ) : null}
       <View style={[styles.panneau, { bottom: margeBarre - 8 }]}>
         <PanneauAccueil>
-          <SectionPros statut={statut} pros={pros} etat={etat} date={date} onUtiliserPosition={demanderAutorisation} onReessayer={reessayer} />
+          <SectionPros statut={statut} pros={pros} etat={etat} date={date} onUtiliserPosition={demanderAutorisation} peutReessayer={sansReseau}
+            onReessayer={() => {
+              reessayer();
+              relancerCarte();
+            }}
+          />
         </PanneauAccueil>
       </View>
     </View>
