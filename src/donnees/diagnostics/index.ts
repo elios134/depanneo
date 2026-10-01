@@ -9,6 +9,9 @@ import chasseNeMarchePlus from './chasse-ne-marche-plus.json';
 import robinetDur from './robinet-dur.json';
 import robinetGoutte from './robinet-goutte.json';
 import pressionFaible from './pression-faible.json';
+import doucheEcouleMal from './douche-ecoule-mal.json';
+import odeurEgout from './odeur-egout.json';
+import groupeSecuriteGoutte from './groupe-securite-goutte.json';
 import fuitePiedWc from './fuite-pied-wc.json';
 import flexibleDoucheFuit from './flexible-douche-fuit.json';
 import bruitTuyaux from './bruit-tuyaux.json';
@@ -27,6 +30,9 @@ export const diagnostics: Diagnostic[] = [
   robinetDur as Diagnostic,
   robinetGoutte as Diagnostic,
   pressionFaible as Diagnostic,
+  doucheEcouleMal as Diagnostic,
+  odeurEgout as Diagnostic,
+  groupeSecuriteGoutte as Diagnostic,
   fuitePiedWc as Diagnostic,
   flexibleDoucheFuit as Diagnostic,
   bruitTuyaux as Diagnostic,

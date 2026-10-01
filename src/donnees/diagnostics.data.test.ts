@@ -23,6 +23,7 @@ const IDS_ATTENDUS = [
   'disjoncteur-saute', 'evier-bouche', 'fuite-eau', 'pas-eau-chaude', 'plus-de-courant', 'wc-bouche',
   'wc-lent-a-remplir', 'chasse-coule', 'chasse-ne-marche-plus', 'fuite-pied-wc',
   'robinet-dur', 'robinet-goutte', 'pression-faible', 'flexible-douche-fuit', 'bruit-tuyaux',
+  'douche-ecoule-mal', 'odeur-egout', 'groupe-securite-goutte',
 ];
 
 const tousLesResultats = () =>
@@ -100,5 +101,15 @@ describe('données de diagnostics', () => {
     expect(diag.resultats.resultat_chauffagiste.verdict).toBe('orange');
     expect(diag.resultats.resultat_chauffagiste.renvoi).toEqual({ type: 'urgence', id: 'couper-gaz' });
     expect(diag.resultats.resultat_pro.verdict).toBe('orange');
+  });
+
+  it('« Mauvaise odeur d\'égout » pose d\'abord la question du gaz (rouge, numéro, renvoi Urgences)', () => {
+    const diag = diagnostics.find((d) => d.id === 'odeur-egout')!;
+    expect(diag.etapeInitiale).toBe('q0');
+    const gaz = diag.resultats.resultat_gaz;
+    expect(gaz.verdict).toBe('rouge');
+    expect(gaz.numeroUtile).toBe('0800 47 33 33');
+    expect(gaz.renvoi).toEqual({ type: 'urgence', id: 'couper-gaz' });
+    expect(gaz.tutoId).toBeUndefined();
   });
 });

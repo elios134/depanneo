@@ -1,0 +1,30 @@
+{
+  "id": "douche-ecoule-mal",
+  "titre": "Douche ou baignoire qui s'écoule mal",
+  "categorie": "plomberie",
+  "icone": "shower-head",
+  "motsCles": ["douche", "baignoire", "bonde", "écoulement", "cheveux", "bouché"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "L'eau finit-elle par s'écouler ?",
+      "reponses": [
+        { "texte": "Oui, lentement", "suite": "resultat_bonde" },
+        { "texte": "Non, plus du tout, et d'autres évacuations sont touchées", "suite": "resultat_canalisation" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_bonde": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Ce sont presque toujours des cheveux et du savon dans la bonde.",
+      "tutoId": "nettoyer-bonde"
+    },
+    "resultat_canalisation": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Le bouchon est plus loin dans la canalisation. N'utilise plus la douche et appelle un plombier."
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "groupe-securite-goutte",
+  "titre": "Groupe de sécurité du chauffe-eau qui goutte",
+  "categorie": "plomberie",
+  "icone": "cylinder",
+  "motsCles": ["groupe de sécurité", "chauffe-eau", "goutte", "ballon", "cumulus", "soupape"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Ça goutte seulement pendant que le chauffe-eau chauffe (souvent la nuit) ?",
+      "reponses": [
+        { "texte": "Oui, quelques gouttes pendant la chauffe", "suite": "resultat_normal" },
+        { "texte": "Non, ça coule en continu, même quand il ne chauffe pas", "suite": "resultat_pro" },
+        { "texte": "Je ne sais pas", "suite": "resultat_pro", "inconnu": true }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_normal": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "C'est normal : l'eau se dilate en chauffant et le groupe de sécurité évacue le surplus. Pense à manœuvrer sa petite manette une fois par mois pour éviter le calcaire.",
+      "tutoId": "entretenir-groupe-securite"
+    },
+    "resultat_pro": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Le groupe de sécurité est usé ou la pression est trop forte. Ne le bouche jamais (risque d'explosion du ballon). Appelle un plombier."
+    }
+  }
+}
