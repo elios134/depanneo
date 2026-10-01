@@ -11,6 +11,7 @@ export function distanceKm(a: Position, b: Position): number {
 }
 
 export function formaterDistance(km: number): string {
-  if (km < 1) return `${Math.round((km * 1000) / 10) * 10} m`;
+  const metres = Math.round((km * 1000) / 10) * 10;
+  if (metres < 1000) return `${metres} m`;
   return `${String(Math.round(km * 10) / 10).replace('.', ',')} km`;
 }

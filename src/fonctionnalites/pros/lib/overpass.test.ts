@@ -53,4 +53,27 @@ describe('overpass', () => {
     expect(analyserReponse(null, depuis)).toEqual([]);
     expect(analyserReponse({ elements: 'x' }, depuis)).toEqual([]);
   });
+
+  it('ignore les éléments null ou aux coordonnées non numériques', () => {
+    const pros = analyserReponse(
+      {
+        elements: [
+          null,
+          { type: 'node', id: 7, lat: '43.3', lon: 5.4, tags: { craft: 'plumber', name: 'Texte' } },
+          { type: 'node', id: 8, lat: 43.3, tags: { craft: 'plumber', name: 'Sans lon' } },
+          { type: 'node', id: 9, lat: 43.3, lon: 5.4, tags: { craft: 'plumber', name: 'Bon' } },
+        ],
+      },
+      depuis,
+    );
+    expect(pros.map((p) => p.id)).toEqual(['node/9']);
+  });
+
+  it('met un téléphone vide à null', () => {
+    const [pro] = analyserReponse(
+      { elements: [{ type: 'node', id: 10, lat: 43.3, lon: 5.4, tags: { craft: 'plumber', name: 'Vide', phone: ' ; 06' } }] },
+      depuis,
+    );
+    expect(pro.telephone).toBeNull();
+  });
 });

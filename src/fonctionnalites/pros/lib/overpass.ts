@@ -33,14 +33,16 @@ export function analyserReponse(donnees: unknown, depuis: Position): Pro[] {
   const elements = (donnees as { elements?: unknown } | null)?.elements;
   if (!Array.isArray(elements)) return [];
   const pros: Pro[] = [];
-  for (const el of elements as ElementOverpass[]) {
+  for (const el of elements as (ElementOverpass | null)[]) {
+    if (!el || typeof el !== 'object') continue;
     const lat = el.lat ?? el.center?.lat;
     const lon = el.lon ?? el.center?.lon;
+    if (typeof lat !== 'number' || typeof lon !== 'number' || !Number.isFinite(lat) || !Number.isFinite(lon)) continue;
     const tags = el.tags ?? {};
     const metiers = metiersDe(tags);
-    if (lat === undefined || lon === undefined || metiers.length === 0) continue;
+    if (metiers.length === 0) continue;
     const brut = tags.phone ?? tags['contact:phone'] ?? tags['contact:mobile'] ?? null;
-    const telephone = brut ? brut.split(';')[0].trim() : null;
+    const telephone = (typeof brut === 'string' ? brut.split(';')[0].trim() : '') || null;
     if (!tags.name && !telephone) continue;
     pros.push({
       id: `${el.type}/${el.id}`,

@@ -15,6 +15,10 @@ describe('distance', () => {
     expect(formaterDistance(0.834)).toBe('830 m');
   });
 
+  it("passe en km quand l'arrondi atteint 1000 m", () => {
+    expect(formaterDistance(0.996)).toBe('1 km');
+  });
+
   it('affiche les distances longues en km avec une virgule', () => {
     expect(formaterDistance(1.23)).toBe('1,2 km');
     expect(formaterDistance(12)).toBe('12 km');

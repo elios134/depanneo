@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import type { Position } from '@/domaine/lieux';
 import type { Pro } from '@/domaine/pro';
+import { recalerPros } from '../lib/recalerPros';
 import { analyserReponse, construireRequete, URL_OVERPASS } from '../lib/overpass';
 
 const DELAI_MS = 30000;
@@ -27,12 +28,22 @@ async function interroger(position: Position, rayonKm: number): Promise<Pro[]> {
   }
 }
 
+const arrondir = (n: number) => Math.round(n * 1000) / 1000;
+
 export function chercherPros(position: Position, rayonKm: number): Promise<Pro[]> {
-  const cle = `${position.lat.toFixed(3)},${position.lon.toFixed(3)},${rayonKm}`;
-  if (enCours?.cle === cle) return enCours.promesse;
-  const promesse = interroger(position, rayonKm).finally(() => {
-    if (enCours?.promesse === promesse) enCours = null;
-  });
-  enCours = { cle, promesse };
-  return promesse;
+  // Position arrondie à 3 décimales (~100 m) : moins précise pour Overpass, et clé de déduplication identique.
+  const arrondie = { lat: arrondir(position.lat), lon: arrondir(position.lon) };
+  const cle = `${arrondie.lat},${arrondie.lon},${rayonKm}`;
+  let promesse: Promise<Pro[]>;
+  if (enCours?.cle === cle) {
+    promesse = enCours.promesse;
+  } else {
+    const nouvelle: Promise<Pro[]> = interroger(arrondie, rayonKm).finally(() => {
+      if (enCours?.promesse === nouvelle) enCours = null;
+    });
+    enCours = { cle, promesse: nouvelle };
+    promesse = nouvelle;
+  }
+  // Les requêtes fusionnées partagent le même résultat : chacun recale les distances depuis sa propre position.
+  return promesse.then((pros) => recalerPros(pros, position, rayonKm));
 }
