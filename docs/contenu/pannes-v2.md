@@ -1,5 +1,7 @@
 # Contenu des 22 pannes — brouillon à relire par André
 
+> **Converti en données le 01/10 (chantier C)** : `src/donnees/diagnostics/*.json` et `src/donnees/tutos.ts` font désormais foi. André relit dans l'appli ; les corrections se font dans ces fichiers.
+
 > **Comment relire :** corrige directement dans ce fichier : barre, reformule, ajoute ce qui manque. Seules les pannes marquées ✅ dans la colonne « Validé » du sommaire seront converties en données de l'appli.
 >
 > **Règles appliquées partout :**

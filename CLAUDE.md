@@ -12,9 +12,9 @@ Une appli mobile grand public qui aide les gens face à une panne de **plomberie
 Particuliers, locataires et propriétaires, sans connaissance technique. Tout doit être compréhensible par quelqu'un qui n'a jamais ouvert une boîte à outils.
 
 ## Fonctionnalités
-- **Diagnostic guidé** (22 pannes : 16 plomberie, 6 électricité) → verdict 🟢 je peux réparer / 🟠 je sécurise en attendant / 🔴 j'appelle un pro tout de suite.
+- **Diagnostic guidé** (22 pannes : 16 plomberie, 6 électricité) → verdict 🟢 je peux réparer / 🟠 je sécurise en attendant / 🔴 j'appelle un pro tout de suite. Un résultat peut renvoyer vers un autre diagnostic ou vers « Odeur de gaz ? » (champ `renvoi`).
 - **Urgences** (onglet dédié, 1 appui depuis partout) : couper l'eau, couper le courant, « Odeur de gaz ? » (filet de sécurité : consignes + numéro d'urgence gaz), numéros utiles.
-- **Tutos** pas à pas pour les réparations faciles.
+- **Tutos** pas à pas pour les réparations faciles (16), certains avec un petit schéma animé (`src/ui/schemas/`).
 - **Carte des pros** (OpenStreetMap) : plombiers et électriciens proches, appel en 1 appui.
 - **Réglages** : thème sombre/clair/auto, rayon de recherche, localisation.
 - Le diagnostic, les urgences et les tutos **fonctionnent sans réseau**.
