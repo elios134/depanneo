@@ -24,9 +24,9 @@ export const tutos: Tuto[] = [
     duree: '5 min',
     outil: 'ventouse',
     etapes: [
-      'Mets des gants et enfonce une ventouse adaptée dans la cuvette.',
-      'Effectue des mouvements de va-et-vient fermes pendant une minute.',
-      'Si ça ne suffit pas, utilise un furet spécial WC en le poussant doucement.',
+      { texte: 'Mets des gants et enfonce une ventouse adaptée dans la cuvette.', schema: 'wc-ventouse' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
+      { texte: 'Effectue des mouvements de va-et-vient fermes pendant une minute.', schema: 'wc-ecoulement-lent' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
+      { texte: 'Si ça ne suffit pas, utilise un furet spécial WC en le poussant doucement.', schema: 'wc-acide' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
     ],
   },
   {
@@ -37,10 +37,10 @@ export const tutos: Tuto[] = [
     duree: '15 min',
     outil: 'clé',
     etapes: [
-      'Coupe l\'eau avant de commencer (voir le geste "Couper l\'eau").',
-      'Dévisse le raccord qui fuit avec une clé adaptée.',
-      'Remplace le joint usé par un joint neuf de même taille, puis resserre sans forcer excessivement.',
-      'Rouvre l\'eau doucement et vérifie qu\'il n\'y a plus de fuite.',
+      { texte: 'Coupe l\'eau avant de commencer (voir le geste "Couper l\'eau").', schema: 'couper-eau' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
+      { texte: 'Dévisse le raccord qui fuit avec une clé adaptée.', schema: 'raccord-devisser' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
+      { texte: 'Remplace le joint usé par un joint neuf de même taille, puis resserre sans forcer excessivement.', schema: 'joint-comparer' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
+      { texte: 'Rouvre l\'eau doucement et vérifie qu\'il n\'y a plus de fuite.', schema: 'joint-remonter' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
     ],
   },
   {
@@ -164,9 +164,9 @@ export const tutos: Tuto[] = [
     outil: 'vinaigre blanc',
     etapes: [
       'Mets le bouchon de l\'évier pour ne pas perdre de petites pièces.',
-      'Dévisse à la main le mousseur (le petit embout au bout du robinet). S\'il résiste, entoure-le d\'un chiffon et tourne doucement avec une pince.',
+      { texte: 'Dévisse à la main le mousseur (le petit embout au bout du robinet). S\'il résiste, entoure-le d\'un chiffon et tourne doucement avec une pince.', schema: 'mousseur-devisser' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
       'Pour une douche, dévisse le pommeau du flexible, à la main.',
-      'Fais tremper le mousseur ou le pommeau au moins 30 minutes dans du vinaigre blanc.',
+      { texte: 'Fais tremper le mousseur ou le pommeau au moins 30 minutes dans du vinaigre blanc.', schema: 'mousseur-tremper' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
       'Frotte avec une vieille brosse à dents, rince, et vérifie le petit joint : change-le s\'il est abîmé.',
       'Revisse à la main et ouvre l\'eau : le jet doit être plus fort et régulier.',
     ],
@@ -226,7 +226,7 @@ export const tutos: Tuto[] = [
     outil: 'aucun',
     etapes: [
       'Ferme le robinet de la douche et mets le bouchon pour ne pas perdre les petits joints.',
-      'Dévisse le flexible à la main : en bas sous le robinet, puis en haut au pommeau.',
+      { texte: 'Dévisse le flexible à la main : en bas sous le robinet, puis en haut au pommeau.', schema: 'flexible-devisser' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
       'Achète un flexible de la même longueur. Les raccords sont presque toujours de taille standard ; emporte l\'ancien au magasin si tu as un doute.',
       'Vérifie qu\'il y a un joint dans chaque écrou (souvent fourni avec le flexible), puis visse à la main, sans outil.',
       'Ouvre l\'eau doucement : si ça goutte à un raccord, resserre un peu à la main ou change son joint.',
@@ -241,7 +241,7 @@ export const tutos: Tuto[] = [
     outil: 'escabeau bas',
     etapes: [
       'Si le plafond est trop haut pour un escabeau bas, ou si le lustre est lourd ou doit être démonté, n\'y va pas : appelle un électricien.',
-      'Éteins l\'interrupteur, puis coupe le disjoncteur de la pièce dans le tableau électrique (pas seulement l\'interrupteur).',
+      { texte: 'Éteins l\'interrupteur, puis coupe le disjoncteur de la pièce dans le tableau électrique (pas seulement l\'interrupteur).', schema: 'ampoule-devisser' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
       'Attends quelques minutes que l\'ampoule refroidisse : elle peut brûler les doigts.',
       'Monte sur un escabeau stable, bien ouvert, jamais sur une chaise ni un tabouret. Si possible, demande à quelqu\'un de le tenir.',
       'Dévisse l\'ampoule (ou tourne-la d\'un quart de tour puis tire, pour les ampoules à petites pattes). Si elle est cassée dans la douille, arrête-toi : appelle un électricien.',

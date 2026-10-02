@@ -7,6 +7,18 @@ export const NOMS_SCHEMAS = [
   'evier-ventouse',
   'evier-demonter-siphon',
   'evier-furet',
+  'wc-ecoulement-lent',
+  'wc-ventouse',
+  'wc-acide',
+  'couper-eau',
+  'raccord-resserrer',
+  'raccord-devisser',
+  'joint-comparer',
+  'joint-remonter',
+  'mousseur-devisser',
+  'mousseur-tremper',
+  'flexible-devisser',
+  'ampoule-devisser',
 ] as const;
 
 export type NomSchema = (typeof NOMS_SCHEMAS)[number];
