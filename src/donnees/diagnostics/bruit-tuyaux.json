@@ -1,0 +1,36 @@
+{
+  "id": "bruit-tuyaux",
+  "titre": "Bruit ou coups dans les tuyaux",
+  "categorie": "plomberie",
+  "icone": "audio-waveform",
+  "motsCles": ["bruit", "coups", "tuyaux", "claquement", "sifflement", "bélier"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Quel bruit entends-tu ?",
+      "reponses": [
+        { "texte": "Un gros « coup » quand on ferme un robinet", "suite": "resultat_belier" },
+        { "texte": "Un sifflement quand l'eau coule", "suite": "resultat_sifflement" },
+        { "texte": "Un bruit qui vient du chauffe-eau", "suite": "resultat_chauffe_eau" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_belier": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "C'est un « coup de bélier ». Ferme les robinets plus doucement en attendant. Un plombier peut poser un anti-bélier."
+    },
+    "resultat_sifflement": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "C'est souvent un robinet d'arrêt à moitié fermé ou un mousseur entartré. Ouvre les robinets d'arrêt à fond, puis détartre le mousseur.",
+      "tutoId": "detartrer-mousseur"
+    },
+    "resultat_chauffe_eau": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Un chauffe-eau qui fait du bruit est souvent très entartré. Pas de danger immédiat, mais fais-le vérifier par un plombier."
+    }
+  }
+}

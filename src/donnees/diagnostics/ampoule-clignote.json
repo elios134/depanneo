@@ -1,0 +1,42 @@
+{
+  "id": "ampoule-clignote",
+  "titre": "Ampoule qui grille souvent ou lumière qui clignote",
+  "categorie": "electricite",
+  "icone": "lightbulb",
+  "motsCles": ["ampoule", "grille", "clignote", "scintille", "lumière"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Le problème touche-t-il une seule lampe ?",
+      "reponses": [
+        { "texte": "Oui", "suite": "q2" },
+        { "texte": "Non, plusieurs lumières clignotent en même temps", "suite": "resultat_pro_urgent" }
+      ]
+    },
+    "q2": {
+      "question": "L'ampoule est-elle bien vissée et adaptée (bonne puissance, LED « compatible variateur » si tu as un variateur) ?",
+      "reponses": [
+        { "texte": "Oui, j'en suis sûr", "suite": "resultat_pro" },
+        { "texte": "Non, ou je ne suis pas sûr", "suite": "resultat_ampoule" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_ampoule": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Revisse l'ampoule, lumière éteinte et disjoncteur de la pièce coupé, ou prends une ampoule adaptée (compatible variateur si besoin).",
+      "tutoId": "changer-ampoule"
+    },
+    "resultat_pro": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "La douille ou l'interrupteur est peut-être abîmé (mauvais contact). Utilise cette lampe le moins possible et fais-la vérifier par un électricien."
+    },
+    "resultat_pro_urgent": {
+      "verdict": "rouge",
+      "titre": "Appelle un pro tout de suite",
+      "conseil": "Plusieurs lumières qui clignotent ensemble peuvent signaler un problème sur l'installation ou le branchement. Débranche les appareils sensibles et appelle un électricien."
+    }
+  }
+}

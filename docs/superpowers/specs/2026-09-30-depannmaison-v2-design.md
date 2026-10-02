@@ -118,8 +118,8 @@ Réglages enregistrés sur le téléphone (`@react-native-async-storage/async-st
 
 - `Diagnostic` : ajoute `categorie: 'plomberie' | 'electricite'`, `motsCles: string[]` (recherche) ; `icone` devient un nom d'icône Lucide.
 - `Reponse` : ajoute `inconnu?: true` pour la réponse « Je ne sais pas » (affichage pointillé). Règle de contenu : une réponse « Je ne sais pas » mène toujours au verdict **le plus prudent** de la branche.
-- `Resultat` : inchangé (verdict, titre, conseil, tutoId, gesteUrgenceId, numeroUtile). Le métier des pros proposés est déduit de `categorie`.
-- `Tuto` : ajoute `categorie`, `icone`, `duree` (ex. « 5 min »), `outil` (ex. « ventouse »).
+- `Resultat` : verdict, titre, conseil, tutoId, gesteUrgenceId, numeroUtile, et (chantier C) `renvoi?: { type: 'diagnostic' | 'urgence'; id }` : bouton qui ouvre un autre diagnostic (depuis la 1re question) ou un geste de l'onglet Urgences. Le métier des pros proposés est déduit de `categorie`.
+- `Tuto` : ajoute `categorie`, `icone`, `duree` (ex. « 5 min »), `outil` (ex. « ventouse »). Chantier C : une étape est un texte ou `{ texte, schema }`, où `schema` est le nom d'un schéma animé (`siphon`, `disjoncteur` pour l'instant).
 - `GesteUrgence` : ajoute `icone`. Le geste `couper-gaz` est renommé côté affichage « Odeur de gaz ? ».
 - Suppression : `odeur-gaz.json`, `chaudiere-en-panne.json`.
 - Historique du diagnostic : pile d'identifiants d'étapes dans l'état de l'écran → « Question précédente » = dépiler ; « Recommencer » = revenir à `etapeInitiale`.
@@ -151,9 +151,13 @@ Processus : Claude rédige `docs/contenu/pannes-v2.md` (pour chaque panne : ques
 
 Règles de contenu : sécurité CLAUDE.md (jamais de tableau électrique ouvert, jamais d'intervention gaz, jamais de travail en hauteur) ; « Je ne sais pas » → verdict le plus prudent ; vocabulaire accessible à quelqu'un qui n'a jamais ouvert une boîte à outils.
 
+**Réalisé au chantier C (01/10)** : les 22 pannes et 16 tutos sont dans `src/donnees/` (le brouillon reste la trace de relecture ; André relit dans l'appli et les corrections se font dans les données). Ajouts validés par la maquette `8-renvois-schemas.html` :
+- **Renvois** : un résultat peut afficher une carte « Continuer avec ce diagnostic » (bleue, `stethoscope`) ou « Odeur de gaz ? — Consignes et numéro d'urgence » (rouge, `flame`). Utilisés par les pannes 4 (chaudière → gaz), 7 (réservoir vide → WC lent à se remplir), 12 (gaz), 18 (disjoncteur général qui re-saute → Disjoncteur qui saute), 20 et 21 (toute la pièce → Plus de courant dans une seule pièce). Sur un verdict rouge avec renvoi vers Urgences, aucun pro n'est proposé.
+- **Schémas animés** : petits dessins en boucle sous certaines étapes de tuto (siphon qui se remplit, disjoncteur qui remonte), dessinés avec `react-native-svg` et les couleurs du thème, figés si le téléphone demande de réduire les animations. D'autres schémas pourront être ajoutés sur le même modèle (`src/ui/schemas/`).
+
 ## 9. Tests et vérification
 
-- Tests unitaires (Jest) sur la logique pure : validation des données (dont icônes et catégories), historique du diagnostic (précédente / recommencer / progression), réglages (lecture/écriture avec valeurs par défaut), parsing de la réponse Overpass, distance, fraîcheur du cache, filtre de recherche des pannes.
+- Tests unitaires (Jest) sur la logique pure : validation des données (dont icônes, catégories, renvois vers des cibles existantes, règles gaz, réponses « Je ne sais pas »), historique du diagnostic (précédente / recommencer / progression), réglages (lecture/écriture avec valeurs par défaut), parsing de la réponse Overpass, distance, fraîcheur du cache, filtre de recherche des pannes, calculs des schémas animés.
 - `npx tsc --noEmit` sans erreur, `npm test` vert.
 - Vérification visuelle par Claude dans le navigateur (version web) à chaque chantier, comparée aux maquettes.
 - Vérification sur téléphone réel par André à la fin de chaque chantier (Expo Go pour A ; build de développement à partir de B).

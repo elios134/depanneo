@@ -3,29 +3,42 @@
   "titre": "WC bouché",
   "categorie": "plomberie",
   "icone": "toilet",
-  "motsCles": ["wc", "toilettes", "bouché", "cuvette"],
+  "motsCles": ["wc", "toilettes", "bouché", "cuvette", "chasse"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {
-      "question": "Depuis quand les WC sont bouchés ?",
+      "question": "L'eau monte-t-elle dans la cuvette quand tu tires la chasse ?",
       "reponses": [
-        { "texte": "Ça vient d'arriver", "suite": "resultat_ventouse" },
-        { "texte": "Depuis plusieurs jours, l'eau remonte lentement", "suite": "resultat_persistant" }
+        { "texte": "Oui, elle monte près du bord", "suite": "resultat_ne_plus_tirer" },
+        { "texte": "Non, elle descend lentement", "suite": "q2" }
+      ]
+    },
+    "q2": {
+      "question": "D'autres évacuations (douche, évier) s'écoulent-elles mal aussi, ou font des bruits de glouglou ?",
+      "reponses": [
+        { "texte": "Non, seulement les WC", "suite": "resultat_ventouse" },
+        { "texte": "Oui", "suite": "resultat_canalisation" },
+        { "texte": "Je ne sais pas", "suite": "resultat_canalisation", "inconnu": true }
       ]
     }
   },
   "resultats": {
+    "resultat_ne_plus_tirer": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Ne tire plus la chasse, sinon ça débordera. Attends que le niveau baisse, puis utilise une ventouse. Si rien ne bouge, appelle un plombier.",
+      "tutoId": "deboucher-wc"
+    },
     "resultat_ventouse": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Une ventouse ou un furet suffit dans la plupart des cas.",
+      "conseil": "Une ventouse à WC suffit dans la plupart des cas. N'utilise pas de produit chimique puis la ventouse (projections).",
       "tutoId": "deboucher-wc"
     },
-    "resultat_persistant": {
+    "resultat_canalisation": {
       "verdict": "orange",
-      "titre": "Essaie de déboucher, sinon appelle un pro",
-      "conseil": "Si la ventouse et le furet ne suffisent pas, le bouchon est probablement plus loin dans la canalisation. Un plombier pourra intervenir avec un matériel adapté.",
-      "tutoId": "deboucher-wc"
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Le bouchon est sûrement dans la canalisation commune. Limite l'usage de l'eau et appelle un plombier (ou le gardien si tu es en immeuble)."
     }
   }
 }

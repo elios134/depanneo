@@ -1,0 +1,36 @@
+{
+  "id": "robinet-dur",
+  "titre": "Robinet dur à fermer ou à ouvrir",
+  "categorie": "plomberie",
+  "icone": "wrench",
+  "motsCles": ["robinet", "dur", "bloqué", "fermer", "ouvrir", "mitigeur"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "C'est quel type de robinet ?",
+      "reponses": [
+        { "texte": "Un mitigeur (une seule manette)", "suite": "resultat_cartouche" },
+        { "texte": "Deux poignées (eau chaude / eau froide)", "suite": "resultat_tete" },
+        { "texte": "Le robinet général ou un robinet d'arrêt", "suite": "resultat_arret" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_cartouche": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "La cartouche du mitigeur est entartrée ou usée. Ne force pas : elle peut casser et fuir. Un plombier la remplace en quelques minutes."
+    },
+    "resultat_tete": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "La tête du robinet est entartrée. Coupe l'eau, dévisse la tête et nettoie-la au vinaigre blanc.",
+      "tutoId": "detartrer-tete-robinet"
+    },
+    "resultat_arret": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Ne force jamais un robinet d'arrêt : s'il casse, tu ne pourras plus couper l'eau. Fais-le remplacer par un plombier. Pense à le manœuvrer 2 fois par an pour qu'il ne se bloque pas."
+    }
+  }
+}

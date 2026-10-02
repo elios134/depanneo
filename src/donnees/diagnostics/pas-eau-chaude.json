@@ -3,40 +3,68 @@
   "titre": "Pas d'eau chaude",
   "categorie": "plomberie",
   "icone": "heater",
-  "motsCles": ["eau chaude", "chauffe-eau", "ballon", "froide"],
-  "etapeInitiale": "q1",
+  "motsCles": ["eau chaude", "chauffe-eau", "ballon", "cumulus", "froide"],
+  "etapeInitiale": "q0",
   "etapes": {
-    "q1": {
-      "question": "As-tu un chauffe-eau électrique ou une chaudière ?",
+    "q0": {
+      "question": "Ton eau chaude vient-elle d'un chauffe-eau électrique (un ballon) ou d'une chaudière (souvent au gaz) ?",
       "reponses": [
-        { "texte": "Chauffe-eau électrique", "suite": "q2" },
-        { "texte": "Chaudière", "suite": "resultat_chaudiere" }
+        { "texte": "Un chauffe-eau électrique", "suite": "q1" },
+        { "texte": "Une chaudière", "suite": "resultat_chauffagiste" },
+        { "texte": "Je ne sais pas", "suite": "resultat_chauffagiste", "inconnu": true }
+      ]
+    },
+    "q1": {
+      "question": "Y a-t-il de l'eau chaude à un autre robinet de la maison ?",
+      "reponses": [
+        { "texte": "Oui, seulement ce robinet est froid", "suite": "resultat_mitigeur" },
+        { "texte": "Non, nulle part", "suite": "q2" }
       ]
     },
     "q2": {
-      "question": "Le disjoncteur du chauffe-eau a-t-il sauté ?",
+      "question": "Le disjoncteur « chauffe-eau » du tableau électrique est-il en position basse ?",
       "reponses": [
-        { "texte": "Oui, il est en position basse", "suite": "resultat_rearmer" },
-        { "texte": "Non, tout est allumé mais toujours pas d'eau chaude", "suite": "resultat_panne" }
+        { "texte": "Oui", "suite": "resultat_rearmer" },
+        { "texte": "Non, il est en haut", "suite": "q3" },
+        { "texte": "Je ne sais pas lequel c'est", "suite": "resultat_pro", "inconnu": true }
+      ]
+    },
+    "q3": {
+      "question": "Ton chauffe-eau chauffe peut-être seulement la nuit (heures creuses). As-tu utilisé beaucoup d'eau chaude depuis hier soir ?",
+      "reponses": [
+        { "texte": "Oui, on en a beaucoup utilisé", "suite": "resultat_attendre" },
+        { "texte": "Non", "suite": "resultat_pro" }
       ]
     }
   },
   "resultats": {
+    "resultat_mitigeur": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le problème vient du robinet (cartouche du mitigeur entartrée), pas du chauffe-eau. Si l'eau coule faiblement, détartre le mousseur ; sinon, appelle un plombier.",
+      "tutoId": "detartrer-mousseur"
+    },
     "resultat_rearmer": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Réarme le disjoncteur du chauffe-eau et attends quelques heures que l'eau chauffe.",
+      "conseil": "Réarme le disjoncteur. L'eau mettra plusieurs heures à chauffer. S'il re-saute, n'insiste pas et appelle un pro.",
       "tutoId": "reparer-disjoncteur"
     },
-    "resultat_panne": {
-      "verdict": "rouge",
-      "titre": "Appelle un pro tout de suite",
-      "conseil": "Le chauffe-eau est probablement en panne (résistance ou thermostat). N'ouvre pas le chauffe-eau toi-même, fais appel à un pro."
+    "resultat_attendre": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le ballon est simplement vide. Attends la nuit (heures creuses) : l'eau sera chaude demain matin."
     },
-    "resultat_chaudiere": {
+    "resultat_pro": {
       "verdict": "orange",
-      "titre": "Vérifie, sinon appelle un chauffagiste",
-      "conseil": "Vérifie que la chaudière est bien alimentée, allumée, et qu'aucun voyant d'erreur n'est affiché. Si le problème persiste, appelle un chauffagiste."
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Pas de danger immédiat, mais le chauffe-eau est probablement en panne (résistance, thermostat ou contacteur). N'ouvre jamais le capot du chauffe-eau : il y a du courant. Appelle un plombier-chauffagiste."
+    },
+    "resultat_chauffagiste": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Les chaudières ne sont pas traitées par l'appli. N'ouvre pas la chaudière et appelle ton chauffagiste (ou ton bailleur si tu es locataire). Si tu sens le gaz, va tout de suite dans l'onglet Urgences.",
+      "renvoi": { "type": "urgence", "id": "couper-gaz" }
     }
   }
 }

@@ -1,0 +1,30 @@
+{
+  "id": "fuite-pied-wc",
+  "titre": "Fuite au pied du WC",
+  "categorie": "plomberie",
+  "icone": "droplet-off",
+  "motsCles": ["wc", "pied", "flaque", "fuite", "sol", "toilettes"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "L'eau apparaît-elle juste après avoir tiré la chasse ?",
+      "reponses": [
+        { "texte": "Oui", "suite": "resultat_pipe" },
+        { "texte": "Non, le sol est humide tout le temps, surtout en été", "suite": "resultat_condensation" },
+        { "texte": "Je ne sais pas", "suite": "resultat_pipe", "inconnu": true }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_pipe": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Le joint entre la cuvette et l'évacuation (la « pipe ») fuit. Ce sont des eaux usées : évite de tirer la chasse, nettoie avec des gants et appelle un plombier."
+    },
+    "resultat_condensation": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Ce n'est sûrement pas une fuite : de la condensation se forme sur le réservoir froid. Aère la pièce et essuie ; si l'eau revient après avoir séché, refais le diagnostic."
+    }
+  }
+}

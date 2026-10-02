@@ -16,6 +16,8 @@ import { CartePro } from '@/ui/CartePro';
 import { FichePro } from '@/ui/FichePro';
 import { NumeroUrgence } from '@/ui/NumeroUrgence';
 import { VerdictBadge } from '@/ui/VerdictBadge';
+import { prosVisibles } from '../lib/renvoi';
+import { CarteRenvoi } from './CarteRenvoi';
 
 interface Props {
   resultat: Resultat;
@@ -30,8 +32,11 @@ export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
   const [proOuvert, setProOuvert] = useState<Pro | null>(null);
   const tuto = tutos.find((t) => t.id === resultat.tutoId);
   const geste = gestesUrgence.find((g) => g.id === resultat.gesteUrgenceId);
-  const prosMetier = filtrerPros(pros, metier).slice(0, resultat.verdict === 'vert' ? 1 : 2);
+  const prosMetier = prosVisibles(resultat)
+    ? filtrerPros(pros, metier).slice(0, resultat.verdict === 'vert' ? 1 : 2)
+    : [];
 
+  const carteRenvoi = resultat.renvoi ? <CarteRenvoi key="renvoi" renvoi={resultat.renvoi} /> : null;
   const boutonTuto = tuto ? (
     <BoutonPrincipal
       key="tuto"
@@ -58,15 +63,16 @@ export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
           {resultat.verdict === 'vert' ? 'Si tu préfères un pro' : `${LIBELLES_METIER[metier]}s près de toi`}
         </Text>
         {prosMetier.map((pro) => (
-          <CartePro key={pro.id} pro={pro} onOuvrir={setProOuvert} />
+          <CartePro key={pro.id} pro={pro} metier={metier} onOuvrir={setProOuvert} />
         ))}
       </View>
     ) : null;
 
+  // Le renvoi passe toujours en premier, juste sous le conseil (maquette 8).
   const actions =
-    resultat.verdict === 'vert' ? [boutonTuto, carteGeste, sectionPros] :
-    resultat.verdict === 'orange' ? [carteGeste, numero, sectionPros, boutonTuto] :
-    [numero, sectionPros, carteGeste];
+    resultat.verdict === 'vert' ? [carteRenvoi, boutonTuto, carteGeste, sectionPros] :
+    resultat.verdict === 'orange' ? [carteRenvoi, carteGeste, numero, sectionPros, boutonTuto] :
+    [carteRenvoi, numero, sectionPros, carteGeste];
 
   return (
     <>

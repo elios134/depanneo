@@ -1,0 +1,44 @@
+{
+  "id": "chasse-ne-marche-plus",
+  "titre": "Chasse d'eau qui ne se déclenche plus",
+  "categorie": "plomberie",
+  "icone": "circle-x",
+  "motsCles": ["chasse", "bouton", "tirette", "wc", "ne marche pas"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "Le réservoir est-il plein d'eau ? (soulève le couvercle pour regarder)",
+      "reponses": [
+        { "texte": "Oui, il est plein", "suite": "q2" },
+        { "texte": "Non, il est vide", "suite": "resultat_vide" }
+      ]
+    },
+    "q2": {
+      "question": "Quand tu appuies sur le bouton, sens-tu une résistance ?",
+      "reponses": [
+        { "texte": "Non, le bouton appuie dans le vide", "suite": "resultat_tringle" },
+        { "texte": "Oui, mais rien ne se passe", "suite": "resultat_mecanisme" },
+        { "texte": "Je ne sais pas", "suite": "resultat_mecanisme", "inconnu": true }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_vide": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "L'eau n'arrive pas dans le réservoir : vérifie que le petit robinet d'arrivée est ouvert à fond. Sinon, continue avec le diagnostic « WC lent à se remplir ».",
+      "renvoi": { "type": "diagnostic", "id": "wc-lent-a-remplir" }
+    },
+    "resultat_tringle": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "La petite tige ou le câble entre le bouton et le mécanisme s'est décroché. Soulève le couvercle et raccroche-le.",
+      "tutoId": "raccrocher-tringle"
+    },
+    "resultat_mecanisme": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Le mécanisme est bloqué ou cassé. En attendant, tu peux vider la cuvette avec un seau d'eau. Un plombier changera le mécanisme."
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "id": "odeur-egout",
+  "titre": "Mauvaise odeur d'égout",
+  "categorie": "plomberie",
+  "icone": "wind",
+  "motsCles": ["odeur", "égout", "mauvaise odeur", "siphon", "sent"],
+  "etapeInitiale": "q0",
+  "etapes": {
+    "q0": {
+      "question": "Est-ce plutôt une odeur de gaz (œuf pourri, odeur « chimique ») ?",
+      "reponses": [
+        { "texte": "Oui", "suite": "resultat_gaz" },
+        { "texte": "Non, ça sent l'égout", "suite": "q1" },
+        { "texte": "Je ne suis pas sûr", "suite": "resultat_gaz", "inconnu": true }
+      ]
+    },
+    "q1": {
+      "question": "L'odeur vient-elle d'une évacuation peu utilisée (douche d'amis, lavabo, siphon de sol) ?",
+      "reponses": [
+        { "texte": "Oui", "suite": "resultat_siphon_sec" },
+        { "texte": "Non, d'un évier ou d'une douche utilisés tous les jours", "suite": "resultat_nettoyer" },
+        { "texte": "Je ne sais pas d'où elle vient", "suite": "resultat_pro", "inconnu": true }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_siphon_sec": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "L'eau du siphon s'est évaporée et laisse passer l'odeur. Fais couler l'eau une minute.",
+      "tutoId": "remplir-siphon"
+    },
+    "resultat_nettoyer": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le siphon est encrassé.",
+      "tutoId": "nettoyer-siphon"
+    },
+    "resultat_pro": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Une odeur d'égout persistante sans origine visible peut venir d'une ventilation ou d'une canalisation abîmée. Aère et appelle un plombier."
+    },
+    "resultat_gaz": {
+      "verdict": "rouge",
+      "titre": "Appelle un pro tout de suite",
+      "conseil": "Ne touche à aucun interrupteur, n'allume rien, ouvre les fenêtres, sors et appelle le numéro d'urgence gaz depuis l'extérieur.",
+      "numeroUtile": "0800 47 33 33",
+      "renvoi": { "type": "urgence", "id": "couper-gaz" }
+    }
+  }
+}

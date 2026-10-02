@@ -1,6 +1,8 @@
 # Contenu des 22 pannes — brouillon à relire par André
 
-> **Comment relire :** corrige directement dans ce fichier : barre, reformule, ajoute ce qui manque. Seules les pannes marquées ✅ dans la colonne « Validé » du sommaire seront converties en données de l'appli.
+> **Converti en données le 01/10 (chantier C)** : `src/donnees/diagnostics/*.json` et `src/donnees/tutos.ts` font désormais foi. André relit dans l'appli ; les corrections se font dans ces fichiers.
+
+> **Comment corriger :** ce fichier est le brouillon historique. Pour corriger une panne, dis-le à Claude (ou modifie directement les JSON de `src/donnees/diagnostics/`).
 >
 > **Règles appliquées partout :**
 > - Jamais d'intervention sur le tableau électrique ouvert, le gaz ou en hauteur : ces cas renvoient toujours vers un pro.
@@ -72,7 +74,7 @@ Mots-clés : wc, toilettes, bouché, cuvette, chasse
 - **Q2 — D'autres évacuations (douche, évier) s'écoulent-elles mal aussi, ou font des bruits de glouglou ?**
   - Non, seulement les WC → R-ventouse
   - Oui → R-canalisation
-  - Je ne sais pas → R-ventouse
+  - Je ne sais pas → R-canalisation
 - **Résultats**
   - R-ne-plus-tirer 🟠 : Ne tire plus la chasse, sinon ça débordera. Attends que le niveau baisse, puis utilise une ventouse. Si rien ne bouge, appelle un plombier. — tuto *Déboucher des WC*
   - R-ventouse 🟢 : Une ventouse à WC suffit dans la plupart des cas. N'utilise pas de produit chimique puis la ventouse (projections). — tuto *Déboucher des WC*
@@ -89,7 +91,7 @@ Mots-clés : évier, lavabo, bouché, écoulement, siphon
 - **Q2 — D'autres évacuations sont-elles touchées (autre évier, douche) ?**
   - Non, seulement celui-ci → R-siphon
   - Oui → R-canalisation
-  - Je ne sais pas → R-siphon
+  - Je ne sais pas → R-canalisation
 - **Résultats**
   - R-deboucher 🟢 : Une ventouse ou un furet suffit généralement. — tuto *Déboucher un évier*
   - R-siphon 🟢 : Le bouchon est sûrement dans le siphon (le coude sous l'évier). Il se dévisse à la main. — tuto *Nettoyer un siphon*
@@ -125,14 +127,14 @@ Mots-clés : wc, chasse, réservoir, lent, remplir, flotteur
 - **Q1 — Le petit robinet d'arrivée d'eau des WC (sur le tuyau, derrière ou à côté) est-il ouvert à fond ?**
   - Oui, à fond → Q2
   - Non, ou je ne suis pas sûr → R-ouvrir
-  - Je ne sais pas où il est → R-ouvrir
+  - Je ne sais pas où il est → R-pro
 - **Q2 — Le problème est-il apparu petit à petit ?**
   - Oui, de plus en plus lent → R-calcaire
   - Non, d'un coup → R-pro
 - **Résultats**
   - R-ouvrir 🟢 : Tourne le petit robinet d'arrivée dans le sens inverse des aiguilles d'une montre jusqu'en butée. Souvent il a été fermé à moitié lors d'une réparation.
   - R-calcaire 🟢 : Le robinet flotteur (la pièce qui remplit le réservoir) est entartré. — tuto *Détartrer le robinet flotteur*
-  - R-pro 🟠 : Pas de danger. Le robinet flotteur est peut-être cassé : un plombier le remplacera rapidement.
+  - R-pro 🟠 : Pas de danger. Le robinet flotteur est peut-être cassé : un plombier le remplacera rapidement. Si tu ne trouves pas le petit robinet d'arrivée, il le repérera aussi.
 
 ### 6. Chasse d'eau qui coule en continu
 Mots-clés : chasse, coule, fuit, réservoir, wc, clapet
@@ -309,7 +311,7 @@ Mots-clés : courant, électricité, coupure, noir, panne
   - Je ne le trouve pas → R-pro
 - **Résultats**
   - R-reseau 🟠 : Coupure du réseau. Attends le rétablissement. Le numéro de dépannage d'Enedis figure sur ta facture d'électricité. Débranche les appareils sensibles en attendant.
-  - R-reenclencher 🟢 : Remets-le en position haute. S'il re-saute, fais le diagnostic « Disjoncteur qui saute ». — tuto *Réarmer un disjoncteur*
+  - R-reenclencher 🟢 : Remets-le en position haute. S'il re-saute, continue avec le diagnostic « Disjoncteur qui saute ». — tuto *Réarmer un disjoncteur* — renvoi *diagnostic 17*
   - R-pro 🔴 : Une coupure chez toi sans disjoncteur coupé est anormale. N'ouvre pas le tableau. Appelle un électricien, ou le dépannage Enedis (sur ta facture).
 
 ### 19. Plus de courant dans une seule pièce
@@ -403,3 +405,6 @@ Les étapes des 12 nouveaux tutos seront rédigées après validation des pannes
 4. Tuto « Changer une ampoule » : gardé, avec avertissement (disjoncteur coupé, escabeau stable, plafond haut ou lustre lourd → pro).
 5. Renvois (pannes 7, 20, 21) : un **bouton** sur le résultat ouvre directement l'autre diagnostic (même bouton pour « Urgences › Odeur de gaz ? »). Maquette à valider.
 6. Relecture complète des arbres : André relira dans l'appli ; on corrigera ensuite.
+7. Coordination (01/10) : « Je ne sais pas » applique la règle du verdict le plus prudent dans les pannes 2 (Q2 → R-canalisation), 3 (Q2 → R-canalisation) et 5 (Q1 → R-pro). Exception gardée : panne 1 Q1 (« il y a de l'eau par terre » exclut le plafond → orange).
+8. Panne 18 : R-reenclencher renvoie vers le diagnostic « Disjoncteur qui saute ».
+9. Notés pour plus tard (non modifiés) : pas de « Je ne sais pas » aux pannes 8, 15, 16 et 20 (Q1) ; panne 11 sans réponse « plus du tout, seulement la douche ».

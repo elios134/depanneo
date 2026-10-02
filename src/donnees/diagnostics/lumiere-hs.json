@@ -1,0 +1,43 @@
+{
+  "id": "lumiere-hs",
+  "titre": "Interrupteur ou lumière qui ne marche plus",
+  "categorie": "electricite",
+  "icone": "lightbulb-off",
+  "motsCles": ["interrupteur", "lumière", "lampe", "plafonnier", "marche pas"],
+  "etapeInitiale": "q1",
+  "etapes": {
+    "q1": {
+      "question": "As-tu déjà essayé une ampoule neuve (qui marche ailleurs) ?",
+      "reponses": [
+        { "texte": "Non", "suite": "resultat_ampoule" },
+        { "texte": "Oui, toujours rien", "suite": "q2" }
+      ]
+    },
+    "q2": {
+      "question": "Les autres lumières de la pièce marchent-elles ?",
+      "reponses": [
+        { "texte": "Non plus", "suite": "resultat_piece" },
+        { "texte": "Oui", "suite": "resultat_pro" }
+      ]
+    }
+  },
+  "resultats": {
+    "resultat_ampoule": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Commence par changer l'ampoule, avec le disjoncteur de la pièce coupé.",
+      "tutoId": "changer-ampoule"
+    },
+    "resultat_piece": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le problème touche toute la pièce : ça vient sûrement du tableau électrique, pas de l'interrupteur.",
+      "renvoi": { "type": "diagnostic", "id": "courant-une-piece" }
+    },
+    "resultat_pro": {
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "L'interrupteur ou un fil est défectueux. Ne démonte rien : appelle un électricien."
+    }
+  }
+}

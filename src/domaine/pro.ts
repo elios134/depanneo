@@ -1,3 +1,4 @@
+import { formaterDistance } from './distance';
 import type { Categorie } from './types';
 
 export type Metier = 'plombier' | 'electricien';
@@ -25,4 +26,9 @@ export const LIBELLES_METIER: Record<Metier, string> = {
 
 export function metierDeCategorie(categorie: Categorie): Metier {
   return categorie === 'plomberie' ? 'plombier' : 'electricien';
+}
+
+/** Sous-titre d'un pro : tous ses métiers puis la distance. */
+export function sousTitrePro(pro: Pro): string {
+  return [...pro.metiers.map((m) => LIBELLES_METIER[m]), formaterDistance(pro.distanceKm)].join(' · ');
 }

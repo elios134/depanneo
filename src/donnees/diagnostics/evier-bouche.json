@@ -3,14 +3,22 @@
   "titre": "Évier ou lavabo bouché",
   "categorie": "plomberie",
   "icone": "waves",
-  "motsCles": ["évier", "lavabo", "bouché", "écoulement"],
+  "motsCles": ["évier", "lavabo", "bouché", "écoulement", "siphon"],
   "etapeInitiale": "q1",
   "etapes": {
     "q1": {
       "question": "L'eau s'écoule-t-elle un peu, ou plus du tout ?",
       "reponses": [
         { "texte": "Elle s'écoule lentement", "suite": "resultat_deboucher" },
-        { "texte": "Elle ne s'écoule plus du tout, et d'autres éviers sont touchés", "suite": "resultat_canalisation" }
+        { "texte": "Plus du tout", "suite": "q2" }
+      ]
+    },
+    "q2": {
+      "question": "D'autres évacuations sont-elles touchées (autre évier, douche) ?",
+      "reponses": [
+        { "texte": "Non, seulement celui-ci", "suite": "resultat_siphon" },
+        { "texte": "Oui", "suite": "resultat_canalisation" },
+        { "texte": "Je ne sais pas", "suite": "resultat_canalisation", "inconnu": true }
       ]
     }
   },
@@ -21,10 +29,16 @@
       "conseil": "Une ventouse ou un furet suffit généralement.",
       "tutoId": "deboucher-evier"
     },
+    "resultat_siphon": {
+      "verdict": "vert",
+      "titre": "Tu peux réparer ça toi-même",
+      "conseil": "Le bouchon est sûrement dans le siphon (le coude sous l'évier). Il se dévisse à la main.",
+      "tutoId": "nettoyer-siphon"
+    },
     "resultat_canalisation": {
       "verdict": "orange",
-      "titre": "Fais appel à un pro",
-      "conseil": "Le bouchon est probablement profond dans une canalisation commune. Un plombier sera plus efficace."
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "Le bouchon est dans une canalisation commune. N'utilise plus l'eau et appelle un plombier."
     }
   }
 }
