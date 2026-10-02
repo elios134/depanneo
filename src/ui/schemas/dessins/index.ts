@@ -2,6 +2,10 @@
 import type { NomDessine } from '@/domaine/etapes';
 import type { Dessin } from '../dessin';
 import { ampouleDevisser, flexibleDevisser, mousseurDevisser, mousseurTremper } from './divers';
+import { flotteurNettoyer, flotteurSortir, reservoirRemplissage } from './flotteur';
+import {
+  mecanismeEcrou, mecanismeQuartTour, papillons, reservoirRetirer, reservoirVidange, tuyauAlimentation,
+} from './mecanisme';
 import { evierDemonterSiphon, evierDevisserSiphon, evierFuret, evierNettoyer, evierVentouse } from './evier';
 import { couperEau, jointComparer, jointRemonter, raccordDevisser, raccordResserrer } from './raccord';
 import { wcAcide, wcEcoulementLent, wcVentouse } from './wc';
@@ -24,4 +28,13 @@ export const DESSINS: Record<NomDessine, Dessin> = {
   'mousseur-tremper': mousseurTremper,
   'flexible-devisser': flexibleDevisser,
   'ampoule-devisser': ampouleDevisser,
+  'flotteur-sortir': flotteurSortir,
+  'flotteur-nettoyer': flotteurNettoyer,
+  'reservoir-remplissage': reservoirRemplissage,
+  'reservoir-vidange': reservoirVidange,
+  'mecanisme-quart-tour': mecanismeQuartTour,
+  'tuyau-alimentation': tuyauAlimentation,
+  'papillons': papillons,
+  'reservoir-retirer': reservoirRetirer,
+  'mecanisme-ecrou': mecanismeEcrou,
 };

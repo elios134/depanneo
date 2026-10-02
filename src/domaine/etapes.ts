@@ -19,6 +19,15 @@ export const NOMS_SCHEMAS = [
   'mousseur-tremper',
   'flexible-devisser',
   'ampoule-devisser',
+  'flotteur-sortir',
+  'flotteur-nettoyer',
+  'reservoir-remplissage',
+  'reservoir-vidange',
+  'mecanisme-quart-tour',
+  'tuyau-alimentation',
+  'papillons',
+  'reservoir-retirer',
+  'mecanisme-ecrou',
 ] as const;
 
 export type NomSchema = (typeof NOMS_SCHEMAS)[number];

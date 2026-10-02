@@ -39,3 +39,8 @@ export function cuvette(): Forme[] {
     { type: 'rect', x: 86, y: 78, l: 28, h: 42, peinture: 'objet' },
   ];
 }
+
+/** Réservoir de chasse vu en coupe, ouvert vers le haut ('trait' = sans fond). */
+export function reservoirOuvert(peinture: 'objet' | 'trait' = 'objet'): Forme[] {
+  return [{ type: 'chemin', d: 'M30 8 V96 H190 V8', peinture }];
+}

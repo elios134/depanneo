@@ -88,9 +88,9 @@ export const tutos: Tuto[] = [
       'Ferme le petit robinet d\'arrivée d\'eau des WC (dans le sens des aiguilles d\'une montre), puis tire la chasse pour vider le réservoir.',
       'Soulève le couvercle du réservoir et pose-le à plat sur une serviette : il est lourd et casse facilement.',
       'Repère le robinet flotteur : la pièce reliée au tuyau d\'arrivée, avec un flotteur qui monte et descend.',
-      'Enlève le capuchon du robinet flotteur s\'il se déclipse ou se dévisse à la main. S\'il faut un outil ou forcer, arrête-toi là et appelle un plombier.',
-      'Fais tremper les petites pièces 15 minutes dans du vinaigre blanc, frotte-les avec une vieille brosse à dents, puis rince-les.',
-      'Remonte tout, rouvre le petit robinet d\'arrivée et vérifie que le réservoir se remplit plus vite et s\'arrête bien.',
+      { texte: 'Enlève le capuchon du robinet flotteur s\'il se déclipse ou se dévisse à la main. S\'il faut un outil ou forcer, arrête-toi là et appelle un plombier.', schema: 'flotteur-sortir' }, // TEMPORAIRE (Tâche 4), la Tâche 6 réécrit ce tuto
+      { texte: 'Fais tremper les petites pièces 15 minutes dans du vinaigre blanc, frotte-les avec une vieille brosse à dents, puis rince-les.', schema: 'flotteur-nettoyer' }, // TEMPORAIRE (Tâche 4), la Tâche 6 réécrit ce tuto
+      { texte: 'Remonte tout, rouvre le petit robinet d\'arrivée et vérifie que le réservoir se remplit plus vite et s\'arrête bien.', schema: 'reservoir-remplissage' }, // TEMPORAIRE (Tâche 4), la Tâche 6 réécrit ce tuto
     ],
   },
   {
@@ -117,12 +117,12 @@ export const tutos: Tuto[] = [
     duree: '20 min',
     outil: 'joint neuf',
     etapes: [
-      'Ferme le petit robinet d\'arrivée d\'eau des WC, puis tire la chasse pour vider le réservoir.',
-      'Soulève le couvercle du réservoir et pose-le à plat sur une serviette.',
-      'Sors le mécanisme de chasse (la colonne au milieu) : sur la plupart des modèles, tourne-le d\'un quart de tour et soulève-le. S\'il ne vient pas à la main, arrête-toi là et appelle un plombier.',
-      'Retire le joint en caoutchouc sous le mécanisme et emporte-le au magasin de bricolage pour acheter le même.',
-      'Nettoie le fond du réservoir, là où le joint s\'appuie (éponge et vinaigre blanc), puis mets le joint neuf.',
-      'Remets le mécanisme, rouvre le petit robinet d\'arrivée et vérifie que l\'eau ne coule plus dans la cuvette.',
+      { texte: 'Ferme le petit robinet d\'arrivée d\'eau des WC, puis tire la chasse pour vider le réservoir.', schema: 'tuyau-alimentation' }, // TEMPORAIRE (Tâche 4), la Tâche 6 réécrit ce tuto
+      { texte: 'Soulève le couvercle du réservoir et pose-le à plat sur une serviette.', schema: 'papillons' }, // TEMPORAIRE (Tâche 4), la Tâche 6 réécrit ce tuto
+      { texte: 'Sors le mécanisme de chasse (la colonne au milieu) : sur la plupart des modèles, tourne-le d\'un quart de tour et soulève-le. S\'il ne vient pas à la main, arrête-toi là et appelle un plombier.', schema: 'mecanisme-quart-tour' }, // TEMPORAIRE (Tâche 4), la Tâche 6 réécrit ce tuto
+      { texte: 'Retire le joint en caoutchouc sous le mécanisme et emporte-le au magasin de bricolage pour acheter le même.', schema: 'reservoir-retirer' }, // TEMPORAIRE (Tâche 4), la Tâche 6 réécrit ce tuto
+      { texte: 'Nettoie le fond du réservoir, là où le joint s\'appuie (éponge et vinaigre blanc), puis mets le joint neuf.', schema: 'mecanisme-ecrou' }, // TEMPORAIRE (Tâche 4), la Tâche 6 réécrit ce tuto
+      { texte: 'Remets le mécanisme, rouvre le petit robinet d\'arrivée et vérifie que l\'eau ne coule plus dans la cuvette.', schema: 'reservoir-vidange' }, // TEMPORAIRE (Tâche 4), la Tâche 6 réécrit ce tuto
     ],
   },
   {
