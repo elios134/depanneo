@@ -34,7 +34,7 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le siphon est encrassé.",
-      "tutoId": "nettoyer-siphon"
+      "tutoId": "deboucher-evier"
     },
     "resultat_pro": {
       "verdict": "orange",

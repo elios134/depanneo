@@ -33,7 +33,7 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le bouchon est sûrement dans le siphon (le coude sous l'évier). Il se dévisse à la main.",
-      "tutoId": "nettoyer-siphon"
+      "tutoId": "deboucher-evier"
     },
     "resultat_canalisation": {
       "verdict": "orange",

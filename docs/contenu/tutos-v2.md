@@ -1,5 +1,7 @@
 # Tutos v2 — étapes dictées par André (brouillon)
 
+**Statut : intégré dans l'appli (src/donnees/tutos.ts fait foi).**
+
 Brouillon des tutos réécrits par André, avec les schémas animés proposés (🎞️).
 Une fois validés en maquette, ils seront reportés dans `src/donnees/tutos.ts` (source de vérité).
 
@@ -120,7 +122,7 @@ lien de tuto retiré, le conseil suffit (validé). Passage à 13 tutos.
   voir « Pannes modifiées suite au tri » ci-dessous (validé).
 - Gardés tels quels : Détartrer un mousseur ou un pommeau, Changer un flexible de douche, Réarmer un disjoncteur, Changer une ampoule.
 - Gardé mais à réécrire (dictée André) : Remplir un siphon.
-- Total : 9 tutos.
+- Total : 10 tutos.
 
 ## Pannes modifiées suite au tri (validé André 02/10)
 

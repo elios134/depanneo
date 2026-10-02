@@ -20,13 +20,13 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le robinet flotteur ne coupe plus l'eau : il faut régler le niveau (souvent une vis ou un clip).",
-      "tutoId": "regler-flotteur"
+      "tutoId": "detartrer-flotteur"
     },
     "resultat_clapet": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le joint du clapet, au fond du réservoir, est usé ou entartré.",
-      "tutoId": "changer-joint-clapet"
+      "tutoId": "changer-mecanisme-chasse"
     },
     "resultat_couper": {
       "verdict": "orange",

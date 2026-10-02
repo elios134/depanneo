@@ -32,8 +32,7 @@
     "resultat_tringle": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "La petite tige ou le câble entre le bouton et le mécanisme s'est décroché. Soulève le couvercle et raccroche-le.",
-      "tutoId": "raccrocher-tringle"
+      "conseil": "La petite tige ou le câble entre le bouton et le mécanisme s'est décroché. Soulève le couvercle et raccroche-le."
     },
     "resultat_mecanisme": {
       "verdict": "orange",
