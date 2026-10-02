@@ -34,3 +34,7 @@ Cette version est autonome (elle n'a pas besoin de ton PC), mais chaque changeme
 - La carte s'affiche (sombre ou claire selon le thème) avec ton point bleu et les pros proches.
 - Mode avion : bandeau « Hors connexion », la dernière liste de pros reste affichée.
 - Refuser la localisation : le champ « Ta ville ou ton code postal » apparaît.
+
+## Icône et écran de démarrage
+
+Les images de `assets/images/` sont générées depuis `assets/logo/` par `python scripts/generer-icones.py` (Pillow). Pour une icône plus nette, remplacer le fichier du logo puis relancer le script et `npx expo prebuild --clean`.
