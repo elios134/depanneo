@@ -48,3 +48,8 @@ export function texteEtape(etape: EtapeTuto): string {
 export function schemaEtape(etape: EtapeTuto): NomSchema | undefined {
   return typeof etape === 'string' ? undefined : etape.schema;
 }
+
+/** Toutes les étapes d'un tuto, Plan B compris, dans l'ordre d'affichage. */
+export function toutesLesEtapes(tuto: { etapes: EtapeTuto[]; planB?: { etapes: EtapeTuto[] } }): EtapeTuto[] {
+  return [...tuto.etapes, ...(tuto.planB?.etapes ?? [])];
+}

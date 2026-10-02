@@ -1,6 +1,6 @@
 import {
   AudioWaveform, Bath, BookOpen, ChevronLeft, ChevronRight, CircleX, Clock, Cylinder, DoorOpen, Droplet,
-  DropletOff, Droplets, Flame, Gauge, Globe, HardHat, Heater, Hourglass, House, Lightbulb, LightbulbOff,
+  DropletOff, Droplets, Flame, Gauge, Globe, HardHat, Heater, Hourglass, House, Info, Lightbulb, LightbulbOff,
   LocateFixed, Mail, MapPin, Phone, Plug, Power, RotateCcw, RotateCw, Search, Settings, ShieldAlert,
   ShowerHead, Siren, Stethoscope, Toilet, ToggleLeft, TriangleAlert, Waves, Wind, Wrench, X, Zap,
   ZapOff, type LucideIcon,
@@ -16,7 +16,7 @@ const COMPOSANTS: Record<NomIcone, LucideIcon> = {
   'triangle-alert': TriangleAlert, 'book-open': BookOpen, 'map-pin': MapPin, settings: Settings,
   stethoscope: Stethoscope, phone: Phone, 'locate-fixed': LocateFixed, search: Search,
   'rotate-ccw': RotateCcw, 'shield-alert': ShieldAlert, 'hard-hat': HardHat, flame: Flame,
-  power: Power, clock: Clock, globe: Globe, mail: Mail, siren: Siren, 'chevron-right': ChevronRight, 'chevron-left': ChevronLeft, x: X, zap: Zap,
+  power: Power, clock: Clock, globe: Globe, mail: Mail, info: Info, siren: Siren, 'chevron-right': ChevronRight, 'chevron-left': ChevronLeft, x: X, zap: Zap,
 };
 
 interface Props {

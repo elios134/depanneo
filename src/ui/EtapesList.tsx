@@ -5,7 +5,7 @@ import { teinte } from '@/theme/teinte';
 import { useTheme } from '@/theme/ThemeProvider';
 import { SchemaAnime } from './schemas/SchemaAnime';
 
-export function EtapesList({ etapes }: { etapes: readonly EtapeTuto[] }) {
+export function EtapesList({ etapes, premierNumero = 1 }: { etapes: readonly EtapeTuto[]; premierNumero?: number }) {
   const { couleurs } = useTheme();
   return (
     <View style={styles.liste}>
@@ -14,7 +14,7 @@ export function EtapesList({ etapes }: { etapes: readonly EtapeTuto[] }) {
         return (
           <View key={index} style={[styles.ligne, { backgroundColor: couleurs.carte, borderColor: couleurs.bordure }]}>
             <View style={[styles.numero, { backgroundColor: teinte(couleurs.accent, 0.18) }]}>
-              <Text style={[styles.numeroTexte, { color: couleurs.accent }]}>{index + 1}</Text>
+              <Text style={[styles.numeroTexte, { color: couleurs.accent }]}>{premierNumero + index}</Text>
             </View>
             <View style={styles.corps}>
               <Text style={[styles.texte, { color: couleurs.texte }]}>{texteEtape(etape)}</Text>

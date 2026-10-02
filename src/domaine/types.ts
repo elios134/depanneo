@@ -50,6 +50,20 @@ export interface GesteUrgence {
   numeroUtile?: string;
 }
 
+/** Encadré en haut d'un tuto : alerte (rouge) ou info (bleu), avec éventuellement un bouton de renvoi. */
+export interface EncadreTuto {
+  ton: 'alerte' | 'info';
+  titre?: string;
+  texte: string;
+  renvoi?: Renvoi;
+}
+
+/** Suite du tuto si les premières étapes n'ont pas suffi ; la numérotation continue. */
+export interface PlanB {
+  sousTitre: string;
+  etapes: EtapeTuto[];
+}
+
 export interface Tuto {
   id: string;
   titre: string;
@@ -58,4 +72,6 @@ export interface Tuto {
   duree: string;
   outil: string;
   etapes: EtapeTuto[];
+  encadre?: EncadreTuto;
+  planB?: PlanB;
 }

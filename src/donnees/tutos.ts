@@ -28,6 +28,9 @@ export const tutos: Tuto[] = [
       { texte: 'Effectue des mouvements de va-et-vient fermes pendant une minute.', schema: 'wc-ecoulement-lent' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
       { texte: 'Si ça ne suffit pas, utilise un furet spécial WC en le poussant doucement.', schema: 'wc-acide' }, // TEMPORAIRE (Tâche 3), la Tâche 6 réécrit ce tuto
     ],
+    // TEMPORAIRE (Tâche 5), la Tâche 6 met le vrai contenu
+    encadre: { ton: 'alerte', titre: "L'eau remonte sans que tu tires la chasse ?", texte: "N'essaie rien et appelle tout de suite un plombier." },
+    planB: { sousTitre: 'si ça ne suffit pas', etapes: ['Appelle un plombier.'] }, // TEMPORAIRE (Tâche 5)
   },
   {
     id: 'changer-joint',
@@ -193,6 +196,7 @@ export const tutos: Tuto[] = [
     icone: 'wind',
     duree: '2 min',
     outil: 'aucun',
+    encadre: { ton: 'info', texte: 'Tu sens une odeur de gaz ?', renvoi: { type: 'urgence', id: 'couper-gaz' } }, // TEMPORAIRE (Tâche 5)
     etapes: [
       'Repère l\'évacuation qui sent : douche d\'amis, lavabo peu utilisé, siphon de sol.',
       {
