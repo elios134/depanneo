@@ -9,10 +9,11 @@ export const tutos: Tuto[] = [
     duree: '10 min',
     outil: 'furet',
     etapes: [
-      'Mets des gants. N\'utilise jamais la ventouse après avoir versé un produit déboucheur : il pourrait t\'éclabousser.',
-      'Retire l\'eau stagnante avec un récipient si l\'évier est plein.',
-      'Utilise une ventouse en appuyant fermement plusieurs fois sur l\'orifice d\'évacuation.',
-      'Si ça ne suffit pas, utilise un furet en le poussant doucement dans la canalisation.',
+      { texte: 'Mets des gants. N\'utilise jamais la ventouse après avoir versé un produit déboucheur : il pourrait t\'éclabousser.', schema: 'evier-devisser-siphon' },
+      { texte: 'Retire l\'eau stagnante avec un récipient si l\'évier est plein.', schema: 'evier-nettoyer' },
+      { texte: 'Utilise une ventouse en appuyant fermement plusieurs fois sur l\'orifice d\'évacuation.', schema: 'evier-ventouse' },
+      { texte: 'Si ça ne suffit pas, utilise un furet en le poussant doucement dans la canalisation.', schema: 'evier-furet' },
+      { texte: 'Provisoire : démonter le siphon.', schema: 'evier-demonter-siphon' }, // TEMPORAIRE, la Tâche 6 réécrit ce tuto
     ],
   },
   {
