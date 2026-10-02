@@ -11,7 +11,8 @@
       "reponses": [
         { "texte": "Un mitigeur (une seule manette)", "suite": "resultat_cartouche" },
         { "texte": "Deux poignées (eau chaude / eau froide)", "suite": "resultat_tete" },
-        { "texte": "Le robinet général", "suite": "resultat_arret" }
+        { "texte": "Le robinet général", "suite": "resultat_arret" },
+        { "texte": "Un petit robinet d'arrêt (WC, évier, lave-linge)", "suite": "resultat_arret" }
       ]
     }
   },

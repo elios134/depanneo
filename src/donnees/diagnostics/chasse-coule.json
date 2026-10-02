@@ -19,7 +19,7 @@
     "resultat_flotteur": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Le robinet flotteur ne coupe plus l'eau : il faut régler le niveau (souvent une vis ou un clip).",
+      "conseil": "Le robinet flotteur ne coupe plus l'eau : il est souvent entartré ou sa membrane est usée.",
       "tutoId": "detartrer-flotteur"
     },
     "resultat_clapet": {

@@ -130,6 +130,10 @@ lien de tuto retiré, le conseil suffit (validé). Passage à 13 tutos.
 - `resultat_tete` (deux poignées) : 🟢 → 🟠, sans tuto. Conseil : « La tête du robinet est entartrée. Ne force pas : un plombier la nettoie ou la change rapidement. »
 - `resultat_arret` (robinet général) : reste 🟠. Conseil : « Ne force jamais un robinet d'arrêt : s'il casse, tu ne pourras plus couper l'eau. Pour le changer, il faut couper l'eau de tout l'immeuble, ou parfois en amont du compteur pour une maison : c'est un travail de plombier. Pense à le manœuvrer 2 fois par an pour qu'il ne se bloque pas. »
 - Libellé de la réponse : « Le robinet général » (on retire « ou un robinet d'arrêt »).
+- 4e réponse ajoutée (02/10) : « Un petit robinet d'arrêt (WC, évier, lave-linge) » → même résultat que le robinet général.
+
+**chasse-coule**
+- resultat_flotteur.conseil : « Le robinet flotteur ne coupe plus l'eau : il est souvent entartré ou sa membrane est usée. » (02/10)
 
 **groupe-securite-goutte**
 - `resultat_normal` : reste 🟢, même conseil, sans tuto (`entretenir-groupe-securite` supprimé).
