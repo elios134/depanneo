@@ -9,7 +9,7 @@ const SECTIONS = [
   {
     titre: 'Avertissement',
     texte:
-      "Dépann'Maison donne des conseils, mais ne remplace pas un professionnel. En cas de doute ou de danger, appelle un pro. Pour une odeur de gaz, sors du logement et appelle le 0800 47 33 33.",
+      "Dépannéo donne des conseils, mais ne remplace pas un professionnel. En cas de doute ou de danger, appelle un pro. Pour une odeur de gaz, sors du logement et appelle le 0800 47 33 33.",
   },
   {
     titre: 'Crédits',

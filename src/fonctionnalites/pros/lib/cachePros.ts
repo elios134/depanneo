@@ -9,7 +9,7 @@ export interface CachePros {
   date: number;
 }
 
-export const CLE_CACHE_PROS = 'depannmaison.pros';
+export const CLE_CACHE_PROS = 'depanneo.pros';
 
 const MINUTE = 60 * 1000;
 const HEURE = 60 * MINUTE;

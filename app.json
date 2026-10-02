@@ -1,18 +1,18 @@
 {
   "expo": {
-    "name": "Dépann'Maison",
-    "slug": "depannmaison",
+    "name": "Dépannéo",
+    "slug": "depanneo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "depannmaison",
+    "scheme": "depanneo",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "bundleIdentifier": "fr.depannmaison.app",
+      "bundleIdentifier": "fr.depanneo.app",
       "icon": "./assets/expo.icon"
     },
     "android": {
-      "package": "fr.depannmaison.app",
+      "package": "fr.depanneo.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -39,7 +39,7 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Dépann'Maison utilise ta position pour trouver les plombiers et électriciens proches."
+          "locationWhenInUsePermission": "Dépannéo utilise ta position pour trouver les plombiers et électriciens proches."
         }
       ]
     ],

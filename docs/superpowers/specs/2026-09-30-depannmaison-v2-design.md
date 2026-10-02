@@ -1,4 +1,5 @@
-# Dépann'Maison — Spec V2 (refonte design, carte des pros, 22 pannes)
+# Dépannéo — Spec V2 (refonte design, carte des pros, 22 pannes)
+Appli renommée Dépannéo le 02/10/2026 (anciennement Dépann'Maison).
 
 Remplace la spec V1 (`2026-09-26-depannmaison-mvp-design.md`) sur tous les points qu'elle modifie. Ce qui n'est pas mentionné ici reste valable (règles de sécurité, avertissement, fonctionnement hors-ligne du diagnostic).
 
@@ -110,7 +111,7 @@ Petite carte, filtres Tous / Plombiers / Électriciens, liste triée par distanc
 - **Rayon de recherche** : 5 / 10 / 20 km. Défaut : 10 km. (Actif au chantier B.)
 - **Localisation** : interrupteur « Utiliser ma position ». Défaut : activé. (Actif au chantier B.)
 - **Ville par défaut** : ville ou code postal utilisé si la localisation est désactivée ou refusée. (Chantier B.)
-- **À propos et mentions légales** : avertissement « Dépann'Maison donne des conseils, mais ne remplace pas un professionnel », crédits OpenStreetMap / OpenFreeMap / OpenMapTiles, version de l'appli.
+- **À propos et mentions légales** : avertissement « Dépannéo donne des conseils, mais ne remplace pas un professionnel », crédits OpenStreetMap / OpenFreeMap / OpenMapTiles, version de l'appli.
 
 Réglages enregistrés sur le téléphone (`@react-native-async-storage/async-storage`).
 

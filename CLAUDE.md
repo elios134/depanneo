@@ -1,4 +1,4 @@
-# Dépann'Maison
+# Dépannéo
 
 ## L'idée en une phrase
 Une appli mobile grand public qui aide les gens face à une panne de **plomberie sanitaire** ou d'**électricité basique** à la maison : diagnostic simple, gestes d'urgence, mini-tutos, et les plombiers/électriciens les plus proches sur une carte.

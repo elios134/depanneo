@@ -1,4 +1,6 @@
-# Lancer Dépann'Maison sur ton téléphone Android
+# Lancer Dépannéo sur ton téléphone Android
+
+> Après le changement de nom (02/10), l'identifiant Android est devenu `fr.depanneo.app` : regénérer le dossier natif avec `npx expo prebuild --clean` avant le prochain build ; l'ancienne appli Dépann'Maison reste installée à côté et peut être désinstallée.
 
 Depuis l'ajout de la carte (MapLibre), l'appli contient du code natif : **Expo Go ne peut plus l'ouvrir**. Il faut installer une version « de développement » de l'appli sur ton téléphone. Deux possibilités.
 
