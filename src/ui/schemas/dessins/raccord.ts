@@ -1,7 +1,7 @@
 // Schémas du tuto « Changer un joint » (maquette 9, classes s9 à s13).
 import type { Dessin, Forme } from '../dessin';
+import { apparait, OUTIL } from './communs';
 
-const OUTIL = { remplir: 'outil' } as const;
 const FILETS = { contour: 'trait', epaisseur: 1, bout: 'rond' } as const;
 
 /** Écrou du raccord : un rectangle et ses deux filets. */
@@ -13,9 +13,6 @@ function ecrou(x: number, largeur: number, filet1: number, filet2: number): Form
 }
 
 /** Apparition d'un texte ou d'une flèche : invisible, monte entre `montee` et `haut1`, redescend entre `haut2` et `descente`. */
-const apparait = (montee: number, haut1: number, haut2: number, descente: number) =>
-  [[0, 0], [montee, 0], [haut1, 1], [haut2, 1], [descente, 0], [1, 0]] as const;
-
 /** Anneau de joint neuf (contour `joint`, épaisseur 5). */
 const anneau = (cx: number, r: number): Forme => ({
   type: 'cercle', cx, cy: 60, r, peinture: { contour: 'joint', epaisseur: 5 },

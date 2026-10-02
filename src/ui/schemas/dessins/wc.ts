@@ -1,9 +1,7 @@
 // Schémas du tuto « Déboucher des WC » (maquette 9, classes s6 à s8).
 import type { Dessin } from '../dessin';
-import { CUVETTE, cuvette } from './communs';
+import { cuvette, CUVETTE, EAU, OUTIL } from './communs';
 
-const EAU = { remplir: 'eau', opacite: 0.75 } as const;
-const OUTIL = { remplir: 'outil' } as const;
 const SALE = { remplir: 'sale' } as const;
 
 export const wcEcoulementLent: Dessin = {

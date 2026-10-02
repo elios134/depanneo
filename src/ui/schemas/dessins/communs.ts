@@ -1,6 +1,16 @@
 // Morceaux de dessin réutilisés par plusieurs schémas (maquette 9).
 import type { Forme } from '../dessin';
 
+/** Eau du schéma : bleu du thème, légèrement transparent. */
+export const EAU = { remplir: 'eau', opacite: 0.75 } as const;
+
+/** Outil (ventouse, furet, clé) : couleur « outil » du thème. */
+export const OUTIL = { remplir: 'outil' } as const;
+
+/** Courbe d'opacité en boucle : invisible, monte, reste visible, redescend (valeurs = fractions du tour). */
+export const apparait = (montee: number, haut1: number, haut2: number, descente: number) =>
+  [[0, 0], [montee, 0], [haut1, 1], [haut2, 1], [descente, 0], [1, 0]] as const;
+
 /** Contour du seau, fermé : sert de découpe pour l'eau qui le remplit. */
 export const SEAU = 'M66 92 L74 119 H140 L148 92Z';
 

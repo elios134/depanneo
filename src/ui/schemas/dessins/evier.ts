@@ -1,12 +1,13 @@
 // Schémas du tuto « Déboucher un évier » (maquette 9, classes s1 à s5).
 import type { Dessin, Forme } from '../dessin';
-import { fondEvier, seau, SEAU, zigzag } from './communs';
+import { EAU, fondEvier, OUTIL, seau, SEAU, zigzag } from './communs';
 
-const EAU = { remplir: 'eau', opacite: 0.75 } as const;
-const OUTIL = { remplir: 'outil' } as const;
 
 /** Clignotement de début de schéma pour la flèche et son texte (keyframes s1fl). */
 const CLIGNE_DEBUT = [[0, 0], [0.05, 0], [0.1, 1], [0.32, 1], [0.38, 0], [1, 0]] as const;
+
+/** Durée (en secondes) du tour des schémas où tombent gouttes et saletés ; sert aussi à décaler leurs retards. */
+const DUREE_TOMBE_S = 4;
 
 /** Une goutte qui tombe du siphon ouvert dans le seau (keyframes s1g), décalée de `retardS` secondes. */
 function goutte(retardS: number): Forme {
@@ -15,13 +16,13 @@ function goutte(retardS: number): Forme {
     anim: {
       y: [[0, 0], [0.45, 0], [0.62, 30], [1, 30]],
       opacite: [[0, 0], [0.45, 0], [0.47, 1], [0.62, 1], [0.63, 0], [1, 0]],
-      retard: retardS / 4,
+      retard: retardS / DUREE_TOMBE_S,
     },
   };
 }
 
 export const evierDevisserSiphon: Dessin = {
-  dureeMs: 4000,
+  dureeMs: DUREE_TOMBE_S * 1000,
   instantFige: 0.7,
   description: 'Schéma : le bouchon du siphon se dévisse et tombe dans le seau, l\'eau coule dans le seau.',
   formes: [
@@ -56,13 +57,13 @@ function salete(cx: number, r: number, retardS: number): Forme {
     anim: {
       y: [[0, 0], [0.3, 32], [1, 32]],
       opacite: [[0, 0], [0.05, 1], [0.3, 1], [0.35, 0], [1, 0]],
-      retard: retardS / 4,
+      retard: retardS / DUREE_TOMBE_S,
     },
   };
 }
 
 export const evierNettoyer: Dessin = {
-  dureeMs: 4000,
+  dureeMs: DUREE_TOMBE_S * 1000,
   instantFige: 0.5,
   description: 'Schéma : une baguette racle l\'intérieur du siphon ouvert, les saletés tombent dans le seau.',
   formes: [

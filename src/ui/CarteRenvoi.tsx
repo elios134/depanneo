@@ -1,11 +1,11 @@
 // src/ui/CarteRenvoi.tsx — bouton « continuer avec… » (résultat de diagnostic, encadré de tuto ; maquettes 8 et 9).
 import { router } from 'expo-router';
+import { decrireRenvoi } from '@/domaine/renvoi';
 import type { Renvoi } from '@/domaine/types';
 import { diagnostics } from '@/donnees/diagnostics';
 import { gestesUrgence } from '@/donnees/gestesUrgence';
 import { useTheme } from '@/theme/ThemeProvider';
 import { CarteListe } from '@/ui/CarteListe';
-import { decrireRenvoi } from '@/domaine/renvoi';
 
 export function CarteRenvoi({ renvoi }: { renvoi: Renvoi }) {
   const { couleurs } = useTheme();

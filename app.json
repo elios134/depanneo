@@ -8,8 +8,7 @@
     "scheme": "depanneo",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "bundleIdentifier": "fr.depanneo.app",
-      "icon": "./assets/expo.icon"
+      "bundleIdentifier": "fr.depanneo.app"
     },
     "android": {
       "package": "fr.depanneo.app",

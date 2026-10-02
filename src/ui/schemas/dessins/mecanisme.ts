@@ -1,13 +1,9 @@
 // Schémas du tuto « Changer le mécanisme de chasse » (maquette 9, classes s17 à s22).
 import type { Dessin, Forme } from '../dessin';
-import { reservoirOuvert } from './communs';
+import { apparait, EAU, reservoirOuvert } from './communs';
 
-const EAU = { remplir: 'eau', opacite: 0.75 } as const;
 
 /** Invisible, monte entre `montee` et `haut1`, redescend entre `haut2` et `descente`. */
-const apparait = (montee: number, haut1: number, haut2: number, descente: number) =>
-  [[0, 0], [montee, 0], [haut1, 1], [haut2, 1], [descente, 0], [1, 0]] as const;
-
 /** Flèche et texte visibles au début du tour (keyframes s18f). */
 const DEBUT_32 = apparait(0.04, 0.08, 0.32, 0.36);
 

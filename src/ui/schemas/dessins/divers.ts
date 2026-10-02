@@ -1,7 +1,7 @@
 // Schémas du mousseur, du flexible de douche et de l'ampoule (maquette 9, classes s23 à s26).
 import type { Dessin, Forme } from '../dessin';
+import { OUTIL } from './communs';
 
-const OUTIL = { remplir: 'outil' } as const;
 
 /** Flèche « à la main » et son texte : visibles au début du tour (keyframes s23f, s25f, s26f). */
 const CLIGNE_DEBUT = [[0, 0], [0.04, 0], [0.08, 1], [0.3, 1], [0.34, 0], [1, 0]] as const;
@@ -30,6 +30,9 @@ export const mousseurDevisser: Dessin = {
   ],
 };
 
+/** Durée (en secondes) du tour du schéma de trempage ; sert aussi à décaler les bulles. */
+const DUREE_TREMPAGE_S = 5;
+
 /** Bulle de vinaigre qui monte (keyframes s24b, 1,5 s) : 3 fois par tour de 5 s, décalée de 0,5 s. */
 function bulle(cx: number, retardS: number): Forme {
   return {
@@ -39,7 +42,7 @@ function bulle(cx: number, retardS: number): Forme {
       y: [[0, 0], [1, -26]],
       doux: true,
       repetitions: 3,
-      retard: retardS / 5,
+      retard: retardS / DUREE_TREMPAGE_S,
     },
   };
 }
@@ -53,7 +56,7 @@ function tartre(cx: number, cy: number): Forme {
 }
 
 export const mousseurTremper: Dessin = {
-  dureeMs: 5000,
+  dureeMs: DUREE_TREMPAGE_S * 1000,
   instantFige: 0.85,
   description: 'Schéma : le mousseur trempe dans le vinaigre blanc et le tartre disparaît.',
   formes: [

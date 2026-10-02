@@ -3,7 +3,7 @@
 **Statut : intégré dans l'appli (src/donnees/tutos.ts fait foi).**
 
 Brouillon des tutos réécrits par André, avec les schémas animés proposés (🎞️).
-Une fois validés en maquette, ils seront reportés dans `src/donnees/tutos.ts` (source de vérité).
+Ils ont été reportés dans `src/donnees/tutos.ts`, qui fait foi.
 
 ## Déboucher un évier — validé
 
