@@ -1214,3 +1214,30 @@ export const tutos: Tuto[] = [
 git add src CLAUDE.md docs/superpowers/specs/2026-09-30-depannmaison-v2-design.md docs/contenu/tutos-v2.md
 git commit -m "Met en place les 10 tutos réécrits par André avec leurs schémas animés"
 ```
+
+---
+
+### Task 7: Renommer l'appli en ZenHome
+
+Décision d'André (02/10) : « renomme en ZenHome partout ». Le logo (fichiers) sera intégré plus tard, quand André les déposera.
+
+**Files:**
+- Modify: `app.json`, `package.json`, `package-lock.json` (champ `name` racine seulement : les 2 lignes `"name": "depannmaison"`)
+- Modify: `src/fonctionnalites/reglages/EcranAPropos.tsx`, `src/fonctionnalites/pros/api/chercherPros.ts`, `src/fonctionnalites/pros/lib/cachePros.ts`, `src/fonctionnalites/reglages/lib/reglages.ts`
+- Modify: `CLAUDE.md`, `docs/build-android.md`, `docs/superpowers/specs/2026-09-30-depannmaison-v2-design.md`
+- Tests: tout test qui cite l'ancien nom ou les anciennes clés (chercher avec `git grep -n -i "depann"`)
+
+**Interfaces:** aucune nouvelle.
+
+- [ ] **Step 1 : chercher toutes les occurrences.** `git grep -n -i "dépann.maison\|depannmaison\|DepannMaison" -- . ':!docs/superpowers/plans'` (les anciens plans sont l'historique : on ne les touche pas ; les noms de fichiers de la spec restent aussi tels quels).
+- [ ] **Step 2 : `app.json`** : `"name": "ZenHome"`, `"slug": "zenhome"`, `"scheme": "zenhome"`, `"bundleIdentifier": "fr.zenhome.app"`, `"package": "fr.zenhome.app"`, permission de position : `"ZenHome utilise ta position pour trouver les plombiers et électriciens proches."`.
+- [ ] **Step 3 : `package.json` / `package-lock.json`** : `"name": "zenhome"` (les deux occurrences racine du lock).
+- [ ] **Step 4 : code** : texte d'À propos `"ZenHome donne des conseils, mais ne remplace pas un professionnel. …"` (reste de la phrase inchangé) ; `User-Agent` `'ZenHome/2.0'` ; clés de stockage `'zenhome.pros'` et `'zenhome.reglages'` (pas de migration : l'appli n'est pas encore publiée, seuls les réglages du téléphone d'André repartent à zéro une fois). Adapter les tests qui vérifient ces valeurs.
+- [ ] **Step 5 : docs** : `CLAUDE.md` titre `# ZenHome` ; `docs/build-android.md` titre `# Lancer ZenHome sur ton téléphone Android` et ajouter une note : « Après le changement de nom (02/10), l'identifiant Android est devenu `fr.zenhome.app` : regénérer le dossier natif avec `npx expo prebuild --clean` avant le prochain build ; l'ancienne appli Dépann'Maison reste installée à côté et peut être désinstallée. » ; spec v2 : titre `# ZenHome — Spec V2 (…)` (reste inchangé), et l'avertissement de la ligne « À propos » avec ZenHome ; ajouter sous le titre de la spec : « Appli renommée ZenHome le 02/10/2026 (anciennement Dépann'Maison). »
+- [ ] **Step 6 :** `npx jest` → PASS ; `npx tsc --noEmit` → 0 erreur ; `git grep -n -i "dépann.maison\|depannmaison" -- . ':!docs/superpowers/plans'` ne renvoie plus que des noms de fichiers de spec/plan et la note historique.
+- [ ] **Step 7 : commit.**
+
+```bash
+git add -A app.json package.json package-lock.json src CLAUDE.md docs/build-android.md docs/superpowers/specs
+git commit -m "Renomme l'appli en ZenHome"
+```
