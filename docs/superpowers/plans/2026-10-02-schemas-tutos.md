@@ -1241,3 +1241,32 @@ Décision d'André (02/10) : « renomme en ZenHome partout ». Le logo (fichiers
 git add -A app.json package.json package-lock.json src CLAUDE.md docs/build-android.md docs/superpowers/specs
 git commit -m "Renomme l'appli en ZenHome"
 ```
+
+---
+
+### Task 8: Icône et écran de démarrage ZenHome
+
+Validé par André (02/10) : icône = la maison seule sur fond blanc (découpée dans `assets/logo/ZenHome-logo.jpg`) ; écran de démarrage = logo complet (maison + « ZenHome » + « Diagnostic & Réparation Maison ») sur fond blanc. Version provisoire (maison de 336 px agrandie) : à remplacer par un fichier haute définition quand André le fournira.
+
+**Files:**
+- Create: `scripts/generer-icones.py` (script Python/Pillow, relançable quand André fournira un fichier plus net)
+- Replace: `assets/images/icon.png`, `assets/images/android-icon-foreground.png`, `assets/images/android-icon-background.png`, `assets/images/android-icon-monochrome.png`, `assets/images/favicon.png`, `assets/images/splash-icon.png`
+- Modify: `app.json` (couleurs de fond), `docs/build-android.md` (comment regénérer les icônes)
+
+- [ ] **Step 1 : script.** `scripts/generer-icones.py` lit `assets/logo/ZenHome-logo.jpg` ; découpe la maison dans la zone `(520, 140, 885, 480)` puis resserre sur les pixels non blancs (niveau de gris inversé > 40) ; découpe le logo complet (maison + textes) dans la carte blanche `(440, 110, 975, 640)` resserrée de la même façon. Il écrit :
+  - `icon.png` 1024 × 1024, fond blanc, maison centrée occupant 62 % du côté ;
+  - `android-icon-foreground.png` 1024 × 1024, fond **transparent** (pixels quasi blancs > 235 sur R, G et B → alpha 0), maison centrée occupant 58 % (zone sûre des icônes adaptatives) ;
+  - `android-icon-background.png` 1024 × 1024 blanc uni ;
+  - `android-icon-monochrome.png` 1024 × 1024 transparent, silhouette de la maison en noir (mêmes pixels que le foreground, couleur noire) ;
+  - `favicon.png` 48 × 48 (réduction de `icon.png`) ;
+  - `splash-icon.png` : le logo complet sur fond transparent (mêmes règles d'alpha), largeur 1024, hauteur proportionnelle.
+- [ ] **Step 2 :** lancer `python scripts/generer-icones.py`, ouvrir chaque image produite et vérifier : pas de bord coupé, pas de halo gris, maison bien centrée.
+- [ ] **Step 3 : `app.json`** : `android.adaptiveIcon.backgroundColor` → `"#FFFFFF"` ; plugin `expo-splash-screen` : `"backgroundColor": "#FFFFFF"`, `"imageWidth": 220`. (Rester sans `dark` pour l'écran de démarrage : fond blanc dans les deux thèmes, choix d'André.)
+- [ ] **Step 4 :** `npx jest` → PASS (aucun test ne dépend des images) ; vérifier le favicon sur le web (port 8099).
+- [ ] **Step 5 : doc** — `docs/build-android.md` : section « Icône et écran de démarrage » : « Les images de `assets/images/` sont générées depuis `assets/logo/` par `python scripts/generer-icones.py` (Pillow). Pour une icône plus nette, remplacer le fichier du logo puis relancer le script et `npx expo prebuild --clean`. »
+- [ ] **Step 6 : commit.**
+
+```bash
+git add scripts/generer-icones.py assets/images assets/logo app.json docs/build-android.md
+git commit -m "Ajoute l'icône et l'écran de démarrage ZenHome"
+```
