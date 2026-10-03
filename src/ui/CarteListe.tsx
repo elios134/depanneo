@@ -17,9 +17,10 @@ interface Props {
   danger?: boolean;
   grande?: boolean;
   couleurBordure?: string;
+  testID?: string;
 }
 
-export function CarteListe({ icone, couleur, titre, sousTitre, onPress, droite, danger, grande, couleurBordure }: Props) {
+export function CarteListe({ icone, couleur, titre, sousTitre, onPress, droite, danger, grande, couleurBordure, testID }: Props) {
   const { couleurs } = useTheme();
   const fond = danger ? teinte(couleurs.danger, 0.12) : couleurs.carte;
   const bordure = danger
@@ -31,6 +32,7 @@ export function CarteListe({ icone, couleur, titre, sousTitre, onPress, droite, 
   return (
     <Pressable
       onPress={onPress}
+      testID={testID}
       disabled={!onPress}
       accessibilityRole={onPress ? 'button' : undefined}
       style={[styles.carte, grande && styles.grande, { backgroundColor: fond, borderColor: bordure }]}

@@ -35,6 +35,18 @@ Cette version est autonome (elle n'a pas besoin de ton PC), mais chaque changeme
 - Mode avion : bandeau « Hors connexion », la dernière liste de pros reste affichée.
 - Refuser la localisation : le champ « Ta ville ou ton code postal » apparaît.
 
+## Tests de bout en bout (Maestro)
+
+Cinq scénarios (dossier `e2e/`) ouvrent la vraie appli sur un téléphone ou un émulateur et vérifient les parcours importants : diagnostic WC, gaz, urgence eau, tuto avec Plan B, panneau de l'accueil. Ils tournent sur la version de production (APK release), sans serveur Metro.
+
+1. Installer Maestro une fois : voir https://maestro.mobile.dev (`maestro --version` doit répondre).
+2. Brancher le téléphone (débogage USB) ou lancer un émulateur ; `adb devices` doit le lister.
+3. Construire l'APK release : `cd android && ./gradlew assembleRelease`.
+4. L'installer : `adb install -r app/build/outputs/apk/release/app-release.apk` (depuis le dossier `android`).
+5. Lancer les scénarios depuis la racine du projet : `npm run e2e`.
+
+Chaque scénario repart d'une appli neuve (`clearState`) et refuse la localisation si elle est demandée.
+
 ## Suivi des plantages (Sentry)
 
 Sentry prévient André quand l'appli plante chez quelqu'un. Il ne fonctionne que dans une version de production (jamais en développement) et seulement si un DSN est fourni.

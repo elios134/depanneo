@@ -35,6 +35,7 @@ export function PanneauAccueil({ children, nombrePros }: { children?: ReactNode;
       <Verre style={styles.panneau}>
         <Pressable
           onPress={() => changer(!replie)}
+          testID="poignee-panneau"
           accessibilityRole="button"
           accessibilityLabel={replie ? 'Déplier le panneau' : 'Replier le panneau'}
           hitSlop={10}
@@ -42,9 +43,9 @@ export function PanneauAccueil({ children, nombrePros }: { children?: ReactNode;
         >
           <View style={[styles.poignee, { backgroundColor: couleurs.bordure }]} />
         </Pressable>
-        <BoutonPrincipal libelle="Diagnostiquer une panne" icone="stethoscope" onPress={() => router.push('/diagnostic')} />
+        <BoutonPrincipal libelle="Diagnostiquer une panne" icone="stethoscope" testID="bouton-diagnostiquer" onPress={() => router.push('/diagnostic')} />
         {replie ? (
-          <Pressable onPress={() => changer(false)} accessibilityRole="button" style={styles.replie} hitSlop={6}>
+          <Pressable onPress={() => changer(false)} testID="panneau-replie" accessibilityRole="button" style={styles.replie} hitSlop={6}>
             <Icone nom="chevron-up" taille={14} couleur={couleurs.texteDiscret} />
             <Text style={[styles.texteReplie, { color: couleurs.texteDiscret }]}>{libelleReplie(nombrePros)}</Text>
           </Pressable>

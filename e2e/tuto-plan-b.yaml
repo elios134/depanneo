@@ -1,0 +1,22 @@
+appId: fr.depanneo.app
+---
+- launchApp:
+    clearState: true
+# Refus de la localisation si l'appli la demande (ne pas dépendre de la position).
+- tapOn:
+    text: "(Ne pas autoriser|Refuser|Don.t allow|Deny)"
+    optional: true
+- tapOn:
+    id: "onglet-tutos"
+- tapOn: "Déboucher des WC"
+- assertVisible:
+    id: "encadre-tuto"
+- assertVisible: "L'eau remonte sans que tu tires la chasse ?.*"
+- scrollUntilVisible:
+    element:
+      id: "separateur-plan-b"
+- assertVisible: "Plan B"
+# Première étape du Plan B = étape 4
+- scrollUntilVisible:
+    element: "Mets des gants et des lunettes.*"
+- assertVisible: "4"

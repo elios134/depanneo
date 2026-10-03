@@ -6,7 +6,7 @@ import { useTheme } from '@/theme/ThemeProvider';
 export function SeparateurPlanB({ sousTitre }: { sousTitre: string }) {
   const { couleurs } = useTheme();
   return (
-    <View style={styles.ligne}>
+    <View style={styles.ligne} testID="separateur-plan-b">
       <Text style={[styles.pastille, { color: couleurs.verdictOrange, backgroundColor: teinte(couleurs.verdictOrange, 0.13) }]}>
         Plan B
       </Text>

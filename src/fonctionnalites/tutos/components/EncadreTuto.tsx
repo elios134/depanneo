@@ -12,7 +12,7 @@ export function EncadreTuto({ encadre }: { encadre: DonneesEncadre }) {
   const couleur = alerte ? couleurs.danger : couleurs.accent;
   return (
     <View style={styles.bloc}>
-      <View style={[styles.encadre, { backgroundColor: teinte(couleur, 0.1), borderColor: teinte(couleur, 0.4) }]}>
+      <View testID="encadre-tuto" style={[styles.encadre, { backgroundColor: teinte(couleur, 0.1), borderColor: teinte(couleur, 0.4) }]}>
         <View style={[styles.pastille, { backgroundColor: teinte(couleur, 0.2) }]}>
           <Icone nom={alerte ? 'triangle-alert' : 'info'} couleur={couleur} taille={13} />
         </View>

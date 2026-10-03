@@ -11,9 +11,10 @@ interface Props {
   onPress: () => void;
   variante?: 'accent' | 'danger' | 'discret' | 'teinte';
   accessibilityLabel?: string;
+  testID?: string;
 }
 
-export function BoutonPrincipal({ libelle, icone, onPress, variante = 'accent', accessibilityLabel }: Props) {
+export function BoutonPrincipal({ libelle, icone, onPress, variante = 'accent', accessibilityLabel, testID }: Props) {
   const { couleurs } = useTheme();
   const teinte_ = variante === 'teinte';
   const plein = variante === 'accent' || variante === 'danger';
@@ -22,6 +23,7 @@ export function BoutonPrincipal({ libelle, icone, onPress, variante = 'accent', 
   return (
     <Pressable
       onPress={onPress}
+      testID={testID}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
       style={[

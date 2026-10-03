@@ -1,0 +1,22 @@
+appId: fr.depanneo.app
+---
+- launchApp:
+    clearState: true
+# Refus de la localisation si l'appli la demande (ne pas dépendre de la position).
+- tapOn:
+    text: "(Ne pas autoriser|Refuser|Don.t allow|Deny)"
+    optional: true
+- tapOn:
+    id: "bouton-diagnostiquer"
+- tapOn: "Mauvaise odeur d'égout"
+- tapOn: "Oui"
+# Verdict rouge : renvoi vers « Odeur de gaz ? », jamais de carte de pro
+- assertVisible: "Appelle un pro tout de suite"
+- assertVisible:
+    id: "carte-renvoi"
+- assertNotVisible:
+    id: "carte-pro"
+- tapOn:
+    id: "carte-renvoi"
+- assertVisible: "Odeur de gaz ?"
+- assertVisible: ".*0800 47 33 33.*"
