@@ -40,7 +40,8 @@
         {
           "locationWhenInUsePermission": "Dépannéo utilise ta position pour trouver les plombiers et électriciens proches."
         }
-      ]
+      ],
+      "@sentry/react-native/expo"
     ],
     "experiments": {
       "typedRoutes": true,

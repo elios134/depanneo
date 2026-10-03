@@ -1,6 +1,9 @@
 import { Stack } from 'expo-router';
 import { ReglagesProvider } from '@/fonctionnalites/reglages/ReglagesProvider';
+import { demarrerSurveillance } from '@/surveillance/sentry';
 import { ThemeProvider } from '@/theme/ThemeProvider';
+
+demarrerSurveillance();
 
 export default function RootLayout() {
   return (
