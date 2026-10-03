@@ -76,9 +76,9 @@ function FormeAnimee({ forme, ctx, chemin }: { forme: Forme; ctx: Contexte; chem
   );
 }
 
-export function SchemaDessine({ dessin, immobile }: { dessin: Dessin; immobile: boolean }) {
+export function SchemaDessine({ dessin, immobile, visible }: { dessin: Dessin; immobile: boolean; visible: boolean }) {
   const { couleurs } = useTheme();
-  const tBoucle = useTempsBoucle(dessin.dureeMs, !immobile);
+  const tBoucle = useTempsBoucle(dessin.dureeMs, !immobile && visible);
   // Les id SVG ne doivent pas contenir de « : » (anciennes versions de React) : on les retire.
   const prefixe = `s${useId().replace(/:/g, '')}`;
   const ctx: Contexte = { couleurs, t: immobile ? dessin.instantFige : tBoucle, prefixe };

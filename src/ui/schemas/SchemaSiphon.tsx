@@ -9,9 +9,9 @@ import { useTempsBoucle } from './useTempsBoucle';
 
 const TUYAU = 'M70 10 V70 a30 30 0 0 0 60 0 V10 h-16 V70 a14 14 0 0 1 -28 0 V10 Z';
 
-export function SchemaSiphon({ immobile }: { immobile: boolean }) {
+export function SchemaSiphon({ immobile, visible }: { immobile: boolean; visible: boolean }) {
   const { couleurs } = useTheme();
-  const t = useTempsBoucle(DUREE_SIPHON_MS, !immobile);
+  const t = useTempsBoucle(DUREE_SIPHON_MS, !immobile && visible);
   const image = imageSiphon(t, immobile);
   const idClip = `interieur-siphon-${useId().replace(/:/g, '')}`;
   return (

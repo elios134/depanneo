@@ -6,9 +6,9 @@ import { DUREE_DISJONCTEUR_MS, imageDisjoncteur } from './animation';
 import { POLICE_SCHEMA } from './policeSchema';
 import { useTempsBoucle } from './useTempsBoucle';
 
-export function SchemaDisjoncteur({ immobile }: { immobile: boolean }) {
+export function SchemaDisjoncteur({ immobile, visible }: { immobile: boolean; visible: boolean }) {
   const { couleurs } = useTheme();
-  const t = useTempsBoucle(DUREE_DISJONCTEUR_MS, !immobile);
+  const t = useTempsBoucle(DUREE_DISJONCTEUR_MS, !immobile && visible);
   const image = imageDisjoncteur(t, immobile);
   return (
     <View style={styles.zone}>
