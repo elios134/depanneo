@@ -1,4 +1,4 @@
-import { estNomSchema, schemaEtape, texteEtape } from '@/domaine/etapes';
+import { estNomSchema, schemaEtape, texteEtape, toutesLesEtapes } from '@/domaine/etapes';
 
 describe('étapes de tuto', () => {
   it('lit le texte d\'une étape simple', () => {
@@ -21,5 +21,14 @@ describe('étapes de tuto', () => {
     expect(estNomSchema('siphon')).toBe(true);
     expect(estNomSchema('disjoncteur')).toBe(true);
     expect(estNomSchema('robinet')).toBe(false);
+  });
+});
+
+describe('toutesLesEtapes', () => {
+  it('met les étapes du Plan B à la suite', () => {
+    expect(toutesLesEtapes({ etapes: ['a', 'b'], planB: { etapes: ['c'] } })).toEqual(['a', 'b', 'c']);
+  });
+  it('sans Plan B : les étapes seules', () => {
+    expect(toutesLesEtapes({ etapes: ['a'] })).toEqual(['a']);
   });
 });

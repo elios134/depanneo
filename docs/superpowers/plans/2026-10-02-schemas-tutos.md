@@ -1214,3 +1214,59 @@ export const tutos: Tuto[] = [
 git add src CLAUDE.md docs/superpowers/specs/2026-09-30-depannmaison-v2-design.md docs/contenu/tutos-v2.md
 git commit -m "Met en place les 10 tutos réécrits par André avec leurs schémas animés"
 ```
+
+---
+
+### Task 7: Renommer l'appli en Dépannéo
+
+Décision d'André (02/10) : d'abord « ZenHome », puis le même jour « on change pour Dépannéo ». Nom affiché : **Dépannéo** ; identifiants techniques sans accent : `depanneo`.
+
+**Files:**
+- Modify: `app.json`, `package.json`, `package-lock.json` (champ `name` racine seulement : les 2 lignes `"name": "depannmaison"`)
+- Modify: `src/fonctionnalites/reglages/EcranAPropos.tsx`, `src/fonctionnalites/pros/api/chercherPros.ts`, `src/fonctionnalites/pros/lib/cachePros.ts`, `src/fonctionnalites/reglages/lib/reglages.ts`
+- Modify: `CLAUDE.md`, `docs/build-android.md`, `docs/superpowers/specs/2026-09-30-depannmaison-v2-design.md`
+- Tests: tout test qui cite l'ancien nom ou les anciennes clés (chercher avec `git grep -n -i "depann"`)
+
+**Interfaces:** aucune nouvelle.
+
+- [ ] **Step 1 : chercher toutes les occurrences.** `git grep -n -i "dépann.maison\|depannmaison\|DepannMaison" -- . ':!docs/superpowers/plans'` (les anciens plans sont l'historique : on ne les touche pas ; les noms de fichiers de la spec restent aussi tels quels).
+- [ ] **Step 2 : `app.json`** : `"name": "Dépannéo"`, `"slug": "depanneo"`, `"scheme": "depanneo"`, `"bundleIdentifier": "fr.depanneo.app"`, `"package": "fr.depanneo.app"`, permission de position : `"Dépannéo utilise ta position pour trouver les plombiers et électriciens proches."`.
+- [ ] **Step 3 : `package.json` / `package-lock.json`** : `"name": "depanneo"` (les deux occurrences racine du lock).
+- [ ] **Step 4 : code** : texte d'À propos `"Dépannéo donne des conseils, mais ne remplace pas un professionnel. …"` (reste de la phrase inchangé) ; `User-Agent` `'Depanneo/2.0'` ; clés de stockage `'depanneo.pros'` et `'depanneo.reglages'` (pas de migration : l'appli n'est pas encore publiée, seuls les réglages du téléphone d'André repartent à zéro une fois). Adapter les tests qui vérifient ces valeurs.
+- [ ] **Step 5 : docs** : `CLAUDE.md` titre `# Dépannéo` ; `docs/build-android.md` titre `# Lancer Dépannéo sur ton téléphone Android` et ajouter une note : « Après le changement de nom (02/10), l'identifiant Android est devenu `fr.depanneo.app` : regénérer le dossier natif avec `npx expo prebuild --clean` avant le prochain build ; l'ancienne appli Dépann'Maison reste installée à côté et peut être désinstallée. » ; spec v2 : titre `# Dépannéo — Spec V2 (…)` (reste inchangé), et l'avertissement de la ligne « À propos » avec Dépannéo ; ajouter sous le titre de la spec : « Appli renommée Dépannéo le 02/10/2026 (anciennement Dépann'Maison). »
+- [ ] **Step 6 :** `npx jest` → PASS ; `npx tsc --noEmit` → 0 erreur ; `git grep -n -i "dépann.maison\|depannmaison" -- . ':!docs/superpowers/plans'` ne renvoie plus que des noms de fichiers de spec/plan et la note historique.
+- [ ] **Step 7 : commit.**
+
+```bash
+git add -A app.json package.json package-lock.json src CLAUDE.md docs/build-android.md docs/superpowers/specs
+git commit -m "Renomme l'appli en Dépannéo"
+```
+
+---
+
+### Task 8: Icône et écran de démarrage Dépannéo
+
+Validé par André (02/10) : icône = la maison seule sur fond blanc (découpée dans `assets/logo/ZenHome-logo.jpg`) ; écran de démarrage sur fond blanc. Le logo fourni porte encore le texte « ZenHome » : en attendant un logo « Dépannéo », l'écran de démarrage montre **la maison seule** (sans texte). Version provisoire (maison de 336 px agrandie) : à remplacer par un fichier haute définition quand André le fournira.
+
+**Files:**
+- Create: `scripts/generer-icones.py` (script Python/Pillow, relançable quand André fournira un fichier plus net)
+- Replace: `assets/images/icon.png`, `assets/images/android-icon-foreground.png`, `assets/images/android-icon-background.png`, `assets/images/android-icon-monochrome.png`, `assets/images/favicon.png`, `assets/images/splash-icon.png`
+- Modify: `app.json` (couleurs de fond), `docs/build-android.md` (comment regénérer les icônes)
+
+- [ ] **Step 1 : script.** `scripts/generer-icones.py` lit `assets/logo/ZenHome-logo.jpg` ; découpe la maison dans la zone `(520, 140, 885, 480)` puis resserre sur les pixels non blancs (niveau de gris inversé > 40) ; Il écrit :
+  - `icon.png` 1024 × 1024, fond blanc, maison centrée occupant 62 % du côté ;
+  - `android-icon-foreground.png` 1024 × 1024, fond **transparent** (pixels quasi blancs > 235 sur R, G et B → alpha 0), maison centrée occupant 58 % (zone sûre des icônes adaptatives) ;
+  - `android-icon-background.png` 1024 × 1024 blanc uni ;
+  - `android-icon-monochrome.png` 1024 × 1024 transparent, silhouette de la maison en noir (mêmes pixels que le foreground, couleur noire) ;
+  - `favicon.png` 48 × 48 (réduction de `icon.png`) ;
+  - `splash-icon.png` : la maison seule sur fond transparent (mêmes règles d'alpha), 1024 × 1024, maison occupant 80 %.
+- [ ] **Step 2 :** lancer `python scripts/generer-icones.py`, ouvrir chaque image produite et vérifier : pas de bord coupé, pas de halo gris, maison bien centrée.
+- [ ] **Step 3 : `app.json`** : `android.adaptiveIcon.backgroundColor` → `"#FFFFFF"` ; plugin `expo-splash-screen` : `"backgroundColor": "#FFFFFF"`, `"imageWidth": 160`. (Rester sans `dark` pour l'écran de démarrage : fond blanc dans les deux thèmes, choix d'André.)
+- [ ] **Step 4 :** `npx jest` → PASS (aucun test ne dépend des images) ; vérifier le favicon sur le web (port 8099).
+- [ ] **Step 5 : doc** — `docs/build-android.md` : section « Icône et écran de démarrage » : « Les images de `assets/images/` sont générées depuis `assets/logo/` par `python scripts/generer-icones.py` (Pillow). Pour une icône plus nette, remplacer le fichier du logo puis relancer le script et `npx expo prebuild --clean`. »
+- [ ] **Step 6 : commit.**
+
+```bash
+git add scripts/generer-icones.py assets/images assets/logo app.json docs/build-android.md
+git commit -m "Ajoute l'icône et l'écran de démarrage Dépannéo"
+```

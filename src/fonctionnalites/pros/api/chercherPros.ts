@@ -19,7 +19,7 @@ async function interrogerServeur(url: string, position: Position, rayonKm: numbe
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         // Overpass refuse les requêtes anonymes ; le navigateur interdit cet en-tête sur le web.
-        ...(Platform.OS === 'web' ? {} : { 'User-Agent': 'DepannMaison/2.0' }),
+        ...(Platform.OS === 'web' ? {} : { 'User-Agent': 'Depanneo/2.0' }),
       },
       body: 'data=' + encodeURIComponent(construireRequete(position, rayonKm)),
       signal: controleur.signal,

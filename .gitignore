@@ -44,3 +44,6 @@ example
 
 # outils internes (plans, briefs)
 .superpowers/
+
+# Essais de vidéos générées par IA (pas dans l'appli)
+vidéo-tuto/

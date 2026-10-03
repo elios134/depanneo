@@ -18,8 +18,7 @@
     "resultat_bonde": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Ce sont presque toujours des cheveux et du savon dans la bonde.",
-      "tutoId": "nettoyer-bonde"
+      "conseil": "Ce sont presque toujours des cheveux et du savon dans la bonde. Dévisse la grille de la bonde et retire les cheveux."
     },
     "resultat_canalisation": {
       "verdict": "orange",

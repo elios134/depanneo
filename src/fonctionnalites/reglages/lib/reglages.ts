@@ -17,7 +17,7 @@ export const REGLAGES_DEFAUT: Reglages = {
   villeParDefaut: null,
 };
 
-export const CLE_REGLAGES = 'depannmaison.reglages';
+export const CLE_REGLAGES = 'depanneo.reglages';
 
 const MODES: ModeTheme[] = ['sombre', 'clair', 'auto'];
 const RAYONS: RayonKm[] = [5, 10, 20];

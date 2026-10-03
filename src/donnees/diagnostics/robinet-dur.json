@@ -11,7 +11,8 @@
       "reponses": [
         { "texte": "Un mitigeur (une seule manette)", "suite": "resultat_cartouche" },
         { "texte": "Deux poignées (eau chaude / eau froide)", "suite": "resultat_tete" },
-        { "texte": "Le robinet général ou un robinet d'arrêt", "suite": "resultat_arret" }
+        { "texte": "Le robinet général", "suite": "resultat_arret" },
+        { "texte": "Un petit robinet d'arrêt (WC, évier, lave-linge)", "suite": "resultat_arret" }
       ]
     }
   },
@@ -22,15 +23,14 @@
       "conseil": "La cartouche du mitigeur est entartrée ou usée. Ne force pas : elle peut casser et fuir. Un plombier la remplace en quelques minutes."
     },
     "resultat_tete": {
-      "verdict": "vert",
-      "titre": "Tu peux réparer ça toi-même",
-      "conseil": "La tête du robinet est entartrée. Coupe l'eau, dévisse la tête et nettoie-la au vinaigre blanc.",
-      "tutoId": "detartrer-tete-robinet"
+      "verdict": "orange",
+      "titre": "Sécurise en attendant un pro",
+      "conseil": "La tête du robinet est entartrée. Ne force pas : un plombier la nettoie ou la change rapidement."
     },
     "resultat_arret": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Ne force jamais un robinet d'arrêt : s'il casse, tu ne pourras plus couper l'eau. Fais-le remplacer par un plombier. Pense à le manœuvrer 2 fois par an pour qu'il ne se bloque pas."
+      "conseil": "Ne force jamais un robinet d'arrêt : s'il casse, tu ne pourras plus couper l'eau. Pour le changer, il faut couper l'eau de tout l'immeuble, ou parfois en amont du compteur pour une maison : c'est un travail de plombier. Pense à le manœuvrer 2 fois par an pour qu'il ne se bloque pas."
     }
   }
 }

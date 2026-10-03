@@ -1,20 +1,19 @@
 {
   "expo": {
-    "name": "Dépann'Maison",
-    "slug": "depannmaison",
+    "name": "Dépannéo",
+    "slug": "depanneo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "depannmaison",
+    "scheme": "depanneo",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "bundleIdentifier": "fr.depannmaison.app",
-      "icon": "./assets/expo.icon"
+      "bundleIdentifier": "fr.depanneo.app"
     },
     "android": {
-      "package": "fr.depannmaison.app",
+      "package": "fr.depanneo.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#FFFFFF",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -30,16 +29,16 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#FFFFFF",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "imageWidth": 160
         }
       ],
       "@maplibre/maplibre-react-native",
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Dépann'Maison utilise ta position pour trouver les plombiers et électriciens proches."
+          "locationWhenInUsePermission": "Dépannéo utilise ta position pour trouver les plombiers et électriciens proches."
         }
       ]
     ],

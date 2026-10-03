@@ -12,12 +12,12 @@ import { filtrerPros } from '@/fonctionnalites/pros/lib/filtrerPros';
 import { useTheme } from '@/theme/ThemeProvider';
 import { BoutonPrincipal } from '@/ui/BoutonPrincipal';
 import { CarteListe } from '@/ui/CarteListe';
+import { CarteRenvoi } from '@/ui/CarteRenvoi';
 import { CartePro } from '@/ui/CartePro';
 import { FichePro } from '@/ui/FichePro';
 import { NumeroUrgence } from '@/ui/NumeroUrgence';
 import { VerdictBadge } from '@/ui/VerdictBadge';
 import { prosVisibles } from '../lib/renvoi';
-import { CarteRenvoi } from './CarteRenvoi';
 
 interface Props {
   resultat: Resultat;

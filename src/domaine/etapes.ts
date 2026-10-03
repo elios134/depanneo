@@ -1,7 +1,39 @@
 // Une étape de tuto : un texte, ou un texte accompagné d'un petit schéma animé.
-export const NOMS_SCHEMAS = ['siphon', 'disjoncteur'] as const;
+export const NOMS_SCHEMAS = [
+  'siphon',
+  'disjoncteur',
+  'evier-devisser-siphon',
+  'evier-nettoyer',
+  'evier-ventouse',
+  'evier-demonter-siphon',
+  'evier-furet',
+  'wc-ecoulement-lent',
+  'wc-ventouse',
+  'wc-acide',
+  'couper-eau',
+  'raccord-resserrer',
+  'raccord-devisser',
+  'joint-comparer',
+  'joint-remonter',
+  'mousseur-devisser',
+  'mousseur-tremper',
+  'flexible-devisser',
+  'ampoule-devisser',
+  'flotteur-sortir',
+  'flotteur-nettoyer',
+  'reservoir-remplissage',
+  'reservoir-vidange',
+  'mecanisme-quart-tour',
+  'tuyau-alimentation',
+  'papillons',
+  'reservoir-retirer',
+  'mecanisme-ecrou',
+] as const;
 
 export type NomSchema = (typeof NOMS_SCHEMAS)[number];
+
+/** Schémas décrits comme des données (moteur `src/ui/schemas/dessin.ts`) ; siphon et disjoncteur ont leur propre composant. */
+export type NomDessine = Exclude<NomSchema, 'siphon' | 'disjoncteur'>;
 
 export type EtapeTuto = string | { texte: string; schema: NomSchema };
 
@@ -15,4 +47,9 @@ export function texteEtape(etape: EtapeTuto): string {
 
 export function schemaEtape(etape: EtapeTuto): NomSchema | undefined {
   return typeof etape === 'string' ? undefined : etape.schema;
+}
+
+/** Toutes les étapes d'un tuto, Plan B compris, dans l'ordre d'affichage. */
+export function toutesLesEtapes(tuto: { etapes: EtapeTuto[]; planB?: { etapes: EtapeTuto[] } }): EtapeTuto[] {
+  return [...tuto.etapes, ...(tuto.planB?.etapes ?? [])];
 }

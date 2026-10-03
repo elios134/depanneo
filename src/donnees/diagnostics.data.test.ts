@@ -42,6 +42,14 @@ describe('données de diagnostics', () => {
     }
   );
 
+  it('robinet-dur q1 propose le petit robinet d\'arrêt, menant à resultat_arret', () => {
+    const diag = diagnostics.find((d) => d.id === 'robinet-dur')!;
+    const reponse = diag.etapes.q1.reponses.find(
+      (r) => r.texte === "Un petit robinet d'arrêt (WC, évier, lave-linge)"
+    );
+    expect(reponse?.suite).toBe('resultat_arret');
+  });
+
   it('chaque renvoi pointe vers un diagnostic ou un geste existant', () => {
     expect(validerRenvois(diagnostics, gestesUrgence.map((g) => g.id))).toEqual([]);
   });

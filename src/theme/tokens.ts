@@ -25,6 +25,14 @@ export interface Couleurs {
   carteBloc: string;
   carteParc: string;
   carteEau: string;
+  schemaPiece: string;
+  schemaSale: string;
+  schemaTartre: string;
+  schemaJoint: string;
+  schemaFlexible: string;
+  schemaEponge: string;
+  schemaChiffon: string;
+  schemaVinaigre: string;
   flou: 'dark' | 'light';
 }
 
@@ -54,6 +62,14 @@ export const COULEURS: Record<NomTheme, Couleurs> = {
     carteBloc: '#151a25',
     carteParc: '#12251d',
     carteEau: '#10213a',
+    schemaPiece: 'rgba(255,255,255,0.2)',
+    schemaSale: '#9b7653',
+    schemaTartre: '#ece6cc',
+    schemaJoint: '#d9c7a0',
+    schemaFlexible: '#c9ced8',
+    schemaEponge: '#f5d76e',
+    schemaChiffon: '#7d8fae',
+    schemaVinaigre: '#f3e9b0',
     flou: 'dark',
   },
   clair: {
@@ -81,6 +97,14 @@ export const COULEURS: Record<NomTheme, Couleurs> = {
     carteBloc: '#dde3ea',
     carteParc: '#d3ead9',
     carteEau: '#cfe0f5',
+    schemaPiece: 'rgba(15,23,42,0.12)',
+    schemaSale: '#8a6440',
+    schemaTartre: '#c9bf98',
+    schemaJoint: '#b89f6a',
+    schemaFlexible: '#8b93a3',
+    schemaEponge: '#e0b93a',
+    schemaChiffon: '#6b7d9c',
+    schemaVinaigre: '#e6d68a',
     flou: 'light',
   },
 };

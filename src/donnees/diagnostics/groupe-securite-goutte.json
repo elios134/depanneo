@@ -19,13 +19,12 @@
     "resultat_normal": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "C'est normal : l'eau se dilate en chauffant et le groupe de sécurité évacue le surplus. Pense à manœuvrer sa petite manette une fois par mois pour éviter le calcaire.",
-      "tutoId": "entretenir-groupe-securite"
+      "conseil": "C'est normal : l'eau se dilate en chauffant et le groupe de sécurité évacue le surplus. Pense à manœuvrer sa petite manette une fois par mois pour éviter le calcaire."
     },
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Le groupe de sécurité est usé ou la pression est trop forte. Ne le bouche jamais (risque d'explosion du ballon). Appelle un plombier."
+      "conseil": "Soit le groupe de sécurité est entartré à l'intérieur et il faut le changer, soit le chauffe-eau chauffe trop (thermostat ou contacteur jour/nuit en panne). Ne bouche jamais le groupe : le ballon pourrait exploser. Appelle un plombier."
     }
   }
 }
