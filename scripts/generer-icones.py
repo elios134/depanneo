@@ -17,8 +17,6 @@ POLICE_TITRE = "C:/Windows/Fonts/segoeuib.ttf"
 POLICE_SOUS_TITRE = "C:/Windows/Fonts/segoeui.ttf"
 # Teinte la plus sombre du logo (plus bas canal) : sert à estimer la transparence.
 CANAL_MIN_LOGO = 60
-# Fond sombre de l'icône (même noir que l'appli et l'écran de démarrage).
-FOND_SOMBRE = (10, 10, 15, 255)
 
 
 def decouper(zone) -> Image.Image:
@@ -79,11 +77,11 @@ def main() -> None:
     SORTIE.mkdir(parents=True, exist_ok=True)
     maison = rendre_transparent(decouper(ZONE_MAISON))
 
-    icone = placer(maison, 0.62, FOND_SOMBRE).convert("RGB")
+    icone = placer(maison, 0.62, (255, 255, 255, 255)).convert("RGB")
     icone.save(SORTIE / "icon.png")
 
     placer(maison, 0.58, (0, 0, 0, 0)).save(SORTIE / "android-icon-foreground.png")
-    Image.new("RGB", (TAILLE, TAILLE), FOND_SOMBRE[:3]).save(SORTIE / "android-icon-background.png")
+    Image.new("RGB", (TAILLE, TAILLE), (255, 255, 255)).save(SORTIE / "android-icon-background.png")
 
     silhouette = placer(maison, 0.58, (0, 0, 0, 0))
     # Silhouette nette : on supprime le bruit léger du JPEG et on renforce les bords.
