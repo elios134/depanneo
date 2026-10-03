@@ -35,7 +35,6 @@ export function EcranDemarrage() {
   if (!visible) return null;
   return (
     <Animated.View
-      pointerEvents="none"
       onLayout={() => SplashScreen.hideAsync().catch(() => undefined)}
       style={[StyleSheet.absoluteFill, styles.centre, { backgroundColor: C.fond, opacity: opacite }]}
     >
@@ -63,5 +62,5 @@ export function EcranDemarrage() {
 }
 
 const styles = StyleSheet.create({
-  centre: { alignItems: 'center', justifyContent: 'center', zIndex: 100 },
+  centre: { alignItems: 'center', justifyContent: 'center', zIndex: 100, pointerEvents: 'none' },
 });
