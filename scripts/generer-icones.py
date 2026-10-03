@@ -73,10 +73,16 @@ def main() -> None:
     mono.save(SORTIE / "android-icon-monochrome.png")
 
     icone.resize((48, 48), Image.LANCZOS).save(SORTIE / "favicon.png")
-    # Écran de démarrage : le logo complet (maison + nom), 1024 px de large.
+    # Écran de démarrage : le logo complet (maison + nom) dans un carré.
+    # Android 12+ n'affiche que le cercle central (diamètre = 2/3 du carré) :
+    # le logo doit tenir entièrement dans ce cercle.
     logo = rendre_transparent(decouper(ZONE_LOGO))
-    hauteur = round(logo.height * TAILLE / logo.width)
-    logo.resize((TAILLE, hauteur), Image.LANCZOS).save(SORTIE / "splash-icon.png")
+    diametre = TAILLE * 2 / 3 * 0.96
+    echelle = diametre / (logo.width**2 + logo.height**2) ** 0.5
+    taille = (round(logo.width * echelle), round(logo.height * echelle))
+    toile = Image.new("RGBA", (TAILLE, TAILLE), (0, 0, 0, 0))
+    toile.alpha_composite(logo.resize(taille, Image.LANCZOS), ((TAILLE - taille[0]) // 2, (TAILLE - taille[1]) // 2))
+    toile.save(SORTIE / "splash-icon.png")
     print("Icônes générées dans", SORTIE)
 
 
