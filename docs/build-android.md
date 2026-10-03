@@ -37,4 +37,4 @@ Cette version est autonome (elle n'a pas besoin de ton PC), mais chaque changeme
 
 ## Icône et écran de démarrage
 
-Les images de `assets/images/` sont générées depuis `assets/logo/` par `python scripts/generer-icones.py` (Pillow). Pour une icône plus nette, remplacer le fichier du logo puis relancer le script et `npx expo prebuild --clean`.
+Les images de `assets/images/` sont générées depuis `assets/logo/Depanneo-logo.jpg` (le logo d'André, où « ZenHome » a été remplacé par « Dépannéo ») par `python scripts/generer-icones.py` (Pillow). Pour une icône plus nette, remplacer le fichier du logo puis relancer le script et `npx expo prebuild --clean`. L'icône utilise la maison seule ; l'écran de démarrage, le logo complet (maison + nom).

@@ -8,17 +8,19 @@ from pathlib import Path
 from PIL import Image, ImageChops
 
 RACINE = Path(__file__).resolve().parent.parent
-LOGO = RACINE / "assets" / "logo" / "ZenHome-logo.jpg"
+LOGO = RACINE / "assets" / "logo" / "Depanneo-logo.jpg"
 SORTIE = RACINE / "assets" / "images"
 TAILLE = 1024
 ZONE_MAISON = (520, 140, 885, 480)
+# Maison + « Dépannéo » + sous-titre, à l'intérieur de la carte blanche.
+ZONE_LOGO = (470, 140, 940, 632)
 # Teinte la plus sombre du logo (plus bas canal) : sert à estimer la transparence.
 CANAL_MIN_LOGO = 60
 
 
-def decouper_maison() -> Image.Image:
-    """Découpe la maison puis resserre sur les pixels non blancs."""
-    img = Image.open(LOGO).convert("RGB").crop(ZONE_MAISON)
+def decouper(zone) -> Image.Image:
+    """Découpe une zone du logo puis resserre sur les pixels non blancs."""
+    img = Image.open(LOGO).convert("RGB").crop(zone)
     inverse = ImageChops.invert(img.convert("L")).point(lambda v: 255 if v > 40 else 0)
     return img.crop(inverse.getbbox())
 
@@ -55,7 +57,7 @@ def placer(maison: Image.Image, part: float, fond) -> Image.Image:
 
 def main() -> None:
     SORTIE.mkdir(parents=True, exist_ok=True)
-    maison = rendre_transparent(decouper_maison())
+    maison = rendre_transparent(decouper(ZONE_MAISON))
 
     icone = placer(maison, 0.62, (255, 255, 255, 255)).convert("RGB")
     icone.save(SORTIE / "icon.png")
@@ -71,7 +73,10 @@ def main() -> None:
     mono.save(SORTIE / "android-icon-monochrome.png")
 
     icone.resize((48, 48), Image.LANCZOS).save(SORTIE / "favicon.png")
-    placer(maison, 0.80, (0, 0, 0, 0)).save(SORTIE / "splash-icon.png")
+    # Écran de démarrage : le logo complet (maison + nom), 1024 px de large.
+    logo = rendre_transparent(decouper(ZONE_LOGO))
+    hauteur = round(logo.height * TAILLE / logo.width)
+    logo.resize((TAILLE, hauteur), Image.LANCZOS).save(SORTIE / "splash-icon.png")
     print("Icônes générées dans", SORTIE)
 
 
