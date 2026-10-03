@@ -42,7 +42,7 @@ export function EcranAccueil() {
         <Text style={[styles.credit, { top: top + 62, color: couleurs.texteDiscret }]}>© OpenFreeMap · OpenMapTiles · OpenStreetMap</Text>
       ) : null}
       <View style={[styles.panneau, { bottom: margeBarre - 8 }]}>
-        <PanneauAccueil>
+        <PanneauAccueil nombrePros={pros.length}>
           <SectionPros statut={statut} pros={pros} etat={etat} date={date} onUtiliserPosition={demanderAutorisation} peutReessayer={sansReseau || indisponible}
             onReessayer={() => {
               reessayer();
