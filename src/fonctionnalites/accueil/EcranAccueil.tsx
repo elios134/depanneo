@@ -10,7 +10,6 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { BandeauHorsLigne } from '@/ui/BandeauHorsLigne';
 import { useMargeBarre } from '@/ui/useMargeBarre';
 import { BoutonRecentrer } from './components/BoutonRecentrer';
-import { Logo } from './components/Logo';
 import { PanneauAccueil } from './components/PanneauAccueil';
 import { SectionPros } from './components/SectionPros';
 
@@ -31,7 +30,7 @@ export function EcranAccueil() {
     <View style={[styles.racine, { backgroundColor: couleurs.carteSol }]}>
       <CartePros centre={position} pros={pros} horsLigne={horsLigne} recentrage={recentrage} onEchecCarte={setCarteEchec} rechargement={rechargement} />
       <View style={[styles.haut, { top: top + 12 }]}>
-        <Logo />
+        <View style={styles.place} />
         {sansReseau ? <BandeauHorsLigne /> : indisponible ? <BandeauHorsLigne texte="Service des pros indisponible" /> : null}
         {statut === 'gps' && !sansReseau ? (
           <BoutonRecentrer onPress={() => setRecentrage((n) => n + 1)} />

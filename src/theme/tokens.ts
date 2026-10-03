@@ -108,3 +108,10 @@ export const COULEURS: Record<NomTheme, Couleurs> = {
     flou: 'light',
   },
 };
+
+/** Écran de démarrage : toujours sombre, quel que soit le thème (maquette 11, option A). */
+export const COULEURS_DEMARRAGE = {
+  fond: '#0a0a0f',
+  haloViolet: 'rgba(139,92,246,0.45)',
+  haloBleu: 'rgba(79,163,255,0.35)',
+} as const;
