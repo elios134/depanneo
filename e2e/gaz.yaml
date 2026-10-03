@@ -1,0 +1,31 @@
+appId: fr.depanneo.app
+---
+- launchApp:
+    clearState: true
+# Refus de la localisation si l'appli la demande (ne pas dépendre de la position).
+- extendedWaitUntil:
+    visible: "(Ne pas autoriser|Refuser|Don.t allow|Deny)"
+    timeout: 4000
+    optional: true
+- tapOn:
+    text: "(Ne pas autoriser|Refuser|Don.t allow|Deny)"
+    optional: true
+- tapOn:
+    id: "bouton-diagnostiquer"
+- scrollUntilVisible:
+    element:
+      text: "Mauvaise odeur d'égout"
+    direction: DOWN
+- tapOn: "Mauvaise odeur d'égout"
+- tapOn: "Oui"
+# Verdict rouge : renvoi vers « Odeur de gaz \? », jamais de carte de pro
+- assertVisible: "Appelle un pro tout de suite"
+- assertVisible:
+    id: "carte-renvoi"
+# toujours vrai sans position (refusée) ; la règle « pas de pro sur le résultat gaz » est testée par Jest (prosVisibles)
+- assertNotVisible:
+    id: "carte-pro"
+- tapOn:
+    id: "carte-renvoi"
+- assertVisible: "Ne touche à aucun interrupteur, prise ou sonnette.*"
+- assertVisible: ".*0800 47 33 33.*"

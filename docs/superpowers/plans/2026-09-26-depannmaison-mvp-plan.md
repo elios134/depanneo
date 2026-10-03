@@ -79,7 +79,7 @@ __tests__/
 - [ ] **Step 1: Générer le projet Expo avec le template TypeScript + Expo Router**
 
 ```bash
-cd "C:/Users/andre/Documents/ZenHome"
+cd "<dossier du projet>"
 npx create-expo-app@latest . --template tabs
 ```
 

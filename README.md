@@ -4,6 +4,8 @@
 
 # Dépannéo
 
+[![Vérification](https://github.com/elios134/depanneo/actions/workflows/verification.yml/badge.svg)](https://github.com/elios134/depanneo/actions/workflows/verification.yml)
+
 Une appli mobile qui aide les particuliers face à une panne de **plomberie** ou d'**électricité simple** à la maison : diagnostic guidé, gestes d'urgence, tutos avec schémas animés, et les plombiers et électriciens les plus proches sur une carte.
 
 Projet portfolio d'André, ancien plombier et technicien de maintenance (10 ans de terrain) en reconversion dans le développement. Le contenu des diagnostics et des tutos vient de ce vécu.

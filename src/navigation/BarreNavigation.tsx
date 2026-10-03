@@ -36,6 +36,7 @@ export function BarreNavigation({ state, navigation }: PropsBarre) {
             <Pressable
               key={route.key}
               onPress={aller}
+              testID={`onglet-${route.name.replace(/[()]/g, '')}`}
               accessibilityRole="tab"
               accessibilityLabel={onglet.libelle}
               accessibilityState={{ selected: actif }}

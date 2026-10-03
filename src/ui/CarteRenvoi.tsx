@@ -28,6 +28,7 @@ export function CarteRenvoi({ renvoi }: { renvoi: Renvoi }) {
       titre={description.titre}
       sousTitre={description.sousTitre}
       onPress={ouvrir}
+      testID="carte-renvoi"
     />
   );
 }

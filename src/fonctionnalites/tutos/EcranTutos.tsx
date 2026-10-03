@@ -37,7 +37,7 @@ export function EcranTutos() {
         />
       ))}
       {liste.length === 0 ? (
-        <Text style={[styles.vide, { color: couleurs.texteDiscret }]}>Aucun tuto pour l'instant.</Text>
+        <Text style={[styles.vide, { color: couleurs.texteDiscret }]}>Aucun tuto pour l&apos;instant.</Text>
       ) : null}
     </FondEcran>
   );

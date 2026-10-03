@@ -55,7 +55,9 @@ export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPro
   const valide = resultat !== null && resultat.cle === cleActuelle ? resultat : null;
   const etat: EtatPros = cleActuelle === null ? 'attente' : (valide?.etat ?? 'chargement');
   const etatActuel = useRef(etat);
-  etatActuel.current = etat;
+  useEffect(() => {
+    etatActuel.current = etat;
+  }, [etat]);
 
   const reessayer = useCallback(() => setEssai((n) => n + 1), []);
 

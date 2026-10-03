@@ -2,9 +2,9 @@ import { useIsFocused } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { phaseBoucle } from './animation';
 
-const PAS_MS = 33; // environ 30 images par seconde : fluide et peu coûteux
+const PAS_MS = 42; // environ 24 images par seconde : fluide et peu coûteux
 
-/** Temps qui tourne en boucle, entre 0 et 1, sur `dureeMs`. Reste à 0 si `actif` est faux ; en pause quand l'écran n'est pas affiché. */
+/** Temps qui tourne en boucle, entre 0 et 1, sur `dureeMs`. Garde sa dernière valeur quand `actif` est faux ; en pause quand l'écran n'est pas affiché. */
 export function useTempsBoucle(dureeMs: number, actif: boolean): number {
   const [t, setT] = useState(0);
   const ecranAffiche = useIsFocused();

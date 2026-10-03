@@ -1,5 +1,5 @@
 // src/ui/schemas/SchemaDessine.tsx — dessine un schéma décrit en données (moteur dessin.ts, maquette 9).
-import { useId } from 'react';
+import { memo, useId } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Circle, ClipPath, Defs, Ellipse, G, Marker, Path, Rect, Text as SvgText } from 'react-native-svg';
 import type { Couleurs } from '@/theme/tokens';
@@ -76,9 +76,9 @@ function FormeAnimee({ forme, ctx, chemin }: { forme: Forme; ctx: Contexte; chem
   );
 }
 
-export function SchemaDessine({ dessin, immobile }: { dessin: Dessin; immobile: boolean }) {
+function SchemaDessineBase({ dessin, immobile, visible }: { dessin: Dessin; immobile: boolean; visible: boolean }) {
   const { couleurs } = useTheme();
-  const tBoucle = useTempsBoucle(dessin.dureeMs, !immobile);
+  const tBoucle = useTempsBoucle(dessin.dureeMs, !immobile && visible);
   // Les id SVG ne doivent pas contenir de « : » (anciennes versions de React) : on les retire.
   const prefixe = `s${useId().replace(/:/g, '')}`;
   const ctx: Contexte = { couleurs, t: immobile ? dessin.instantFige : tBoucle, prefixe };
@@ -97,6 +97,9 @@ export function SchemaDessine({ dessin, immobile }: { dessin: Dessin; immobile: 
     </View>
   );
 }
+
+// Les props sont stables : un changement de zone ne redessine pas un schéma en pause.
+export const SchemaDessine = memo(SchemaDessineBase);
 
 const styles = StyleSheet.create({
   zone: { width: '100%', aspectRatio: 220 / 120, overflow: 'hidden' },

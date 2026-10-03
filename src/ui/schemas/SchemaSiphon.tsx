@@ -1,5 +1,5 @@
 // src/ui/schemas/SchemaSiphon.tsx — l'eau remplit le coude du siphon et bloque les odeurs (maquette 8).
-import { useId } from 'react';
+import { memo, useId } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Circle, ClipPath, Defs, G, Path, Rect, Text as SvgText } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -9,9 +9,9 @@ import { useTempsBoucle } from './useTempsBoucle';
 
 const TUYAU = 'M70 10 V70 a30 30 0 0 0 60 0 V10 h-16 V70 a14 14 0 0 1 -28 0 V10 Z';
 
-export function SchemaSiphon({ immobile }: { immobile: boolean }) {
+function SchemaSiphonBase({ immobile, visible }: { immobile: boolean; visible: boolean }) {
   const { couleurs } = useTheme();
-  const t = useTempsBoucle(DUREE_SIPHON_MS, !immobile);
+  const t = useTempsBoucle(DUREE_SIPHON_MS, !immobile && visible);
   const image = imageSiphon(t, immobile);
   const idClip = `interieur-siphon-${useId().replace(/:/g, '')}`;
   return (
@@ -40,6 +40,9 @@ export function SchemaSiphon({ immobile }: { immobile: boolean }) {
     </View>
   );
 }
+
+// Les props sont stables : un changement de zone ne redessine pas un schéma en pause.
+export const SchemaSiphon = memo(SchemaSiphonBase);
 
 const styles = StyleSheet.create({
   zone: { width: '100%', aspectRatio: 220 / 120 },

@@ -49,11 +49,15 @@ export function usePosition({ passif = false }: Options = {}): {
   // Le mode passif n'empêche que les demandes automatiques : un appui explicite demande vraiment la permission.
   const demandeExplicite = useRef(false);
   const etatActuel = useRef(etat);
-  etatActuel.current = etat;
+  useEffect(() => {
+    etatActuel.current = etat;
+  }, [etat]);
 
   useEffect(() => {
     if (!charge) return;
     if (!reglages.localisation) {
+      // Synchronisation voulue de l'état avec le réglage de localisation.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setEtat('refuse');
       return;
     }

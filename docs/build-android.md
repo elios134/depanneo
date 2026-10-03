@@ -35,6 +35,32 @@ Cette version est autonome (elle n'a pas besoin de ton PC), mais chaque changeme
 - Mode avion : bandeau « Hors connexion », la dernière liste de pros reste affichée.
 - Refuser la localisation : le champ « Ta ville ou ton code postal » apparaît.
 
+## Tests de bout en bout (Maestro)
+
+Cinq scénarios (dossier `e2e/`) ouvrent la vraie appli sur un téléphone ou un émulateur et vérifient les parcours importants : diagnostic WC, gaz, urgence eau, tuto avec Plan B, panneau de l'accueil. Ils tournent sur la version de production (APK release), sans serveur Metro.
+
+1. Installer Maestro une fois : voir https://maestro.mobile.dev (`maestro --version` doit répondre).
+2. Brancher le téléphone (débogage USB) ou lancer un émulateur ; `adb devices` doit le lister.
+3. Construire l'APK release : `cd android && ./gradlew assembleRelease`.
+4. L'installer : `adb install -r app/build/outputs/apk/release/app-release.apk` (depuis le dossier `android`).
+5. Lancer les scénarios depuis la racine du projet : `npm run e2e`.
+
+Chaque scénario repart d'une appli neuve (`clearState`) et refuse la localisation si elle est demandée.
+
+## Suivi des plantages (Sentry)
+
+Sentry prévient André quand l'appli plante chez quelqu'un. Il ne fonctionne que dans une version de production (jamais en développement) et seulement si un DSN est fourni.
+
+1. Créer un compte gratuit sur sentry.io.
+2. Créer un projet de type « React Native ».
+3. Copier le DSN (une adresse qui commence par `https://`) dans un fichier `.env.local` à la racine : `EXPO_PUBLIC_SENTRY_DSN=ton-dsn` (modèle : `.env.example`). Ce fichier n'est pas versionné.
+4. Dans les réglages du projet Sentry, activer « Prevent Storing of IP Addresses » (ne pas stocker les adresses IP).
+5. Refaire un build de production (voir ci-dessus) : le DSN est lu au moment du build.
+
+Le plugin `plugins/sentry-sans-envoi.js` (déclaré dans `app.json`) coupe l'envoi automatique des source maps à chaque build release, pour que `gradlew assembleRelease` fonctionne sans compte Sentry. Il réécrit `android/app/build.gradle` à chaque `prebuild`. Cela ne concerne qu'Android : iOS n'est pas visé pour l'instant.
+
+Aucune donnée personnelle n'est envoyée : ni position, ni recherche de ville (ces appels réseau sont retirés des traces). Les source maps ne sont pas envoyées pour l'instant.
+
 ## Icône et écran de démarrage
 
 Les images de `assets/images/` sont générées depuis `assets/logo/Depanneo-logo.jpg` (le logo d'André, où « ZenHome » a été remplacé par « Dépannéo ») par `python scripts/generer-icones.py` (Pillow). Pour une icône plus nette, remplacer le fichier du logo puis relancer le script et `npx expo prebuild --clean`. L'icône utilise la maison seule ; l'écran de démarrage, le logo complet (maison + nom).

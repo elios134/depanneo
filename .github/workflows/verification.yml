@@ -1,0 +1,29 @@
+# Vérifie le projet à chaque envoi : types, qualité du code, tests.
+name: Vérification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Types
+        run: npx tsc --noEmit
+      - name: Qualité du code
+        run: npx expo lint
+      - name: Tests
+        run: npx jest --ci

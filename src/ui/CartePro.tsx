@@ -23,6 +23,7 @@ export function CartePro({ pro, onOuvrir, metier: metierDemande }: Props) {
       icone={metier === 'plombier' ? 'wrench' : 'zap'}
       couleur={metier === 'plombier' ? couleurs.plomberie : couleurs.electricite}
       titre={pro.nom}
+      testID="carte-pro"
       onPress={onOuvrir ? () => onOuvrir(pro) : undefined}
       sousTitre={sousTitrePro(pro)}
       droite={

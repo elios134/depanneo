@@ -19,6 +19,8 @@ export function RechercheVille({ onChoisir }: { onChoisir: (lieu: Lieu) => void 
   useEffect(() => {
     const recherche = texte.trim();
     if (recherche.length < 2) {
+      // Saisie trop courte : on remet les résultats à zéro (synchronisation voulue avec le texte).
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLieux([]);
       setErreur(false);
       return;

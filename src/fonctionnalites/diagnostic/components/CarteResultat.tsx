@@ -40,6 +40,7 @@ export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
   const boutonTuto = tuto ? (
     <BoutonPrincipal
       key="tuto"
+      testID="bouton-tuto"
       libelle={`Voir le tuto (${tuto.duree})`}
       icone="book-open"
       onPress={() => router.push({ pathname: '/tutos/[id]', params: { id: tuto.id } }, { withAnchor: true })}
