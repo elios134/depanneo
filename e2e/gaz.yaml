@@ -12,6 +12,10 @@ appId: fr.depanneo.app
     optional: true
 - tapOn:
     id: "bouton-diagnostiquer"
+- scrollUntilVisible:
+    element:
+      text: "Mauvaise odeur d'égout"
+    direction: DOWN
 - tapOn: "Mauvaise odeur d'égout"
 - tapOn: "Oui"
 # Verdict rouge : renvoi vers « Odeur de gaz \? », jamais de carte de pro
