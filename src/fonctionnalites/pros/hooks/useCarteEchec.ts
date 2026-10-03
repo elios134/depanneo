@@ -8,7 +8,9 @@ export function useCarteEchec() {
   const [carteEchec, setCarteEchec] = useState(false);
   const [rechargement, setRechargement] = useState(0);
   const echecActuel = useRef(false);
-  echecActuel.current = carteEchec;
+  useEffect(() => {
+    echecActuel.current = carteEchec;
+  }, [carteEchec]);
 
   const relancerCarte = useCallback(() => setRechargement((n) => n + 1), []);
 

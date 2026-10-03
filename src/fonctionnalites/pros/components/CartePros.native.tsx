@@ -46,6 +46,8 @@ export function CartePros({ centre, pros, horsLigne, recentrage, interactive = t
   // La carte est remontée (key) : l'échec précédent n'est plus valable.
   useEffect(() => {
     if (rechargement === 0) return;
+    // Remise à zéro voulue de l'échec quand la carte est remontée.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setEchec(false);
     onEchecCarte?.(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps

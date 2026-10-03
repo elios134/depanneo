@@ -1,5 +1,5 @@
 // src/ui/FichePro.tsx
-import { useRef } from 'react';
+import { useState } from 'react';
 import { Alert, Linking, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { formaterDistance } from '@/domaine/distance';
@@ -45,9 +45,9 @@ export function FichePro({ pro, onFermer }: Props) {
   const { couleurs } = useTheme();
   const { bottom } = useSafeAreaInsets();
   // On garde le dernier pro affiché pendant que la feuille redescend.
-  const dernier = useRef<Pro | null>(null);
-  if (pro) dernier.current = pro;
-  const p = pro ?? dernier.current;
+  const [dernier, setDernier] = useState<Pro | null>(pro);
+  if (pro && pro !== dernier) setDernier(pro);
+  const p = pro ?? dernier;
   const siteAffiche = p?.siteWeb?.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, '');
   const aDesInfos = Boolean(p && (p.adresse || p.horaires || p.siteWeb || p.email));
 
@@ -91,7 +91,7 @@ export function FichePro({ pro, onFermer }: Props) {
             {p.email ? <Ligne icone="mail" texte={p.email} lien={`mailto:${p.email}`} libelle={`Écrire à ${p.nom}`} /> : null}
             {aDesInfos ? null : (
               <Text style={[styles.peu, { color: couleurs.texteDiscret, borderTopColor: couleurs.bordure }]}>
-                Peu d'infos disponibles pour ce pro.
+                Peu d&apos;infos disponibles pour ce pro.
               </Text>
             )}
             <View style={styles.boutons}>
@@ -105,7 +105,7 @@ export function FichePro({ pro, onFermer }: Props) {
               />
             </View>
             <Text style={[styles.note, { color: couleurs.texteDiscret }]}>
-              Infos OpenStreetMap, parfois incomplètes. Les avis s'ouvrent dans ton navigateur.
+              Infos OpenStreetMap, parfois incomplètes. Les avis s&apos;ouvrent dans ton navigateur.
             </Text>
           </Verre>
         ) : null}

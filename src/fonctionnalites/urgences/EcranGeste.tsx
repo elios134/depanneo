@@ -14,7 +14,7 @@ export function EcranGeste({ id }: { id: string }) {
     return (
       <FondEcran>
         <EnTete titre="Geste d'urgence" action="retour" />
-        <Text style={[styles.texte, { color: couleurs.texte }]}>Geste d'urgence introuvable.</Text>
+        <Text style={[styles.texte, { color: couleurs.texte }]}>Geste d&apos;urgence introuvable.</Text>
       </FondEcran>
     );
   }

@@ -33,6 +33,9 @@ export function EcranPros() {
   const echec = horsLigne || indisponible;
   const sansReseau = horsLigne || (carteEchec && statut !== 'aucune');
   const discret = { color: couleurs.texteDiscret };
+  // L'âge affiché est relatif à l'instant du rendu : l'heure courante est voulue ici.
+  // eslint-disable-next-line react-hooks/purity
+  const age = date === null ? '' : ageTexte(date, Date.now());
 
   return (
     <FondEcran>
@@ -72,7 +75,7 @@ export function EcranPros() {
           ) : null}
           {etat === 'ok' && pros.length === 0 ? (
             <Text style={[styles.message, discret]}>
-              Aucun pro trouvé dans un rayon de {reglages.rayonKm} km. Les données d'OpenStreetMap peuvent être incomplètes.
+              Aucun pro trouvé dans un rayon de {reglages.rayonKm} km. Les données d&apos;OpenStreetMap peuvent être incomplètes.
             </Text>
           ) : null}
           {(etat === 'ok' || echec) && pros.length > 0 && liste.length === 0 ? (
@@ -91,7 +94,7 @@ export function EcranPros() {
             <CartePro key={pro.id} pro={pro} metier={filtre === 'tous' ? undefined : filtre} onOuvrir={setProOuvert} />
           ))}
           {date !== null && liste.length > 0 ? (
-            <Text style={[styles.credit, discret]}>Données © OpenStreetMap · mis à jour {ageTexte(date, Date.now())}</Text>
+            <Text style={[styles.credit, discret]}>Données © OpenStreetMap · mis à jour {age}</Text>
           ) : null}
           {sansReseau || indisponible ? (
             <Pressable

@@ -85,6 +85,10 @@ export function SectionPros({ statut, pros, etat, date, onUtiliserPosition, peut
     );
   }
 
+  // L'âge affiché est relatif à l'instant du rendu : l'heure courante est voulue ici.
+  // eslint-disable-next-line react-hooks/purity
+  const age = date === null ? '' : ageTexte(date, Date.now());
+
   return (
     <View style={styles.bloc}>
       {titre('Pros près de toi', true)}
@@ -93,7 +97,7 @@ export function SectionPros({ statut, pros, etat, date, onUtiliserPosition, peut
       ))}
       <FichePro pro={proOuvert} onFermer={() => setProOuvert(null)} />
       {estEchec(etat) && date !== null ? (
-        <Text style={[styles.message, { color: couleurs.texteDiscret }]}>Liste enregistrée {ageTexte(date, Date.now())}</Text>
+        <Text style={[styles.message, { color: couleurs.texteDiscret }]}>Liste enregistrée {age}</Text>
       ) : null}
       {peutReessayer ? <Lien texte="Réessayer" onPress={onReessayer} /> : null}
     </View>
