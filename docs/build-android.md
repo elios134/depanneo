@@ -44,6 +44,8 @@ Sentry prévient André quand l'appli plante chez quelqu'un. Il ne fonctionne qu
 3. Copier le DSN (une adresse qui commence par `https://`) dans un fichier `.env.local` à la racine : `EXPO_PUBLIC_SENTRY_DSN=ton-dsn` (modèle : `.env.example`). Ce fichier n'est pas versionné.
 4. Refaire un build de production (voir ci-dessus) : le DSN est lu au moment du build.
 
+Le plugin `plugins/sentry-sans-envoi.js` (déclaré dans `app.json`) coupe l'envoi automatique des source maps à chaque build release, pour que `gradlew assembleRelease` fonctionne sans compte Sentry. Il réécrit `android/app/build.gradle` à chaque `prebuild`.
+
 Aucune donnée personnelle n'est envoyée : ni position, ni recherche de ville (ces appels réseau sont retirés des traces). Les source maps ne sont pas envoyées pour l'instant.
 
 ## Icône et écran de démarrage

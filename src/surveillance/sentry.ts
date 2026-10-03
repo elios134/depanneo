@@ -8,6 +8,15 @@ export function demarrerSurveillance(): void {
   Sentry.init({
     dsn,
     sendDefaultPii: false,
+    attachScreenshot: false,
+    attachViewHierarchy: false,
+    enableCaptureFailedRequests: false,
+    enableLogs: false,
+    integrations: [Sentry.breadcrumbsIntegration({ console: false })],
+    beforeSend: (evenement) => {
+      delete evenement.request;
+      return evenement;
+    },
     beforeBreadcrumb: (miette) => nettoyerFilAriane(miette),
   });
 }
