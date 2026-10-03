@@ -18,6 +18,7 @@ appId: fr.depanneo.app
 - assertVisible: "Appelle un pro tout de suite"
 - assertVisible:
     id: "carte-renvoi"
+# toujours vrai sans position (refusée) ; la règle « pas de pro sur le résultat gaz » est testée par Jest (prosVisibles)
 - assertNotVisible:
     id: "carte-pro"
 - tapOn:

@@ -1,4 +1,5 @@
 // src/ui/schemas/SchemaDisjoncteur.tsx — le levier remonte de 0 à I, puis une coche (maquette 8).
+import { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Circle, G, Path, Rect, Text as SvgText } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -6,7 +7,7 @@ import { DUREE_DISJONCTEUR_MS, imageDisjoncteur } from './animation';
 import { POLICE_SCHEMA } from './policeSchema';
 import { useTempsBoucle } from './useTempsBoucle';
 
-export function SchemaDisjoncteur({ immobile, visible }: { immobile: boolean; visible: boolean }) {
+function SchemaDisjoncteurBase({ immobile, visible }: { immobile: boolean; visible: boolean }) {
   const { couleurs } = useTheme();
   const t = useTempsBoucle(DUREE_DISJONCTEUR_MS, !immobile && visible);
   const image = imageDisjoncteur(t, immobile);
@@ -46,6 +47,9 @@ export function SchemaDisjoncteur({ immobile, visible }: { immobile: boolean; vi
     </View>
   );
 }
+
+// Les props sont stables : un changement de zone ne redessine pas un schéma en pause.
+export const SchemaDisjoncteur = memo(SchemaDisjoncteurBase);
 
 const styles = StyleSheet.create({
   zone: { width: '100%', aspectRatio: 220 / 120 },

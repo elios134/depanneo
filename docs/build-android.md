@@ -54,9 +54,10 @@ Sentry prévient André quand l'appli plante chez quelqu'un. Il ne fonctionne qu
 1. Créer un compte gratuit sur sentry.io.
 2. Créer un projet de type « React Native ».
 3. Copier le DSN (une adresse qui commence par `https://`) dans un fichier `.env.local` à la racine : `EXPO_PUBLIC_SENTRY_DSN=ton-dsn` (modèle : `.env.example`). Ce fichier n'est pas versionné.
-4. Refaire un build de production (voir ci-dessus) : le DSN est lu au moment du build.
+4. Dans les réglages du projet Sentry, activer « Prevent Storing of IP Addresses » (ne pas stocker les adresses IP).
+5. Refaire un build de production (voir ci-dessus) : le DSN est lu au moment du build.
 
-Le plugin `plugins/sentry-sans-envoi.js` (déclaré dans `app.json`) coupe l'envoi automatique des source maps à chaque build release, pour que `gradlew assembleRelease` fonctionne sans compte Sentry. Il réécrit `android/app/build.gradle` à chaque `prebuild`.
+Le plugin `plugins/sentry-sans-envoi.js` (déclaré dans `app.json`) coupe l'envoi automatique des source maps à chaque build release, pour que `gradlew assembleRelease` fonctionne sans compte Sentry. Il réécrit `android/app/build.gradle` à chaque `prebuild`. Cela ne concerne qu'Android : iOS n'est pas visé pour l'instant.
 
 Aucune donnée personnelle n'est envoyée : ni position, ni recherche de ville (ces appels réseau sont retirés des traces). Les source maps ne sont pas envoyées pour l'instant.
 

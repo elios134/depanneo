@@ -6,7 +6,10 @@ export interface ZoneVisible {
   fin: number;
 }
 
-/** `null` = pas de défilement connu : les schémas restent toujours actifs. */
+/**
+ * La valeur sert surtout de « déclencheur » : à chaque changement, les schémas mesurent à nouveau leur position
+ * (debut/fin ne sont pas lus par eux).
+ * `null` = pas de défilement connu : les schémas restent toujours actifs. */
 export const ZoneVisibleContexte = createContext<ZoneVisible | null>(null);
 
 export function useZoneVisible(): ZoneVisible | null {

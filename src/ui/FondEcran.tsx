@@ -1,6 +1,6 @@
 // src/ui/FondEcran.tsx
 import { useState, type ReactNode } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -13,6 +13,11 @@ export function FondEcran({ children, defilant = true }: { children: ReactNode; 
   const margeBarre = useMargeBarre();
   // Zone visible du défilement : les schémas animés s'en servent pour se mettre en pause hors de l'écran.
   const [zone, setZone] = useState<ZoneVisible | null>(null);
+  // Met à jour la zone visible ; aussi appelé en fin de glissement/d'élan (position finale) et quand le contenu change de taille.
+  const majZone = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { contentOffset, layoutMeasurement } = e.nativeEvent;
+    setZone({ debut: contentOffset.y, fin: contentOffset.y + layoutMeasurement.height });
+  };
   const contenuStyle = { paddingTop: top + 12, paddingBottom: margeBarre, paddingHorizontal: 16, gap: 12 };
   return (
     <View style={[styles.racine, { backgroundColor: couleurs.fond }]}>
@@ -34,10 +39,11 @@ export function FondEcran({ children, defilant = true }: { children: ReactNode; 
         <ScrollView
           contentContainerStyle={contenuStyle}
           scrollEventThrottle={100}
-          onScroll={(e) => {
-            const { contentOffset, layoutMeasurement } = e.nativeEvent;
-            setZone({ debut: contentOffset.y, fin: contentOffset.y + layoutMeasurement.height });
-          }}
+          onScroll={majZone}
+          onScrollEndDrag={majZone}
+          onMomentumScrollEnd={majZone}
+          // Un bloc qui change de taille au-dessus d'un schéma le décale : on relance la mesure (nouvel objet = nouveau déclencheur).
+          onContentSizeChange={() => setZone((z) => (z ? { ...z } : z))}
           onLayout={(e) => setZone((z) => ({ debut: z?.debut ?? 0, fin: (z?.debut ?? 0) + e.nativeEvent.layout.height }))}
         >
           <ZoneVisibleContexte.Provider value={zone}>{children}</ZoneVisibleContexte.Provider>

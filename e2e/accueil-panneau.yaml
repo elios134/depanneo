@@ -21,6 +21,7 @@ appId: fr.depanneo.app
 - assertVisible:
     id: "panneau-replie"
 - assertNotVisible: "Conseils uniquement.*"
+# toujours vrai sans position (refusée) ; la règle « pas de pro sur le résultat gaz » est testée par Jest (prosVisibles)
 - assertNotVisible:
     id: "carte-pro"
 # Déplier en touchant la ligne repliée
