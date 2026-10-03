@@ -94,7 +94,6 @@ def main() -> None:
     # Écran de démarrage sombre : maison + nom en blanc (le texte du logo est bleu foncé,
     # illisible sur fond noir, on le réécrit).
     logo = logo_sombre(maison)
-    logo.resize((600, round(logo.height * 600 / logo.width)), Image.LANCZOS).save(SORTIE / "logo-demarrage.png")
     # Android 12+ n'affiche que le cercle central (diamètre = 2/3 du carré) :
     # le logo doit tenir entièrement dans ce cercle.
     diametre = TAILLE * 2 / 3 * 0.96
