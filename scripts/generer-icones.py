@@ -5,15 +5,16 @@ Relançable : python scripts/generer-icones.py
 """
 from pathlib import Path
 
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 RACINE = Path(__file__).resolve().parent.parent
 LOGO = RACINE / "assets" / "logo" / "Depanneo-logo.jpg"
 SORTIE = RACINE / "assets" / "images"
 TAILLE = 1024
 ZONE_MAISON = (520, 140, 885, 480)
-# Maison + « Dépannéo » + sous-titre, à l'intérieur de la carte blanche.
-ZONE_LOGO = (470, 140, 940, 632)
+# Polices Windows utilisées pour écrire le nom en blanc (écran de démarrage sombre).
+POLICE_TITRE = "C:/Windows/Fonts/segoeuib.ttf"
+POLICE_SOUS_TITRE = "C:/Windows/Fonts/segoeui.ttf"
 # Teinte la plus sombre du logo (plus bas canal) : sert à estimer la transparence.
 CANAL_MIN_LOGO = 60
 
@@ -55,6 +56,23 @@ def placer(maison: Image.Image, part: float, fond) -> Image.Image:
     return toile
 
 
+def logo_sombre(maison: Image.Image) -> Image.Image:
+    """Maison + « Dépannéo » en blanc + sous-titre gris clair, sur fond transparent."""
+    largeur, haut = 700, 760
+    toile = Image.new("RGBA", (largeur, haut), (0, 0, 0, 0))
+    m = maison.resize((420, round(maison.height * 420 / maison.width)), Image.LANCZOS)
+    toile.alpha_composite(m, ((largeur - m.width) // 2, 40))
+    dessin = ImageDraw.Draw(toile)
+
+    def centrer(texte, police, y, couleur):
+        g, h, d, b = dessin.textbbox((0, 0), texte, font=police)
+        dessin.text(((largeur - (d - g)) / 2 - g, y), texte, font=police, fill=couleur)
+
+    centrer("Dépannéo", ImageFont.truetype(POLICE_TITRE, 96), 40 + m.height + 20, (255, 255, 255, 235))
+    centrer("Diagnostic & Réparation Maison", ImageFont.truetype(POLICE_SOUS_TITRE, 32), 40 + m.height + 150, (255, 255, 255, 140))
+    return toile.crop(toile.getbbox())
+
+
 def main() -> None:
     SORTIE.mkdir(parents=True, exist_ok=True)
     maison = rendre_transparent(decouper(ZONE_MAISON))
@@ -73,10 +91,11 @@ def main() -> None:
     mono.save(SORTIE / "android-icon-monochrome.png")
 
     icone.resize((48, 48), Image.LANCZOS).save(SORTIE / "favicon.png")
-    # Écran de démarrage : le logo complet (maison + nom) dans un carré.
+    # Écran de démarrage sombre : maison + nom en blanc (le texte du logo est bleu foncé,
+    # illisible sur fond noir, on le réécrit).
+    logo = logo_sombre(maison)
     # Android 12+ n'affiche que le cercle central (diamètre = 2/3 du carré) :
     # le logo doit tenir entièrement dans ce cercle.
-    logo = rendre_transparent(decouper(ZONE_LOGO))
     diametre = TAILLE * 2 / 3 * 0.96
     echelle = diametre / (logo.width**2 + logo.height**2) ** 0.5
     taille = (round(logo.width * echelle), round(logo.height * echelle))
