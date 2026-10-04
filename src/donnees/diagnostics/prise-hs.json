@@ -33,23 +33,39 @@
       "verdict": "rouge",
       "titre": "Appelle un pro tout de suite",
       "conseil": "N'utilise plus cette prise et ne la touche pas. Coupe son disjoncteur si tu sais lequel c'est, sinon le disjoncteur général. Appelle un électricien.",
-      "gesteUrgenceId": "couper-courant"
+      "gesteUrgenceId": "couper-courant",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Prise abîmée par l'usage : locataire. Installation défectueuse : propriétaire."
+      }
     },
     "resultat_appareil": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "La prise va bien : c'est l'appareil (ou sa rallonge) qui est en panne."
+      "conseil": "La prise va bien : c'est l'appareil (ou sa rallonge) qui est en panne.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "C'est ton appareil qui est en cause : à ta charge."
+      }
     },
     "resultat_piece": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le problème touche toute la pièce : ça vient sûrement du tableau électrique, pas de la prise.",
-      "renvoi": { "type": "diagnostic", "id": "courant-une-piece" }
+      "renvoi": { "type": "diagnostic", "id": "courant-une-piece" },
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Réarmer un disjoncteur : rien à payer."
+      }
     },
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Un fil est sûrement desserré derrière la prise. Ne la démonte pas : appelle un électricien."
+      "conseil": "Un fil est sûrement desserré derrière la prise. Ne la démonte pas : appelle un électricien.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Le remplacement des prises est à la charge du locataire."
+      }
     }
   }
 }

@@ -14,9 +14,9 @@ const diag: Diagnostic = {
     q3: { question: 'Q3', reponses: [{ texte: 'A', suite: 'r3' }] },
   },
   resultats: {
-    r1: { verdict: 'vert', titre: 'R1', conseil: 'c' },
-    r2: { verdict: 'orange', titre: 'R2', conseil: 'c' },
-    r3: { verdict: 'rouge', titre: 'R3', conseil: 'c' },
+    r1: { verdict: 'vert', titre: 'R1', conseil: 'c', quiPaie: { qui: 'autre', phrase: 'p' } },
+    r2: { verdict: 'orange', titre: 'R2', conseil: 'c', quiPaie: { qui: 'autre', phrase: 'p' } },
+    r3: { verdict: 'rouge', titre: 'R3', conseil: 'c', quiPaie: { qui: 'autre', phrase: 'p' } },
   },
 };
 

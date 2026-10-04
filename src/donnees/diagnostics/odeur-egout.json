@@ -28,25 +28,41 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "L'eau du siphon s'est évaporée et laisse passer l'odeur. Fais couler l'eau une minute.",
-      "tutoId": "remplir-siphon"
+      "tutoId": "remplir-siphon",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Remplir le siphon : rien à payer."
+      }
     },
     "resultat_nettoyer": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le siphon est encrassé.",
-      "tutoId": "deboucher-evier"
+      "tutoId": "deboucher-evier",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Nettoyage du siphon : entretien du locataire."
+      }
     },
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Une odeur d'égout persistante sans origine visible peut venir d'une ventilation ou d'une canalisation abîmée. Aère et appelle un plombier."
+      "conseil": "Une odeur d'égout persistante sans origine visible peut venir d'une ventilation ou d'une canalisation abîmée. Aère et appelle un plombier.",
+      "quiPaie": {
+        "qui": "proprietaire",
+        "phrase": "Ventilation ou canalisation abîmée : à la charge du propriétaire."
+      }
     },
     "resultat_gaz": {
       "verdict": "rouge",
       "titre": "Appelle un pro tout de suite",
       "conseil": "Ne touche à aucun interrupteur, n'allume rien, ouvre les fenêtres, sors et appelle le numéro d'urgence gaz depuis l'extérieur.",
       "numeroUtile": "0800 47 33 33",
-      "renvoi": { "type": "urgence", "id": "couper-gaz" }
+      "renvoi": { "type": "urgence", "id": "couper-gaz" },
+      "quiPaie": {
+        "qui": "autre",
+        "phrase": "Urgence gaz : appelle le numéro d'urgence. Ne t'occupe pas des frais maintenant."
+      }
     }
   }
 }

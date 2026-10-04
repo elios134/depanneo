@@ -42,29 +42,49 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le problème vient du robinet (cartouche du mitigeur entartrée), pas du chauffe-eau. Si l'eau coule faiblement, détartre le mousseur ; sinon, appelle un plombier.",
-      "tutoId": "detartrer-mousseur"
+      "tutoId": "detartrer-mousseur",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Détartrage ou cartouche du mitigeur : entretien du locataire."
+      }
     },
     "resultat_rearmer": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Réarme le disjoncteur. L'eau mettra plusieurs heures à chauffer. S'il re-saute, n'insiste pas et appelle un pro.",
-      "tutoId": "reparer-disjoncteur"
+      "tutoId": "reparer-disjoncteur",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Réarmer un disjoncteur : rien à payer."
+      }
     },
     "resultat_attendre": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Le ballon est simplement vide. Attends la nuit (heures creuses) : l'eau sera chaude demain matin."
+      "conseil": "Le ballon est simplement vide. Attends la nuit (heures creuses) : l'eau sera chaude demain matin.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Rien à payer : le ballon se remplit cette nuit."
+      }
     },
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Pas de danger immédiat, mais le chauffe-eau est probablement en panne (résistance, thermostat ou contacteur). N'ouvre jamais le capot du chauffe-eau : il y a du courant. Appelle un plombier-chauffagiste."
+      "conseil": "Pas de danger immédiat, mais le chauffe-eau est probablement en panne (résistance, thermostat ou contacteur). N'ouvre jamais le capot du chauffe-eau : il y a du courant. Appelle un plombier-chauffagiste.",
+      "quiPaie": {
+        "qui": "proprietaire",
+        "phrase": "Résistance, thermostat ou contacteur du chauffe-eau : à la charge du propriétaire."
+      }
     },
     "resultat_chauffagiste": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
       "conseil": "Les chaudières ne sont pas traitées par l'appli. N'ouvre pas la chaudière et appelle ton chauffagiste (ou ton bailleur si tu es locataire). Si tu sens le gaz, va tout de suite dans l'onglet Urgences.",
-      "renvoi": { "type": "urgence", "id": "couper-gaz" }
+      "renvoi": { "type": "urgence", "id": "couper-gaz" },
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Entretien annuel de la chaudière : locataire. Réparation ou remplacement : propriétaire."
+      }
     }
   }
 }

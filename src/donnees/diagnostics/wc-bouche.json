@@ -27,18 +27,30 @@
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
       "conseil": "Ne tire plus la chasse, sinon ça débordera. Attends que le niveau baisse, puis utilise une ventouse. Si rien ne bouge, appelle un plombier.",
-      "tutoId": "deboucher-wc"
+      "tutoId": "deboucher-wc",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Débouchage des WC : entretien du locataire."
+      }
     },
     "resultat_ventouse": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Une ventouse à WC suffit dans la plupart des cas. N'utilise pas de produit chimique puis la ventouse (projections).",
-      "tutoId": "deboucher-wc"
+      "tutoId": "deboucher-wc",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Débouchage des WC : entretien du locataire."
+      }
     },
     "resultat_canalisation": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Le bouchon est sûrement dans la canalisation commune. Limite l'usage de l'eau et appelle un plombier (ou le gardien si tu es en immeuble)."
+      "conseil": "Le bouchon est sûrement dans la canalisation commune. Limite l'usage de l'eau et appelle un plombier (ou le gardien si tu es en immeuble).",
+      "quiPaie": {
+        "qui": "autre",
+        "phrase": "Canalisation commune : préviens le gestionnaire ou le syndic de l'immeuble."
+      }
     }
   }
 }

@@ -20,18 +20,30 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le robinet flotteur ne coupe plus l'eau : il est souvent entartré ou sa membrane est usée.",
-      "tutoId": "detartrer-flotteur"
+      "tutoId": "detartrer-flotteur",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Entretien courant : détartrage et petites pièces de la chasse d'eau."
+      }
     },
     "resultat_clapet": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le joint du clapet, au fond du réservoir, est usé ou entartré.",
-      "tutoId": "changer-mecanisme-chasse"
+      "tutoId": "changer-mecanisme-chasse",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Le remplacement des joints de chasse d'eau fait partie de l'entretien du locataire."
+      }
     },
     "resultat_couper": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Ferme le petit robinet d'arrivée des WC pour arrêter le gaspillage (une chasse qui coule peut consommer des centaines de litres par jour), puis appelle un plombier."
+      "conseil": "Ferme le petit robinet d'arrivée des WC pour arrêter le gaspillage (une chasse qui coule peut consommer des centaines de litres par jour), puis appelle un plombier.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Joints et réglages : locataire. Mécanisme usé par l'âge : propriétaire."
+      }
     }
   }
 }

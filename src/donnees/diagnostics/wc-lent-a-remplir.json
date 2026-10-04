@@ -26,18 +26,30 @@
     "resultat_ouvrir": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Le petit robinet d'arrivée se trouve sur le tuyau qui arrive au réservoir, derrière ou à côté des WC. Tourne-le dans le sens inverse des aiguilles d'une montre jusqu'en butée. Souvent, il a été fermé à moitié lors d'une réparation."
+      "conseil": "Le petit robinet d'arrivée se trouve sur le tuyau qui arrive au réservoir, derrière ou à côté des WC. Tourne-le dans le sens inverse des aiguilles d'une montre jusqu'en butée. Souvent, il a été fermé à moitié lors d'une réparation.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Ouvrir le robinet d'arrivée : rien à payer."
+      }
     },
     "resultat_calcaire": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le robinet flotteur (la pièce qui remplit le réservoir) est entartré.",
-      "tutoId": "detartrer-flotteur"
+      "tutoId": "detartrer-flotteur",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Détartrer le robinet flotteur : entretien du locataire."
+      }
     },
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Pas de danger. Le robinet flotteur est peut-être cassé : un plombier le remplacera rapidement. Si tu ne trouves pas le petit robinet d'arrivée, il le repérera aussi."
+      "conseil": "Pas de danger. Le robinet flotteur est peut-être cassé : un plombier le remplacera rapidement. Si tu ne trouves pas le petit robinet d'arrivée, il le repérera aussi.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Robinet flotteur cassé par l'usure : propriétaire. Simple membrane ou joint : locataire."
+      }
     }
   }
 }

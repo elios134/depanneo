@@ -3,7 +3,7 @@ import { filtrerPannes, normaliser } from './recherche';
 
 const panne = (id: string, titre: string, categorie: Diagnostic['categorie'], motsCles: string[]): Diagnostic => ({
   id, titre, categorie, motsCles, icone: 'droplets', etapeInitiale: 'r', etapes: {},
-  resultats: { r: { verdict: 'vert', titre: 't', conseil: 'c' } },
+  resultats: { r: { verdict: 'vert', titre: 't', conseil: 'c', quiPaie: { qui: 'autre', phrase: 'p' } } },
 });
 
 const pannes = [

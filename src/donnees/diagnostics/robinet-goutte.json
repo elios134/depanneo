@@ -27,18 +27,30 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le joint (clapet) à l'intérieur de la tête du robinet est usé.",
-      "tutoId": "changer-joint"
+      "tutoId": "changer-joint",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Joints et clapets de robinet : entretien du locataire."
+      }
     },
     "resultat_cartouche": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "La cartouche du mitigeur est usée. Pas d'urgence : un plombier la change rapidement."
+      "conseil": "La cartouche du mitigeur est usée. Pas d'urgence : un plombier la change rapidement.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "La cartouche du mitigeur est à la charge du locataire."
+      }
     },
     "resultat_pied": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
       "conseil": "Un joint interne ou le corps du robinet fuit. Mets un chiffon, coupe l'eau sous l'évier si ça coule beaucoup, et appelle un plombier.",
-      "gesteUrgenceId": "couper-eau"
+      "gesteUrgenceId": "couper-eau",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Joint : locataire. Corps du robinet usé par l'âge : propriétaire."
+      }
     }
   }
 }

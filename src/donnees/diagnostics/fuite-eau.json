@@ -29,31 +29,51 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Resserre doucement l'écrou d'un quart de tour. Si ça goutte encore, change le joint.",
-      "tutoId": "changer-joint"
+      "tutoId": "changer-joint",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Joints et raccords apparents : entretien du locataire."
+      }
     },
     "resultat_perce": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
       "conseil": "Coupe l'eau au robinet général et mets une bassine dessous. Un plombier doit remplacer le morceau de tuyau.",
-      "gesteUrgenceId": "couper-eau"
+      "gesteUrgenceId": "couper-eau",
+      "quiPaie": {
+        "qui": "proprietaire",
+        "phrase": "Un tuyau percé (usure, corrosion) est à la charge du propriétaire, sauf dégât causé par le locataire."
+      }
     },
     "resultat_compteur": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
       "conseil": "Une fuite au compteur (avant ou juste après) se signale au fournisseur d'eau : c'est souvent à sa charge. Coupe l'eau si tu peux et appelle le numéro du service des eaux sur ta facture.",
-      "gesteUrgenceId": "couper-eau"
+      "gesteUrgenceId": "couper-eau",
+      "quiPaie": {
+        "qui": "autre",
+        "phrase": "Fuite au compteur : préviens ton fournisseur d'eau, c'est souvent à sa charge."
+      }
     },
     "resultat_plafond": {
       "verdict": "rouge",
       "titre": "Appelle un pro tout de suite",
       "conseil": "Ne touche pas aux interrupteurs ni aux lampes proches de l'eau. Si l'eau coule près d'une lampe ou d'une prise, coupe le courant au disjoncteur général si tu peux y accéder au sec. Préviens le voisin du dessus ou le gardien, puis appelle un pro.",
-      "gesteUrgenceId": "couper-courant"
+      "gesteUrgenceId": "couper-courant",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Ça vient souvent du voisin du dessus : déclare le sinistre à ton assurance habitation."
+      }
     },
     "resultat_inconnue": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
       "conseil": "Coupe l'eau au robinet général, éponge et cherche d'où ça vient (sous les meubles, derrière le WC, le lave-linge). Si tu ne trouves pas, appelle un plombier.",
-      "gesteUrgenceId": "couper-eau"
+      "gesteUrgenceId": "couper-eau",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Selon l'origine : joint ou raccord (locataire), tuyau ou canalisation (propriétaire)."
+      }
     }
   }
 }

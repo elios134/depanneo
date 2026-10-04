@@ -18,12 +18,20 @@
     "resultat_bonde": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Ce sont presque toujours des cheveux et du savon dans la bonde. Dévisse la grille de la bonde et retire les cheveux."
+      "conseil": "Ce sont presque toujours des cheveux et du savon dans la bonde. Dévisse la grille de la bonde et retire les cheveux.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Le débouchage des évacuations jusqu'à la colonne commune est à la charge du locataire."
+      }
     },
     "resultat_canalisation": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Le bouchon est plus loin dans la canalisation. N'utilise plus la douche et appelle un plombier."
+      "conseil": "Le bouchon est plus loin dans la canalisation. N'utilise plus la douche et appelle un plombier.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Bouchon dans ton logement : locataire. Dans la colonne de l'immeuble : propriétaire ou syndic."
+      }
     }
   }
 }

@@ -20,12 +20,20 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Réarme-le. S'il re-saute, débranche tout dans la pièce puis rebranche un par un pour trouver l'appareil fautif.",
-      "tutoId": "reparer-disjoncteur"
+      "tutoId": "reparer-disjoncteur",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Réarmer un disjoncteur : rien à payer."
+      }
     },
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Un fil peut s'être desserré. Ne démonte rien : appelle un électricien."
+      "conseil": "Un fil peut s'être desserré. Ne démonte rien : appelle un électricien.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Fil desserré sur une prise ou un interrupteur : locataire. Défaut de l'installation : propriétaire."
+      }
     }
   }
 }

@@ -27,19 +27,31 @@
     "resultat_reseau": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Coupure du réseau. Attends le rétablissement. Le numéro de dépannage d'Enedis figure sur ta facture d'électricité. Débranche les appareils sensibles en attendant."
+      "conseil": "Coupure du réseau. Attends le rétablissement. Le numéro de dépannage d'Enedis figure sur ta facture d'électricité. Débranche les appareils sensibles en attendant.",
+      "quiPaie": {
+        "qui": "autre",
+        "phrase": "Coupure du réseau : c'est Enedis qui intervient, rien à payer."
+      }
     },
     "resultat_reenclencher": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Remets-le en position haute. S'il re-saute, continue avec le diagnostic « Disjoncteur qui saute ».",
       "tutoId": "reparer-disjoncteur",
-      "renvoi": { "type": "diagnostic", "id": "disjoncteur-saute" }
+      "renvoi": { "type": "diagnostic", "id": "disjoncteur-saute" },
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Réenclencher le disjoncteur : rien à payer."
+      }
     },
     "resultat_pro": {
       "verdict": "rouge",
       "titre": "Appelle un pro tout de suite",
-      "conseil": "Une coupure chez toi sans disjoncteur coupé est anormale. N'ouvre pas le tableau. Appelle un électricien, ou le dépannage Enedis (numéro sur ta facture)."
+      "conseil": "Une coupure chez toi sans disjoncteur coupé est anormale. N'ouvre pas le tableau. Appelle un électricien, ou le dépannage Enedis (numéro sur ta facture).",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Avant le disjoncteur général : Enedis. Dans le logement : propriétaire."
+      }
     }
   }
 }

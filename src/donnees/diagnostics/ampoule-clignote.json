@@ -26,17 +26,29 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Revisse l'ampoule, lumière éteinte et disjoncteur de la pièce coupé, ou prends une ampoule adaptée (compatible variateur si besoin).",
-      "tutoId": "changer-ampoule"
+      "tutoId": "changer-ampoule",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Les ampoules sont à la charge du locataire."
+      }
     },
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "La douille ou l'interrupteur est peut-être abîmé (mauvais contact). Utilise cette lampe le moins possible et fais-la vérifier par un électricien."
+      "conseil": "La douille ou l'interrupteur est peut-être abîmé (mauvais contact). Utilise cette lampe le moins possible et fais-la vérifier par un électricien.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Douilles et interrupteurs abîmés : leur remplacement est à la charge du locataire."
+      }
     },
     "resultat_pro_urgent": {
       "verdict": "rouge",
       "titre": "Appelle un pro tout de suite",
-      "conseil": "Plusieurs lumières qui clignotent ensemble peuvent signaler un problème sur l'installation ou le branchement. Débranche les appareils sensibles et appelle un électricien."
+      "conseil": "Plusieurs lumières qui clignotent ensemble peuvent signaler un problème sur l'installation ou le branchement. Débranche les appareils sensibles et appelle un électricien.",
+      "quiPaie": {
+        "qui": "proprietaire",
+        "phrase": "Défaut sur l'installation électrique : à la charge du propriétaire."
+      }
     }
   }
 }

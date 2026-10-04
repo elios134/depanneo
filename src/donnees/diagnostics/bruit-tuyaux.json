@@ -19,18 +19,30 @@
     "resultat_belier": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "C'est un « coup de bélier ». Ferme les robinets plus doucement en attendant. Un plombier peut poser un anti-bélier."
+      "conseil": "C'est un « coup de bélier ». Ferme les robinets plus doucement en attendant. Un plombier peut poser un anti-bélier.",
+      "quiPaie": {
+        "qui": "proprietaire",
+        "phrase": "Poser un anti-bélier sur l'installation : à la charge du propriétaire."
+      }
     },
     "resultat_sifflement": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "C'est souvent un robinet d'arrêt à moitié fermé ou un mousseur entartré. Ouvre les robinets d'arrêt à fond, puis détartre le mousseur.",
-      "tutoId": "detartrer-mousseur"
+      "tutoId": "detartrer-mousseur",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Ouvrir les robinets d'arrêt, détartrer : entretien du locataire."
+      }
     },
     "resultat_chauffe_eau": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Un chauffe-eau qui fait du bruit est souvent très entartré. Pas de danger immédiat, mais fais-le vérifier par un plombier."
+      "conseil": "Un chauffe-eau qui fait du bruit est souvent très entartré. Pas de danger immédiat, mais fais-le vérifier par un plombier.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Détartrage : souvent locataire. Chauffe-eau à remplacer : propriétaire."
+      }
     }
   }
 }

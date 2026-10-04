@@ -20,17 +20,29 @@
     "resultat_cartouche": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "La cartouche du mitigeur est entartrée ou usée. Ne force pas : elle peut casser et fuir. Un plombier la remplace en quelques minutes."
+      "conseil": "La cartouche du mitigeur est entartrée ou usée. Ne force pas : elle peut casser et fuir. Un plombier la remplace en quelques minutes.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Le remplacement des cartouches et joints de robinet est à la charge du locataire."
+      }
     },
     "resultat_tete": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "La tête du robinet est entartrée. Ne force pas : un plombier la nettoie ou la change rapidement."
+      "conseil": "La tête du robinet est entartrée. Ne force pas : un plombier la nettoie ou la change rapidement.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Têtes et joints de robinet : entretien du locataire."
+      }
     },
     "resultat_arret": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Ne force jamais un robinet d'arrêt : s'il casse, tu ne pourras plus couper l'eau. Pour le changer, il faut couper l'eau de tout l'immeuble, ou parfois en amont du compteur pour une maison : c'est un travail de plombier. Pense à le manœuvrer 2 fois par an pour qu'il ne se bloque pas."
+      "conseil": "Ne force jamais un robinet d'arrêt : s'il casse, tu ne pourras plus couper l'eau. Pour le changer, il faut couper l'eau de tout l'immeuble, ou parfois en amont du compteur pour une maison : c'est un travail de plombier. Pense à le manœuvrer 2 fois par an pour qu'il ne se bloque pas.",
+      "quiPaie": {
+        "qui": "proprietaire",
+        "phrase": "Remplacer le robinet d'arrêt général : à la charge du propriétaire (ou du syndic)."
+      }
     }
   }
 }

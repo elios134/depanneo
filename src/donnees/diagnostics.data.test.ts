@@ -31,6 +31,20 @@ const tousLesResultats = () =>
   diagnostics.flatMap((d) => Object.entries(d.resultats).map(([id, r]) => ({ diag: d.id, id, r })));
 
 describe('données de diagnostics', () => {
+  it('chaque résultat a un « Qui paie ? » valide avec une phrase', () => {
+    const valeurs = ['locataire', 'proprietaire', 'depend', 'autre'];
+    for (const { diag, id, r } of tousLesResultats()) {
+      const cle = `${diag}/${id}`;
+      expect({ cle, valide: valeurs.includes(r.quiPaie.qui) }).toEqual({ cle, valide: true });
+      expect({ cle, phraseVide: r.quiPaie.phrase.trim() === '' }).toEqual({ cle, phraseVide: false });
+    }
+  });
+
+  it("l'odeur d'égout qui vire au gaz renvoie vers un autre organisme", () => {
+    const d = diagnostics.find((x) => x.id === 'odeur-egout');
+    expect(d?.resultats.resultat_gaz.quiPaie.qui).toBe('autre');
+  });
+
   it('contient exactement les diagnostics de la liste attendue', () => {
     expect(diagnostics.map((d) => d.id).sort()).toEqual([...IDS_ATTENDUS].sort());
   });
