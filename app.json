@@ -42,7 +42,14 @@
         }
       ],
       "@sentry/react-native/expo",
-      "./plugins/sentry-sans-envoi.js"
+      "./plugins/sentry-sans-envoi.js",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Dépannéo utilise tes photos pour joindre une photo de la panne ou de ton logement.",
+          "cameraPermission": "Dépannéo utilise l'appareil photo pour photographier la panne ou ton logement."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

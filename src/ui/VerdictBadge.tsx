@@ -2,22 +2,23 @@
 import { StyleSheet, Text, View } from 'react-native';
 import type { NomIcone } from '@/domaine/icones';
 import type { Verdict } from '@/domaine/types';
+import { LIBELLES_VERDICT } from '@/domaine/verdict';
 import type { Couleurs } from '@/theme/tokens';
 import { teinte } from '@/theme/teinte';
 import { useTheme } from '@/theme/ThemeProvider';
 import { Pastille } from './Pastille';
 
 const CONFIG: Record<Verdict, { icone: NomIcone; libelle: string; detail: string; couleur: keyof Couleurs }> = {
-  vert: { icone: 'wrench', libelle: 'Tu peux réparer', detail: 'Réparation simple, sans danger', couleur: 'verdictVert' },
+  vert: { icone: 'wrench', libelle: LIBELLES_VERDICT.vert, detail: 'Réparation simple, sans danger', couleur: 'verdictVert' },
   orange: {
     icone: 'shield-alert',
-    libelle: 'Sécurise en attendant',
+    libelle: LIBELLES_VERDICT.orange,
     detail: 'Mets en sécurité, puis appelle un pro',
     couleur: 'verdictOrange',
   },
   rouge: {
     icone: 'hard-hat',
-    libelle: 'Appelle un pro tout de suite',
+    libelle: LIBELLES_VERDICT.rouge,
     detail: 'Ne répare pas toi-même',
     couleur: 'verdictRouge',
   },

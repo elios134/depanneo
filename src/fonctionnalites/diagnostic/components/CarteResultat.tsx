@@ -21,12 +21,15 @@ import { prosVisibles } from '../lib/renvoi';
 import { BlocQuiPaie } from './BlocQuiPaie';
 
 interface Props {
+  diagnosticId: string;
+  /** Indices des réponses choisies, pour reconstruire le message « Envoyer au plombier ». */
+  choix: number[];
   resultat: Resultat;
   metier: Metier;
   onRecommencer: () => void;
 }
 
-export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
+export function CarteResultat({ diagnosticId, choix, resultat, metier, onRecommencer }: Props) {
   const { couleurs } = useTheme();
   const { position } = usePosition({ passif: true });
   const { pros } = usePros(position);
@@ -70,13 +73,25 @@ export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
       </View>
     ) : null;
 
+  const boutonEnvoyer = (
+    <BoutonPrincipal
+      key="envoyer"
+      testID="bouton-envoyer-plombier"
+      libelle="Envoyer au plombier"
+      icone="share"
+      variante="discret"
+      onPress={() =>
+        router.push({ pathname: '/diagnostic/envoyer', params: { id: diagnosticId, choix: choix.join(',') } }, { withAnchor: true })
+      }
+    />
+  );
   const quiPaie = <BlocQuiPaie key="qui-paie" info={resultat.quiPaie} />;
 
   // Le renvoi passe toujours en premier, juste sous le conseil (maquette 8).
   const actions =
-    resultat.verdict === 'vert' ? [carteRenvoi, quiPaie, boutonTuto, carteGeste, sectionPros] :
-    resultat.verdict === 'orange' ? [carteRenvoi, quiPaie, carteGeste, numero, sectionPros, boutonTuto] :
-    [carteRenvoi, numero, sectionPros, carteGeste, quiPaie];
+    resultat.verdict === 'vert' ? [carteRenvoi, quiPaie, boutonTuto, carteGeste, boutonEnvoyer, sectionPros] :
+    resultat.verdict === 'orange' ? [carteRenvoi, quiPaie, carteGeste, numero, boutonEnvoyer, sectionPros, boutonTuto] :
+    [carteRenvoi, numero, sectionPros, carteGeste, quiPaie, boutonEnvoyer];
 
   return (
     <>
