@@ -15,6 +15,9 @@ Projet portfolio d'André, ancien plombier et technicien de maintenance (10 ans 
 - **Diagnostic guidé** : 22 pannes (fuite, WC bouché, plus d'eau chaude, disjoncteur qui saute…). Quelques questions simples, puis un verdict : 🟢 je peux réparer, 🟠 je sécurise en attendant un pro, 🔴 j'appelle un pro tout de suite.
 - **Urgences** en un appui : couper l'eau, couper le courant, « Odeur de gaz ? » avec le numéro d'urgence.
 - **10 tutos** pas à pas, illustrés par des schémas animés, avec un « Plan B » quand la première méthode ne suffit pas.
+- **Qui paie ?** : pour chaque panne, qui doit payer la réparation (locataire, propriétaire ou gestionnaire).
+- **Mon logement** : tu photographies ton robinet d'arrêt, ton tableau électrique… et tu les retrouves dans les gestes d'urgence.
+- **Envoyer au plombier** : un message prêt à envoyer avec le diagnostic et une photo de la panne.
 - **Carte des pros** (OpenStreetMap) : plombiers et électriciens proches, appel en un appui.
 - Diagnostic, urgences et tutos **fonctionnent sans réseau**.
 

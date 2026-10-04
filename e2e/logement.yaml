@@ -1,0 +1,23 @@
+appId: fr.depanneo.app
+---
+- launchApp:
+    clearState: true
+- runFlow: sous-flux/premier-lancement.yaml
+- tapOn:
+    id: "onglet-urgences"
+- tapOn:
+    id: "carte-mon-logement"
+- tapOn: "Robinet d'arrêt général"
+- tapOn:
+    id: "champ-note"
+- inputText: "Sous l'évier"
+- hideKeyboard
+- tapOn:
+    id: "bouton-enregistrer"
+# Retour (Mon logement, puis Urgences), puis le geste « Couper l'eau » affiche « Chez toi ».
+- back
+- back
+- tapOn: "Couper l'eau"
+- assertVisible:
+    id: "chez-toi"
+- assertVisible: "Sous l'évier"

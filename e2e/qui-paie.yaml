@@ -1,0 +1,15 @@
+appId: fr.depanneo.app
+---
+- launchApp:
+    clearState: true
+- runFlow: sous-flux/premier-lancement.yaml
+- tapOn:
+    id: "bouton-diagnostiquer"
+- tapOn: "WC bouché"
+- tapOn: "Non, elle descend lentement"
+- tapOn: "Non, seulement les WC"
+# Verdict vert (ventouse) avec le statut locataire : « Qui paie ? »
+- assertVisible: "Tu peux réparer"
+- assertVisible:
+    id: "bloc-qui-paie"
+- assertVisible: "À ta charge"

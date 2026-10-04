@@ -2,14 +2,7 @@ appId: fr.depanneo.app
 ---
 - launchApp:
     clearState: true
-# Refus de la localisation si l'appli la demande (ne pas dépendre de la position).
-- extendedWaitUntil:
-    visible: "(Ne pas autoriser|Refuser|Don.t allow|Deny)"
-    timeout: 4000
-    optional: true
-- tapOn:
-    text: "(Ne pas autoriser|Refuser|Don.t allow|Deny)"
-    optional: true
+- runFlow: sous-flux/premier-lancement.yaml
 - assertVisible:
     id: "bouton-diagnostiquer"
 - assertVisible: "Conseils uniquement.*"
