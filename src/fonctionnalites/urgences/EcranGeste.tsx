@@ -25,21 +25,26 @@ export function EcranGeste({ id }: { id: string }) {
   }
   const emplacement = emplacementDuGeste(id);
   const info = emplacement ? logement[emplacement] : undefined;
+  // Pour le gaz, rien de nouveau au-dessus des consignes : le lien passe après les étapes et le numéro.
+  const gaz = id === 'couper-gaz';
+  const lien =
+    emplacement && !estRenseigne(info) ? (
+      <Pressable
+        testID="enregistrer-emplacement"
+        accessibilityRole="link"
+        onPress={() => router.push({ pathname: '/urgences/logement/[emplacement]', params: { emplacement } })}
+      >
+        <Text style={[styles.lien, { color: couleurs.accent }]}>Enregistrer l&apos;emplacement</Text>
+      </Pressable>
+    ) : null;
   return (
     <FondEcran>
       <EnTete titre={geste.titre} action="retour" />
       {info && estRenseigne(info) ? <ChezToi info={info} compact={id === 'couper-gaz'} /> : null}
-      {emplacement && !estRenseigne(info) ? (
-        <Pressable
-          testID="enregistrer-emplacement"
-          accessibilityRole="link"
-          onPress={() => router.push({ pathname: '/urgences/logement/[emplacement]', params: { emplacement } })}
-        >
-          <Text style={[styles.lien, { color: couleurs.accent }]}>Enregistrer l&apos;emplacement</Text>
-        </Pressable>
-      ) : null}
+      {!gaz ? lien : null}
       <EtapesList etapes={geste.etapes} />
       {geste.numeroUtile ? <NumeroUrgence numero={geste.numeroUtile} /> : null}
+      {gaz ? lien : null}
     </FondEcran>
   );
 }

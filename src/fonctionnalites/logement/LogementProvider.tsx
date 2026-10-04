@@ -9,7 +9,7 @@ import {
 interface ContexteLogement {
   logement: Logement;
   charge: boolean;
-  /** `photo` = URI choisie ; si elle diffère de la photo déjà enregistrée, elle est copiée dans le dossier de l'appli. */
+  /** `photo` = URI choisie ; si elle diffère de la photo déjà enregistrée, elle est copiée dans le dossier de l'appli. Rejette si la copie ou l'écriture échoue (rien n'est alors modifié). */
   enregistrer: (emplacement: Emplacement, info: InfoEmplacement, mimeType?: string | null) => Promise<void>;
   supprimer: (emplacement: Emplacement) => Promise<void>;
 }
@@ -26,11 +26,11 @@ function effacerPhoto(uri: string | undefined) {
   }
 }
 
-function copierPhoto(source: string, emplacement: Emplacement, mimeType?: string | null): string {
+async function copierPhoto(source: string, emplacement: Emplacement, mimeType?: string | null): Promise<string> {
   const dossier = new Directory(Paths.document, 'logement');
   dossier.create({ idempotent: true, intermediates: true });
   const copie = new File(dossier, `${emplacement}-${Date.now()}.${extensionPhoto(source, mimeType)}`);
-  new File(source).copy(copie);
+  await new File(source).copy(copie);
   return copie.uri;
 }
 
@@ -39,10 +39,11 @@ export function LogementProvider({ children }: { children: ReactNode }) {
   const [charge, setCharge] = useState(false);
   const courant = useRef<Logement>({});
 
+  // Écrit d'abord sur le disque : si l'écriture échoue, ni l'état ni les fichiers ne changent.
   const appliquer = async (suivant: Logement) => {
+    await AsyncStorage.setItem(CLE_LOGEMENT, ecrireLogement(suivant));
     courant.current = suivant;
     setLogement(suivant);
-    await AsyncStorage.setItem(CLE_LOGEMENT, ecrireLogement(suivant));
   };
 
   useEffect(() => {
@@ -59,19 +60,26 @@ export function LogementProvider({ children }: { children: ReactNode }) {
     const ancienne = courant.current[emplacement]?.photo;
     const note = info.note?.trim().slice(0, NOTE_MAX);
     let photo = info.photo;
-    if (photo && photo !== ancienne) photo = copierPhoto(photo, emplacement, mimeType);
-    if (ancienne && ancienne !== photo) effacerPhoto(ancienne);
+    const nouvelle = Boolean(photo) && photo !== ancienne;
+    if (photo && nouvelle) photo = await copierPhoto(photo, emplacement, mimeType);
     const suivant = { ...courant.current };
     if (photo || note) suivant[emplacement] = { ...(photo ? { photo } : {}), ...(note ? { note } : {}) };
     else delete suivant[emplacement];
-    await appliquer(suivant);
+    try {
+      await appliquer(suivant);
+    } catch (e) {
+      if (nouvelle) effacerPhoto(photo);
+      throw e;
+    }
+    if (ancienne && ancienne !== photo) effacerPhoto(ancienne);
   };
 
   const supprimer = async (emplacement: Emplacement) => {
-    effacerPhoto(courant.current[emplacement]?.photo);
+    const ancienne = courant.current[emplacement]?.photo;
     const suivant = { ...courant.current };
     delete suivant[emplacement];
     await appliquer(suivant);
+    effacerPhoto(ancienne);
   };
 
   return <Contexte.Provider value={{ logement, charge, enregistrer, supprimer }}>{children}</Contexte.Provider>;

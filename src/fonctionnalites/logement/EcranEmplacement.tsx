@@ -10,8 +10,23 @@ import { usePhoto } from '@/ui/usePhoto';
 import { useLogement } from './LogementProvider';
 import { EMPLACEMENTS, estEmplacement, NOTE_MAX } from './lib/logement';
 
-/** Édition d'un emplacement : photo (appareil ou galerie) et une phrase. */
+/** Attend le chargement du logement avant d'afficher le formulaire, pour ne jamais écraser des données existantes. */
 export function EcranEmplacement({ emplacement }: { emplacement: string }) {
+  const { couleurs } = useTheme();
+  const { charge } = useLogement();
+  if (!charge) {
+    return (
+      <FondEcran>
+        <EnTete titre="Mon logement" action="retour" />
+        <Text style={{ color: couleurs.texteDiscret }}>Chargement…</Text>
+      </FondEcran>
+    );
+  }
+  return <FormulaireEmplacement emplacement={emplacement} />;
+}
+
+/** Édition d'un emplacement : photo (appareil ou galerie) et une phrase. */
+function FormulaireEmplacement({ emplacement }: { emplacement: string }) {
   const { couleurs } = useTheme();
   const { logement, enregistrer, supprimer } = useLogement();
   const existant = estEmplacement(emplacement) ? logement[emplacement] : undefined;
