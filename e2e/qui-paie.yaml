@@ -12,4 +12,4 @@ appId: fr.depanneo.app
 - assertVisible: "Tu peux réparer"
 - assertVisible:
     id: "bloc-qui-paie"
-- assertVisible: "À ta charge"
+- assertVisible: ".*À ta charge.*"

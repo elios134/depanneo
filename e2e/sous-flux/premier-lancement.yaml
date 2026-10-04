@@ -9,6 +9,11 @@ appId: fr.depanneo.app
     text: "(Ne pas autoriser|Refuser|Don.t allow|Deny)"
     optional: true
 # Question du premier lancement (locataire / propriétaire) : absente si déjà répondu.
+- extendedWaitUntil:
+    visible:
+      id: "statut-locataire"
+    timeout: 8000
+    optional: true
 - tapOn:
     id: "statut-locataire"
     optional: true

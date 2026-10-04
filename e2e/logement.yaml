@@ -14,9 +14,15 @@ appId: fr.depanneo.app
 - hideKeyboard
 - tapOn:
     id: "bouton-enregistrer"
-# Retour (Mon logement, puis Urgences), puis le geste « Couper l'eau » affiche « Chez toi ».
-- back
-- back
+# Retour sur la liste des urgences, puis le geste « Couper l'eau » affiche « Chez toi ».
+- tapOn:
+    id: "onglet-urgences"
+# Si l'onglet garde « Mon logement » au-dessus de la pile, on revient d'un cran.
+- runFlow:
+    when:
+      notVisible: "Couper l'eau"
+    commands:
+      - back
 - tapOn: "Couper l'eau"
 - assertVisible:
     id: "chez-toi"
