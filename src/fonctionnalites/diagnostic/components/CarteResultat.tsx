@@ -18,6 +18,7 @@ import { FichePro } from '@/ui/FichePro';
 import { NumeroUrgence } from '@/ui/NumeroUrgence';
 import { VerdictBadge } from '@/ui/VerdictBadge';
 import { prosVisibles } from '../lib/renvoi';
+import { BlocQuiPaie } from './BlocQuiPaie';
 
 interface Props {
   resultat: Resultat;
@@ -69,11 +70,13 @@ export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
       </View>
     ) : null;
 
+  const quiPaie = <BlocQuiPaie key="qui-paie" info={resultat.quiPaie} />;
+
   // Le renvoi passe toujours en premier, juste sous le conseil (maquette 8).
   const actions =
-    resultat.verdict === 'vert' ? [carteRenvoi, boutonTuto, carteGeste, sectionPros] :
-    resultat.verdict === 'orange' ? [carteRenvoi, carteGeste, numero, sectionPros, boutonTuto] :
-    [carteRenvoi, numero, sectionPros, carteGeste];
+    resultat.verdict === 'vert' ? [carteRenvoi, quiPaie, boutonTuto, carteGeste, sectionPros] :
+    resultat.verdict === 'orange' ? [carteRenvoi, quiPaie, carteGeste, numero, sectionPros, boutonTuto] :
+    [carteRenvoi, numero, sectionPros, carteGeste, quiPaie];
 
   return (
     <>

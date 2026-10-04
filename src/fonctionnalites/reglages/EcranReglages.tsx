@@ -10,7 +10,7 @@ import { EnTete } from '@/ui/EnTete';
 import { FondEcran } from '@/ui/FondEcran';
 import { Onglets } from '@/ui/Onglets';
 import { useReglages } from './ReglagesProvider';
-import type { ModeTheme, RayonKm } from './lib/reglages';
+import type { ModeTheme, RayonKm, StatutLogement } from './lib/reglages';
 
 function Bloc({ titre, description, children }: { titre: string; description: string; children: ReactNode }) {
   const { couleurs } = useTheme();
@@ -50,6 +50,17 @@ export function EcranReglages() {
           ]}
           valeur={reglages.rayonKm}
           onChange={(rayonKm) => modifier({ rayonKm })}
+        />
+      </Bloc>
+      <Bloc titre="Je suis…" description="Sert à te dire qui paie la réparation">
+        <Onglets<StatutLogement>
+          options={[
+            { valeur: 'locataire', libelle: 'Locataire' },
+            { valeur: 'proprietaire', libelle: 'Propriétaire' },
+            { valeur: 'non-precise', libelle: 'Préfère ne pas dire' },
+          ]}
+          valeur={reglages.statutLogement ?? 'non-precise'}
+          onChange={(statutLogement) => modifier({ statutLogement })}
         />
       </Bloc>
       <View style={[styles.bloc, styles.ligne, { backgroundColor: couleurs.carte, borderColor: couleurs.bordure }]}>
