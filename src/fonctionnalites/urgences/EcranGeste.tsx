@@ -25,8 +25,9 @@ export function EcranGeste({ id }: { id: string }) {
   }
   const emplacement = emplacementDuGeste(id);
   const info = emplacement ? logement[emplacement] : undefined;
-  // Pour le gaz, rien de nouveau au-dessus des consignes : le lien passe après les étapes et le numéro.
+  // Pour le gaz, rien de nouveau au-dessus des consignes : « Chez toi » et le lien passent après les étapes et le numéro.
   const gaz = id === 'couper-gaz';
+  const chezToi = info && estRenseigne(info) ? <ChezToi info={info} compact={gaz} /> : null;
   const lien =
     emplacement && !estRenseigne(info) ? (
       <Pressable
@@ -40,10 +41,11 @@ export function EcranGeste({ id }: { id: string }) {
   return (
     <FondEcran>
       <EnTete titre={geste.titre} action="retour" />
-      {info && estRenseigne(info) ? <ChezToi info={info} compact={id === 'couper-gaz'} /> : null}
+      {!gaz ? chezToi : null}
       {!gaz ? lien : null}
       <EtapesList etapes={geste.etapes} />
       {geste.numeroUtile ? <NumeroUrgence numero={geste.numeroUtile} /> : null}
+      {gaz ? chezToi : null}
       {gaz ? lien : null}
     </FondEcran>
   );

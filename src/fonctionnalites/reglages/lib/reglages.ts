@@ -1,8 +1,9 @@
 import type { Lieu } from '@/domaine/lieux';
+import type { StatutLogement } from '@/domaine/statutLogement';
 
 export type ModeTheme = 'sombre' | 'clair' | 'auto';
 export type RayonKm = 5 | 10 | 20;
-export type StatutLogement = 'locataire' | 'proprietaire' | 'non-precise';
+export type { StatutLogement };
 
 export interface Reglages {
   theme: ModeTheme;

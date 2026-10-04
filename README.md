@@ -17,7 +17,7 @@ Projet portfolio d'André, ancien plombier et technicien de maintenance (10 ans 
 - **10 tutos** pas à pas, illustrés par des schémas animés, avec un « Plan B » quand la première méthode ne suffit pas.
 - **Qui paie ?** : pour chaque panne, qui doit payer la réparation (locataire, propriétaire ou gestionnaire).
 - **Mon logement** : tu photographies ton robinet d'arrêt, ton tableau électrique… et tu les retrouves dans les gestes d'urgence.
-- **Envoyer au plombier** : un message prêt à envoyer avec le diagnostic et une photo de la panne.
+- **Envoyer à un pro** : un message prêt à envoyer avec le diagnostic et une photo de la panne.
 - **Carte des pros** (OpenStreetMap) : plombiers et électriciens proches, appel en un appui.
 - Diagnostic, urgences et tutos **fonctionnent sans réseau**.
 

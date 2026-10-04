@@ -56,7 +56,7 @@ beforeEach(async () => {
   mockSupprimes.length = 0;
   mockCopieEchoue = false;
   await AsyncStorage.clear();
-  await AsyncStorage.setItem(CLE_LOGEMENT, JSON.stringify({ tableau: { photo: 'file:///docs/logement/ancienne.jpg', note: 'Placard' } }));
+  await AsyncStorage.setItem(CLE_LOGEMENT, JSON.stringify({ tableau: { photo: 'ancienne.jpg', note: 'Placard' } }));
 });
 
 describe('LogementProvider : fichiers', () => {
@@ -67,7 +67,10 @@ describe('LogementProvider : fichiers', () => {
     });
     const photo = sonde.ctx.logement.tableau?.photo ?? '';
     expect(photo).toMatch(/^file:\/\/\/docs\/logement\/tableau-\d+\.jpg$/);
-    expect(JSON.parse((await AsyncStorage.getItem(CLE_LOGEMENT)) ?? '{}').tableau.photo).toBe(photo);
+    // Sur le disque : seulement le nom du fichier.
+    const stocke = JSON.parse((await AsyncStorage.getItem(CLE_LOGEMENT)) ?? '{}').tableau.photo;
+    expect(stocke).toMatch(/^tableau-\d+\.jpg$/);
+    expect(photo).toBe(`file:///docs/logement/${stocke}`);
     expect(mockSupprimes).toEqual(['file:///docs/logement/ancienne.jpg']);
   });
 
@@ -80,6 +83,25 @@ describe('LogementProvider : fichiers', () => {
       }),
     ).rejects.toThrow('copie impossible');
     expect(sonde.ctx.logement.tableau).toEqual({ photo: 'file:///docs/logement/ancienne.jpg', note: 'Placard' });
+    expect(JSON.parse((await AsyncStorage.getItem(CLE_LOGEMENT)) ?? '{}').tableau.photo).toBe('ancienne.jpg');
     expect(mockSupprimes).toEqual([]);
+  });
+
+  it('anciennes données (URI absolue) : seul le nom du fichier est gardé, l’URI est reconstruite', async () => {
+    await AsyncStorage.setItem(
+      CLE_LOGEMENT,
+      JSON.stringify({ tableau: { photo: 'file:///ancien/chemin/documents/logement/vieille.jpg', note: 'Placard' } }),
+    );
+    await monter();
+    expect(sonde.ctx.logement.tableau?.photo).toBe('file:///docs/logement/vieille.jpg');
+  });
+
+  it('photo inchangée : pas de copie, pas de suppression, le nom reste stocké', async () => {
+    await monter();
+    await act(async () => {
+      await sonde.ctx.enregistrer('tableau', { photo: sonde.ctx.logement.tableau?.photo, note: 'Nouvelle note' });
+    });
+    expect(mockSupprimes).toEqual([]);
+    expect(JSON.parse((await AsyncStorage.getItem(CLE_LOGEMENT)) ?? '{}').tableau).toEqual({ photo: 'ancienne.jpg', note: 'Nouvelle note' });
   });
 });

@@ -1,6 +1,6 @@
 // src/fonctionnalites/diagnostic/components/CarteResultat.tsx
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { LIBELLES_METIER, type Metier, type Pro } from '@/domaine/pro';
 import type { Resultat } from '@/domaine/types';
@@ -17,12 +17,13 @@ import { CartePro } from '@/ui/CartePro';
 import { FichePro } from '@/ui/FichePro';
 import { NumeroUrgence } from '@/ui/NumeroUrgence';
 import { VerdictBadge } from '@/ui/VerdictBadge';
+import { ordreActions, type Action } from '../lib/ordreActions';
 import { prosVisibles } from '../lib/renvoi';
 import { BlocQuiPaie } from './BlocQuiPaie';
 
 interface Props {
   diagnosticId: string;
-  /** Indices des réponses choisies, pour reconstruire le message « Envoyer au plombier ». */
+  /** Indices des réponses choisies, pour reconstruire le message « Envoyer à un pro ». */
   choix: number[];
   resultat: Resultat;
   metier: Metier;
@@ -77,7 +78,7 @@ export function CarteResultat({ diagnosticId, choix, resultat, metier, onRecomme
     <BoutonPrincipal
       key="envoyer"
       testID="bouton-envoyer-plombier"
-      libelle="Envoyer au plombier"
+      libelle="Envoyer à un pro"
       icone="share"
       variante="discret"
       onPress={() =>
@@ -87,11 +88,10 @@ export function CarteResultat({ diagnosticId, choix, resultat, metier, onRecomme
   );
   const quiPaie = <BlocQuiPaie key="qui-paie" info={resultat.quiPaie} />;
 
-  // Le renvoi passe toujours en premier, juste sous le conseil (maquette 8).
-  const actions =
-    resultat.verdict === 'vert' ? [carteRenvoi, quiPaie, boutonTuto, carteGeste, boutonEnvoyer, sectionPros] :
-    resultat.verdict === 'orange' ? [carteRenvoi, quiPaie, carteGeste, numero, boutonEnvoyer, sectionPros, boutonTuto] :
-    [carteRenvoi, numero, sectionPros, carteGeste, quiPaie, boutonEnvoyer];
+  const elements: Record<Action, ReactNode> = {
+    renvoi: carteRenvoi, quiPaie, tuto: boutonTuto, geste: carteGeste, numero, envoyer: boutonEnvoyer, pros: sectionPros,
+  };
+  const actions = ordreActions(resultat.verdict).map((a) => elements[a]);
 
   return (
     <>

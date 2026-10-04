@@ -12,12 +12,13 @@ import { usePhotoPanne } from './hooks/usePhotoPanne';
 import { messagePlombier } from './lib/message';
 import { etapeCourante, rejouer, reponsesChoisies } from './lib/parcours';
 
-/** Écran « Envoyer au plombier » : aperçu du message, photo facultative, puis la feuille de partage du téléphone. */
+/** Écran « Envoyer à un pro » : aperçu du message, photo facultative, puis la feuille de partage du téléphone. */
 export function EcranEnvoyer({ id, choix }: { id: string; choix?: string }) {
   const { couleurs } = useTheme();
   const photo = usePhotoPanne();
   const [erreurPartage, setErreurPartage] = useState<string | null>(null);
 
+  const inconnu = !diagnostics.some((d) => d.id === id);
   const message = useMemo(() => {
     const diagnostic = diagnostics.find((d) => d.id === id);
     if (!diagnostic) return null;
@@ -30,8 +31,8 @@ export function EcranEnvoyer({ id, choix }: { id: string; choix?: string }) {
   if (message === null) {
     return (
       <FondEcran>
-        <EnTete titre="Envoyer au plombier" action="retour" />
-        <Text style={{ color: couleurs.texte }}>{"Ce diagnostic n'est pas terminé : reviens au résultat pour l'envoyer."}</Text>
+        <EnTete titre="Envoyer à un pro" action="retour" />
+        <Text style={{ color: couleurs.texte }}>{inconnu ? 'Diagnostic introuvable.' : "Ce diagnostic n'est pas terminé : reviens au résultat pour l'envoyer."}</Text>
       </FondEcran>
     );
   }
@@ -46,7 +47,7 @@ export function EcranEnvoyer({ id, choix }: { id: string; choix?: string }) {
   const partager = async () => {
     setErreurPartage(null);
     try {
-      if (photo.uri) await Share.open({ message, url: photo.uri, type: 'image/jpeg', failOnCancel: false });
+      if (photo.uri) await Share.open({ message, url: photo.uri, type: photo.mimeType ?? 'image/jpeg', failOnCancel: false });
       else await ShareNatif.share({ message });
     } catch {
       setErreurPartage("Le partage n'a pas pu s'ouvrir. Réessaie dans un instant.");
@@ -55,7 +56,7 @@ export function EcranEnvoyer({ id, choix }: { id: string; choix?: string }) {
 
   return (
     <FondEcran>
-      <EnTete titre="Envoyer au plombier" action="retour" />
+      <EnTete titre="Envoyer à un pro" action="retour" />
       {photo.uri ? (
         <View style={styles.vignette}>
           <Image testID="photo-panne" source={{ uri: photo.uri }} style={styles.image} />

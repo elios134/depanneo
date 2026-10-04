@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeProvider';
 import { EnTete } from '@/ui/EnTete';
@@ -10,6 +11,7 @@ import { EMPLACEMENTS } from './lib/logement';
 export function EcranLogement() {
   const { couleurs } = useTheme();
   const { logement } = useLogement();
+  const [photosKo, setPhotosKo] = useState<string[]>([]);
   return (
     <FondEcran>
       <EnTete titre="Mon logement" sousTitre="Où couper en cas d'urgence" action="retour" />
@@ -24,10 +26,15 @@ export function EcranLogement() {
             style={[styles.ligne, { backgroundColor: couleurs.carte, borderColor: couleurs.bordure }]}
           >
             <View style={[styles.vignette, { borderColor: couleurs.bordure }]}>
-              {info?.photo ? (
-                <Image source={{ uri: info.photo }} style={styles.image} accessibilityLabel={`Photo : ${e.titre}`} />
+              {info?.photo && !photosKo.includes(e.id) ? (
+                <Image
+                  source={{ uri: info.photo }}
+                  style={styles.image}
+                  accessibilityLabel={`Photo : ${e.titre}`}
+                  onError={() => setPhotosKo((l) => [...l, e.id])}
+                />
               ) : (
-                <Text style={[styles.plus, { color: couleurs.accent }]}>+ photo</Text>
+                <Text style={[styles.plus, { color: couleurs.accent }]}>{info?.photo ? 'Photo indisponible' : '+ photo'}</Text>
               )}
             </View>
             <View style={styles.textes}>

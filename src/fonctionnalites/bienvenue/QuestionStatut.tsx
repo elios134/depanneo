@@ -21,7 +21,12 @@ export function QuestionStatut() {
 
   if (!visible) return null;
   return (
-    <View style={StyleSheet.absoluteFill} testID="question-statut">
+    <View
+      style={StyleSheet.absoluteFill}
+      testID="question-statut"
+      accessibilityViewIsModal
+      importantForAccessibility="yes"
+    >
       <FondEcran defilant={false}>
         <View style={styles.centre}>
           <Text style={[styles.titre, { color: couleurs.texte }]}>Une dernière chose</Text>

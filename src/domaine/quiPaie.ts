@@ -1,14 +1,13 @@
+import type { StatutLogement } from './statutLogement';
 import type { QuiPaie } from './types';
 
 export type TonQuiPaie = 'vert' | 'orange' | 'neutre';
 
-type Statut = 'locataire' | 'proprietaire' | 'non-precise';
-
 const A_TA_CHARGE = { titre: 'À ta charge', ton: 'vert' } as const;
 
 /** Titre du bloc « Qui paie ? » selon la panne et le statut de l'utilisateur (null = non précisé). */
-export function titreQuiPaie(qui: QuiPaie, statut: Statut | null): { titre: string; ton: TonQuiPaie } {
-  const s: Statut = statut ?? 'non-precise';
+export function titreQuiPaie(qui: QuiPaie, statut: StatutLogement | null): { titre: string; ton: TonQuiPaie } {
+  const s: StatutLogement = statut ?? 'non-precise';
   switch (qui) {
     case 'autre':
       return { titre: "Un autre organisme s'en occupe", ton: 'neutre' };

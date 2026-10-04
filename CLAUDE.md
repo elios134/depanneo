@@ -17,7 +17,7 @@ Particuliers, locataires et propriétaires, sans connaissance technique. Tout do
 - **Tutos** pas à pas pour les réparations faciles (10), avec des schémas animés (`src/ui/schemas/`), un encadré d'alerte ou d'info en haut si besoin et une partie « Plan B » quand la première méthode ne suffit pas.
 - **Qui paie ?** : sur chaque résultat de diagnostic, une phrase dit si la réparation est à la charge du locataire, du propriétaire ou du gestionnaire (selon le statut choisi au premier lancement, modifiable dans les réglages).
 - **Mon logement** (depuis l'onglet Urgences) : photo et note pour les emplacements clés (robinet d'arrêt, tableau électrique, gaz, chauffe-eau), rappelées dans les gestes d'urgence (« Chez toi »). Stocké sur le téléphone.
-- **Envoyer au plombier** : depuis un résultat, un message prêt à partager (diagnostic + photo de la panne) par SMS, WhatsApp ou e-mail.
+- **Envoyer à un pro** : depuis un résultat, un message prêt à partager (diagnostic + photo de la panne) par SMS, WhatsApp ou e-mail.
 - **Carte des pros** (OpenStreetMap) : plombiers et électriciens proches, appel en 1 appui.
 - **Réglages** : thème sombre/clair/auto, rayon de recherche, localisation.
 - Le diagnostic, les urgences et les tutos **fonctionnent sans réseau**.

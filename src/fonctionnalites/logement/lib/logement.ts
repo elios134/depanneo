@@ -7,7 +7,7 @@ export const EMPLACEMENTS: { id: Emplacement; titre: string }[] = [
   { id: 'chauffe-eau', titre: 'Chauffe-eau / groupe de sécurité' },
 ];
 
-/** photo = URI d'un fichier dans le dossier documents de l'appli. */
+/** photo = nom d'un fichier du dossier « logement » (dossier documents de l'appli) ; le fournisseur le transforme en URI pour l'affichage. */
 export interface InfoEmplacement {
   photo?: string;
   note?: string;
