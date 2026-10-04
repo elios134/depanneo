@@ -2,7 +2,7 @@ import type { Resultat } from '@/domaine/types';
 import { prosVisibles } from './renvoi';
 
 describe('prosVisibles', () => {
-  const resultat = (r: Partial<Resultat>): Resultat => ({ verdict: 'orange', titre: 't', conseil: 'c', ...r });
+  const resultat = (r: Partial<Resultat>): Resultat => ({ verdict: 'orange', titre: 't', conseil: 'c', quiPaie: { qui: 'autre', phrase: 'p' }, ...r });
 
   it('montre les pros en temps normal', () => {
     expect(prosVisibles(resultat({}))).toBe(true);

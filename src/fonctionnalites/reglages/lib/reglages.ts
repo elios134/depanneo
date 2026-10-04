@@ -1,13 +1,16 @@
 import type { Lieu } from '@/domaine/lieux';
+import type { StatutLogement } from '@/domaine/statutLogement';
 
 export type ModeTheme = 'sombre' | 'clair' | 'auto';
 export type RayonKm = 5 | 10 | 20;
+export type { StatutLogement };
 
 export interface Reglages {
   theme: ModeTheme;
   rayonKm: RayonKm;
   localisation: boolean;
   villeParDefaut: Lieu | null;
+  statutLogement: StatutLogement | null;
 }
 
 export const REGLAGES_DEFAUT: Reglages = {
@@ -15,12 +18,14 @@ export const REGLAGES_DEFAUT: Reglages = {
   rayonKm: 10,
   localisation: true,
   villeParDefaut: null,
+  statutLogement: null,
 };
 
 export const CLE_REGLAGES = 'depanneo.reglages';
 
 const MODES: ModeTheme[] = ['sombre', 'clair', 'auto'];
 const RAYONS: RayonKm[] = [5, 10, 20];
+const STATUTS: StatutLogement[] = ['locataire', 'proprietaire', 'non-precise'];
 
 function lireLieu(valeur: unknown): Lieu | null {
   if (typeof valeur !== 'object' || valeur === null) return null;
@@ -46,6 +51,9 @@ export function lireReglages(brut: string | null): Reglages {
     rayonKm: RAYONS.includes(donnees.rayonKm as RayonKm) ? (donnees.rayonKm as RayonKm) : REGLAGES_DEFAUT.rayonKm,
     localisation: typeof donnees.localisation === 'boolean' ? donnees.localisation : REGLAGES_DEFAUT.localisation,
     villeParDefaut: lireLieu(donnees.villeParDefaut),
+    statutLogement: STATUTS.includes(donnees.statutLogement as StatutLogement)
+      ? (donnees.statutLogement as StatutLogement)
+      : null,
   };
 }
 

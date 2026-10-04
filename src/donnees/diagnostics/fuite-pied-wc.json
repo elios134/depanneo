@@ -19,12 +19,20 @@
     "resultat_pipe": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Le joint entre la cuvette et l'évacuation (la « pipe ») fuit. Ce sont des eaux usées : évite de tirer la chasse, nettoie avec des gants et appelle un plombier."
+      "conseil": "Le joint entre la cuvette et l'évacuation (la « pipe ») fuit. Ce sont des eaux usées : évite de tirer la chasse, nettoie avec des gants et appelle un plombier.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Joint de la pipe : souvent locataire. Pipe ou cuvette fêlée par l'âge : propriétaire."
+      }
     },
     "resultat_condensation": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "Ce n'est sûrement pas une fuite : de la condensation se forme sur le réservoir froid. Aère la pièce et essuie ; si l'eau revient après avoir séché, refais le diagnostic."
+      "conseil": "Ce n'est sûrement pas une fuite : de la condensation se forme sur le réservoir froid. Aère la pièce et essuie ; si l'eau revient après avoir séché, refais le diagnostic.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Ce n'est pas une panne : rien à payer, pense à aérer."
+      }
     }
   }
 }

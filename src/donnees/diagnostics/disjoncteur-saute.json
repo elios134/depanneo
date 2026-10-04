@@ -33,18 +33,30 @@
     "resultat_appareil": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "C'est l'appareil qui est en défaut. Ne le rebranche pas, fais-le réparer ou remplace-le."
+      "conseil": "C'est l'appareil qui est en défaut. Ne le rebranche pas, fais-le réparer ou remplace-le.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "C'est ton appareil qui est en cause : à ta charge."
+      }
     },
     "resultat_surcharge": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Trop d'appareils en même temps sur le même circuit. Répartis-les sur d'autres prises ou d'autres pièces.",
-      "tutoId": "reparer-disjoncteur"
+      "tutoId": "reparer-disjoncteur",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Répartir les appareils : rien à payer."
+      }
     },
     "resultat_court_circuit": {
       "verdict": "rouge",
       "titre": "Appelle un pro tout de suite",
-      "conseil": "Un disjoncteur qui re-saute immédiatement signale un défaut. Ne le réarme pas plusieurs fois et ne touche pas au tableau. Appelle un électricien."
+      "conseil": "Un disjoncteur qui re-saute immédiatement signale un défaut. Ne le réarme pas plusieurs fois et ne touche pas au tableau. Appelle un électricien.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Appareil en défaut : locataire. Défaut de l'installation : propriétaire."
+      }
     }
   }
 }

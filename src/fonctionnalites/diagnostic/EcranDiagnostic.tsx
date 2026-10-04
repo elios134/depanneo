@@ -17,7 +17,7 @@ function Parcours({ diagnostic }: { diagnostic: Diagnostic }) {
     return (
       <FondEcran>
         <EnTete titre="Résultat" action="fermer" />
-        <CarteResultat resultat={parcours.resultat} metier={metierDeCategorie(diagnostic.categorie)} onRecommencer={parcours.recommencer} />
+        <CarteResultat diagnosticId={diagnostic.id} choix={parcours.choix} resultat={parcours.resultat} metier={metierDeCategorie(diagnostic.categorie)} onRecommencer={parcours.recommencer} />
       </FondEcran>
     );
   }

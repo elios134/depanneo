@@ -20,19 +20,31 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le petit joint du raccord est usé. Dévisse à la main, change le joint, revisse.",
-      "tutoId": "changer-flexible-douche"
+      "tutoId": "changer-flexible-douche",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Joints et flexibles de douche : entretien du locataire."
+      }
     },
     "resultat_flexible": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Change le flexible : il se visse à la main, en taille standard.",
-      "tutoId": "changer-flexible-douche"
+      "tutoId": "changer-flexible-douche",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Le remplacement du flexible de douche est à la charge du locataire."
+      }
     },
     "resultat_pommeau": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Dévisse le pommeau, change son joint et détartre-le.",
-      "tutoId": "detartrer-mousseur"
+      "tutoId": "detartrer-mousseur",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Joint et détartrage du pommeau : entretien du locataire."
+      }
     }
   }
 }

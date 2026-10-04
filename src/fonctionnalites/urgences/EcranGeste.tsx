@@ -1,14 +1,19 @@
 // src/fonctionnalites/urgences/EcranGeste.tsx
-import { StyleSheet, Text } from 'react-native';
+import { router } from 'expo-router';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import { gestesUrgence } from '@/donnees/gestesUrgence';
 import { useTheme } from '@/theme/ThemeProvider';
 import { EnTete } from '@/ui/EnTete';
 import { EtapesList } from '@/ui/EtapesList';
 import { FondEcran } from '@/ui/FondEcran';
 import { NumeroUrgence } from '@/ui/NumeroUrgence';
+import { ChezToi } from '../logement/components/ChezToi';
+import { useLogement } from '../logement/LogementProvider';
+import { emplacementDuGeste, estRenseigne } from '../logement/lib/logement';
 
 export function EcranGeste({ id }: { id: string }) {
   const { couleurs } = useTheme();
+  const { logement } = useLogement();
   const geste = gestesUrgence.find((g) => g.id === id);
   if (!geste) {
     return (
@@ -18,15 +23,35 @@ export function EcranGeste({ id }: { id: string }) {
       </FondEcran>
     );
   }
+  const emplacement = emplacementDuGeste(id);
+  const info = emplacement ? logement[emplacement] : undefined;
+  // Pour le gaz, rien de nouveau au-dessus des consignes : « Chez toi » et le lien passent après les étapes et le numéro.
+  const gaz = id === 'couper-gaz';
+  const chezToi = info && estRenseigne(info) ? <ChezToi info={info} compact={gaz} /> : null;
+  const lien =
+    emplacement && !estRenseigne(info) ? (
+      <Pressable
+        testID="enregistrer-emplacement"
+        accessibilityRole="link"
+        onPress={() => router.push({ pathname: '/urgences/logement/[emplacement]', params: { emplacement } })}
+      >
+        <Text style={[styles.lien, { color: couleurs.accent }]}>Enregistrer l&apos;emplacement</Text>
+      </Pressable>
+    ) : null;
   return (
     <FondEcran>
       <EnTete titre={geste.titre} action="retour" />
+      {!gaz ? chezToi : null}
+      {!gaz ? lien : null}
       <EtapesList etapes={geste.etapes} />
       {geste.numeroUtile ? <NumeroUrgence numero={geste.numeroUtile} /> : null}
+      {gaz ? chezToi : null}
+      {gaz ? lien : null}
     </FondEcran>
   );
 }
 
 const styles = StyleSheet.create({
   texte: { fontSize: 15 },
+  lien: { fontSize: 13.5, fontWeight: '600' },
 });

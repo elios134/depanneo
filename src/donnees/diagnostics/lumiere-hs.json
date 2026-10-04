@@ -26,18 +26,30 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Commence par changer l'ampoule, avec le disjoncteur de la pièce coupé.",
-      "tutoId": "changer-ampoule"
+      "tutoId": "changer-ampoule",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Les ampoules sont à la charge du locataire."
+      }
     },
     "resultat_piece": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le problème touche toute la pièce : ça vient sûrement du tableau électrique, pas de l'interrupteur.",
-      "renvoi": { "type": "diagnostic", "id": "courant-une-piece" }
+      "renvoi": { "type": "diagnostic", "id": "courant-une-piece" },
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Réarmer un disjoncteur : rien à payer."
+      }
     },
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "L'interrupteur ou un fil est défectueux. Ne démonte rien : appelle un électricien."
+      "conseil": "L'interrupteur ou un fil est défectueux. Ne démonte rien : appelle un électricien.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Interrupteur à remplacer : locataire. Fil ou installation défectueux : propriétaire."
+      }
     }
   }
 }

@@ -27,18 +27,30 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Une ventouse ou un furet suffit généralement.",
-      "tutoId": "deboucher-evier"
+      "tutoId": "deboucher-evier",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Débouchage courant : entretien du locataire."
+      }
     },
     "resultat_siphon": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "Le bouchon est sûrement dans le siphon (le coude sous l'évier). Il se dévisse à la main.",
-      "tutoId": "deboucher-evier"
+      "tutoId": "deboucher-evier",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Nettoyage du siphon : entretien du locataire."
+      }
     },
     "resultat_canalisation": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Le bouchon est dans une canalisation commune. N'utilise plus l'eau et appelle un plombier."
+      "conseil": "Le bouchon est dans une canalisation commune. N'utilise plus l'eau et appelle un plombier.",
+      "quiPaie": {
+        "qui": "autre",
+        "phrase": "Canalisation commune : préviens le gestionnaire ou le syndic de l'immeuble."
+      }
     }
   }
 }

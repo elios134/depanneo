@@ -12,9 +12,10 @@ interface Props {
   variante?: 'accent' | 'danger' | 'discret' | 'teinte';
   accessibilityLabel?: string;
   testID?: string;
+  disabled?: boolean;
 }
 
-export function BoutonPrincipal({ libelle, icone, onPress, variante = 'accent', accessibilityLabel, testID }: Props) {
+export function BoutonPrincipal({ libelle, icone, onPress, variante = 'accent', accessibilityLabel, testID, disabled }: Props) {
   const { couleurs } = useTheme();
   const teinte_ = variante === 'teinte';
   const plein = variante === 'accent' || variante === 'danger';
@@ -23,11 +24,14 @@ export function BoutonPrincipal({ libelle, icone, onPress, variante = 'accent', 
   return (
     <Pressable
       onPress={onPress}
+      disabled={disabled}
       testID={testID}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      accessibilityState={disabled ? { disabled: true } : undefined}
       style={[
         styles.bouton,
+        disabled && styles.inactif,
         teinte_
           ? { backgroundColor: teinte(couleurs.accent, 0.14), borderColor: 'transparent' }
           : { backgroundColor: fond, borderColor: plein ? fond : couleurs.bordure, shadowColor: fond },
@@ -52,5 +56,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   ombre: { shadowOpacity: 0.35, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 6 },
+  inactif: { opacity: 0.5 },
   libelle: { fontSize: 16, fontWeight: '700' },
 });

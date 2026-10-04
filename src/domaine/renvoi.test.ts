@@ -9,7 +9,7 @@ const piece: Diagnostic = {
   motsCles: ['pièce'],
   etapeInitiale: 'r',
   etapes: {},
-  resultats: { r: { verdict: 'vert', titre: 't', conseil: 'c' } },
+  resultats: { r: { verdict: 'vert', titre: 't', conseil: 'c', quiPaie: { qui: 'autre', phrase: 'p' } } },
 };
 const gaz: GesteUrgence = { id: 'couper-gaz', titre: 'Odeur de gaz ?', icone: 'flame', numeroUtile: '0800 47 33 33', etapes: ['Sors.'] };
 const eau: GesteUrgence = { id: 'couper-eau', titre: 'Couper l\'eau', icone: 'droplets', etapes: ['Ferme.'] };

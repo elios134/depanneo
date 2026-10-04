@@ -15,7 +15,7 @@ const diagTest: Diagnostic = {
     },
   },
   resultats: {
-    r1: { verdict: 'vert', titre: 'OK', conseil: 'Répare ça toi-même.' },
+    r1: { verdict: 'vert', titre: 'OK', conseil: 'Répare ça toi-même.', quiPaie: { qui: 'autre', phrase: 'p' } },
   },
 };
 

@@ -15,7 +15,8 @@ export function useParcoursDiagnostic(diag: Diagnostic) {
     numeroQuestion: etat.historique.length,
     progression: progression(diag, etat),
     peutRevenir: peutRevenir(etat),
-    repondre: (suite: string) => setEtat((e) => repondre(e, suite)),
+    choix: etat.choix,
+    repondre: (indice: number, suite: string) => setEtat((e) => repondre(e, indice, suite)),
     precedente: () => setEtat((e) => precedente(e)),
     recommencer: () => setEtat(demarrer(diag)),
   };

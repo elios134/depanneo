@@ -27,17 +27,29 @@
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
       "conseil": "L'eau n'arrive pas dans le réservoir : vérifie que le petit robinet d'arrivée est ouvert à fond. Sinon, continue avec le diagnostic « WC lent à se remplir ».",
-      "renvoi": { "type": "diagnostic", "id": "wc-lent-a-remplir" }
+      "renvoi": { "type": "diagnostic", "id": "wc-lent-a-remplir" },
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Ouvrir le robinet d'arrivée : rien à payer."
+      }
     },
     "resultat_tringle": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "La petite tige ou le câble entre le bouton et le mécanisme s'est décroché. Soulève le couvercle et raccroche-le."
+      "conseil": "La petite tige ou le câble entre le bouton et le mécanisme s'est décroché. Soulève le couvercle et raccroche-le.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Petite réparation de la chasse : entretien du locataire."
+      }
     },
     "resultat_mecanisme": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Le mécanisme est bloqué ou cassé. En attendant, tu peux vider la cuvette avec un seau d'eau. Un plombier changera le mécanisme."
+      "conseil": "Le mécanisme est bloqué ou cassé. En attendant, tu peux vider la cuvette avec un seau d'eau. Un plombier changera le mécanisme.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Pièce cassée par usure normale : propriétaire. Casse par mauvaise utilisation : locataire."
+      }
     }
   }
 }

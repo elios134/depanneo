@@ -11,7 +11,7 @@ describe('validerDiagnostic', () => {
       motsCles: ['fuite'],
       etapeInitiale: 'q1',
       etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'r1' }] } },
-      resultats: { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok' } },
+      resultats: { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' } } },
     };
     expect(validerDiagnostic(diag)).toEqual([]);
   });
@@ -55,7 +55,7 @@ describe('validerDiagnostic', () => {
       motsCles: ['fuite'],
       etapeInitiale: 'r1',
       etapes: {},
-      resultats: { r1: { verdict: 'rouge', titre: 'OK', conseil: 'ok' } },
+      resultats: { r1: { verdict: 'rouge', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' } } },
     };
     expect(validerDiagnostic(diag)).toEqual([]);
   });
@@ -69,7 +69,7 @@ describe('validerDiagnostic', () => {
       motsCles: ['fuite'],
       etapeInitiale: 'q1',
       etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'r1' }] } },
-      resultats: { r1: { verdict: 'Rouge', titre: 'OK', conseil: 'ok' } as unknown as Resultat },
+      resultats: { r1: { verdict: 'Rouge', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' } } as unknown as Resultat },
     };
     const erreurs = validerDiagnostic(diag);
     expect(erreurs.length).toBeGreaterThan(0);
@@ -84,7 +84,7 @@ describe('validerDiagnostic', () => {
       motsCles: ['fuite'],
       etapeInitiale: 'q1',
       etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'r1' }] } },
-      resultats: { r1: { verdict: 'rouge', titre: 'OK', conseil: '' } },
+      resultats: { r1: { verdict: 'rouge', titre: 'OK', conseil: '', quiPaie: { qui: 'autre', phrase: 'p' } } },
     };
     const erreurs = validerDiagnostic(diag);
     expect(erreurs.length).toBeGreaterThan(0);
@@ -113,7 +113,7 @@ describe('validerDiagnostic', () => {
     motsCles: ['fuite'],
     etapeInitiale: 'q1',
     etapes: { q1: { question: 'Q1', reponses: [{ texte: 'A', suite: 'r1' }] } },
-    resultats: { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok' } },
+    resultats: { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' } } },
   });
 
   it('refuse une catégorie inconnue', () => {
@@ -133,7 +133,7 @@ describe('validerDiagnostic', () => {
 
   it('refuse un verdict rouge qui propose un tuto', () => {
     const diag = base();
-    diag.resultats = { r1: { verdict: 'rouge', titre: 'Danger', conseil: 'Appelle un pro', tutoId: 'un-tuto' } };
+    diag.resultats = { r1: { verdict: 'rouge', titre: 'Danger', conseil: 'Appelle un pro', quiPaie: { qui: 'autre', phrase: 'p' }, tutoId: 'un-tuto' } };
     const erreurs = validerDiagnostic(diag).join(' ');
     expect(erreurs).toContain('tuto');
     expect(erreurs).toContain('rouge');
@@ -145,14 +145,14 @@ describe('validerDiagnostic', () => {
 
   it('accepte un renvoi vers un autre diagnostic', () => {
     const diag = base();
-    diag.resultats = { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', renvoi: { type: 'diagnostic', id: 'autre' } } };
+    diag.resultats = { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' }, renvoi: { type: 'diagnostic', id: 'autre' } } };
     expect(validerDiagnostic(diag)).toEqual([]);
   });
 
   it('refuse un renvoi de type inconnu', () => {
     const diag = base();
     diag.resultats = {
-      r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', renvoi: { type: 'tuto', id: 'x' } as unknown as Resultat['renvoi'] },
+      r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' }, renvoi: { type: 'tuto', id: 'x' } as unknown as Resultat['renvoi'] },
     };
     expect(validerDiagnostic(diag).join(' ')).toContain('renvoi');
   });
@@ -160,20 +160,20 @@ describe('validerDiagnostic', () => {
   it('refuse un renvoi null', () => {
     const diag = base();
     diag.resultats = {
-      r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', renvoi: null as unknown as Resultat['renvoi'] },
+      r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' }, renvoi: null as unknown as Resultat['renvoi'] },
     };
     expect(validerDiagnostic(diag).join(' ')).toContain('renvoi ne peut pas être null');
   });
 
   it('refuse un renvoi sans identifiant', () => {
     const diag = base();
-    diag.resultats = { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', renvoi: { type: 'urgence', id: '' } } };
+    diag.resultats = { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' }, renvoi: { type: 'urgence', id: '' } } };
     expect(validerDiagnostic(diag).join(' ')).toContain('renvoi');
   });
 
   it('refuse un renvoi d\'un diagnostic vers lui-même', () => {
     const diag = base();
-    diag.resultats = { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', renvoi: { type: 'diagnostic', id: 'test' } } };
+    diag.resultats = { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' }, renvoi: { type: 'diagnostic', id: 'test' } } };
     expect(validerDiagnostic(diag).join(' ')).toContain('lui-même');
   });
 });
@@ -187,7 +187,7 @@ describe('validerRenvois', () => {
     motsCles: ['x'],
     etapeInitiale: 'r1',
     etapes: {},
-    resultats: { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', renvoi } },
+    resultats: { r1: { verdict: 'vert', titre: 'OK', conseil: 'ok', quiPaie: { qui: 'autre', phrase: 'p' }, renvoi } },
   });
 
   it('accepte des renvois vers un diagnostic et une urgence qui existent', () => {

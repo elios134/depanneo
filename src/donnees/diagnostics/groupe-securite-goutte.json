@@ -19,12 +19,20 @@
     "resultat_normal": {
       "verdict": "vert",
       "titre": "Tu peux réparer ça toi-même",
-      "conseil": "C'est normal : l'eau se dilate en chauffant et le groupe de sécurité évacue le surplus. Pense à manœuvrer sa petite manette une fois par mois pour éviter le calcaire."
+      "conseil": "C'est normal : l'eau se dilate en chauffant et le groupe de sécurité évacue le surplus. Pense à manœuvrer sa petite manette une fois par mois pour éviter le calcaire.",
+      "quiPaie": {
+        "qui": "locataire",
+        "phrase": "Manœuvrer le groupe de sécurité fait partie de l'entretien du locataire."
+      }
     },
     "resultat_pro": {
       "verdict": "orange",
       "titre": "Sécurise en attendant un pro",
-      "conseil": "Soit le groupe de sécurité est entartré à l'intérieur et il faut le changer, soit le chauffe-eau chauffe trop (thermostat ou contacteur jour/nuit en panne). Ne bouche jamais le groupe : le ballon pourrait exploser. Appelle un plombier."
+      "conseil": "Soit le groupe de sécurité est entartré à l'intérieur et il faut le changer, soit le chauffe-eau chauffe trop (thermostat ou contacteur jour/nuit en panne). Ne bouche jamais le groupe : le ballon pourrait exploser. Appelle un plombier.",
+      "quiPaie": {
+        "qui": "depend",
+        "phrase": "Groupe de sécurité entartré : souvent locataire. Thermostat ou chauffe-eau en panne : propriétaire."
+      }
     }
   }
 }

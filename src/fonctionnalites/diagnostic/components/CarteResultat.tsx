@@ -1,6 +1,6 @@
 // src/fonctionnalites/diagnostic/components/CarteResultat.tsx
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { LIBELLES_METIER, type Metier, type Pro } from '@/domaine/pro';
 import type { Resultat } from '@/domaine/types';
@@ -17,15 +17,20 @@ import { CartePro } from '@/ui/CartePro';
 import { FichePro } from '@/ui/FichePro';
 import { NumeroUrgence } from '@/ui/NumeroUrgence';
 import { VerdictBadge } from '@/ui/VerdictBadge';
+import { ordreActions, type Action } from '../lib/ordreActions';
 import { prosVisibles } from '../lib/renvoi';
+import { BlocQuiPaie } from './BlocQuiPaie';
 
 interface Props {
+  diagnosticId: string;
+  /** Indices des réponses choisies, pour reconstruire le message « Envoyer à un pro ». */
+  choix: number[];
   resultat: Resultat;
   metier: Metier;
   onRecommencer: () => void;
 }
 
-export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
+export function CarteResultat({ diagnosticId, choix, resultat, metier, onRecommencer }: Props) {
   const { couleurs } = useTheme();
   const { position } = usePosition({ passif: true });
   const { pros } = usePros(position);
@@ -69,11 +74,24 @@ export function CarteResultat({ resultat, metier, onRecommencer }: Props) {
       </View>
     ) : null;
 
-  // Le renvoi passe toujours en premier, juste sous le conseil (maquette 8).
-  const actions =
-    resultat.verdict === 'vert' ? [carteRenvoi, boutonTuto, carteGeste, sectionPros] :
-    resultat.verdict === 'orange' ? [carteRenvoi, carteGeste, numero, sectionPros, boutonTuto] :
-    [carteRenvoi, numero, sectionPros, carteGeste];
+  const boutonEnvoyer = (
+    <BoutonPrincipal
+      key="envoyer"
+      testID="bouton-envoyer-plombier"
+      libelle="Envoyer à un pro"
+      icone="share"
+      variante="discret"
+      onPress={() =>
+        router.push({ pathname: '/diagnostic/envoyer', params: { id: diagnosticId, choix: choix.join(',') } }, { withAnchor: true })
+      }
+    />
+  );
+  const quiPaie = <BlocQuiPaie key="qui-paie" info={resultat.quiPaie} />;
+
+  const elements: Record<Action, ReactNode> = {
+    renvoi: carteRenvoi, quiPaie, tuto: boutonTuto, geste: carteGeste, numero, envoyer: boutonEnvoyer, pros: sectionPros,
+  };
+  const actions = ordreActions(resultat.verdict).map((a) => elements[a]);
 
   return (
     <>

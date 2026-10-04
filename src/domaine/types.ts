@@ -21,6 +21,14 @@ export interface Etape {
 /** Bouton sur un résultat : ouvre un autre diagnostic (depuis le début) ou un geste de l'onglet Urgences. */
 export type Renvoi = { type: 'diagnostic'; id: string } | { type: 'urgence'; id: string };
 
+/** Qui paie la réparation : locataire, propriétaire, ça dépend, ou un autre organisme. */
+export type QuiPaie = 'locataire' | 'proprietaire' | 'depend' | 'autre';
+
+export interface InfoQuiPaie {
+  qui: QuiPaie;
+  phrase: string;
+}
+
 export interface Resultat {
   verdict: Verdict;
   titre: string;
@@ -29,6 +37,7 @@ export interface Resultat {
   gesteUrgenceId?: string;
   numeroUtile?: string;
   renvoi?: Renvoi;
+  quiPaie: InfoQuiPaie;
 }
 
 export interface Diagnostic {
