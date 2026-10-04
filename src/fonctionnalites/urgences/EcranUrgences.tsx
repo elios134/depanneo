@@ -10,6 +10,8 @@ import { appeler } from '@/ui/appeler';
 import { CarteListe } from '@/ui/CarteListe';
 import { EnTete } from '@/ui/EnTete';
 import { FondEcran } from '@/ui/FondEcran';
+import { useLogement } from '../logement/LogementProvider';
+import { resumeLogement } from '../logement/lib/logement';
 
 function couleurGeste(c: Couleurs, id: string): string {
   if (id === 'couper-gaz') return c.danger;
@@ -23,9 +25,20 @@ function sousTitreGeste(geste: GesteUrgence): string {
 
 export function EcranUrgences() {
   const { couleurs } = useTheme();
+  const { logement } = useLogement();
   return (
     <FondEcran>
       <EnTete titre="Urgences" sousTitre="Les bons gestes en attendant le pro." />
+      <CarteListe
+        testID="carte-mon-logement"
+        grande
+        icone="house"
+        couleur={couleurs.accent}
+        couleurBordure={couleurs.accent}
+        titre="Mon logement"
+        sousTitre={resumeLogement(logement)}
+        onPress={() => router.push('/urgences/logement')}
+      />
       {gestesUrgence.map((geste) => (
         <CarteListe
           key={geste.id}
