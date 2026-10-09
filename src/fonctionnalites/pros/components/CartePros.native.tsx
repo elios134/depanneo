@@ -91,7 +91,7 @@ export function CartePros({ centre, pros, horsLigne, recentrage, interactive = t
               disabled={!onOuvrirPro}
               accessibilityRole="button"
               accessibilityLabel={`Voir la fiche de ${pro.nom}`}
-              hitSlop={8}
+              hitSlop={estJoignable(pro) ? 8 : 16}
             >
               {estJoignable(pro) ? <EpinglePro metier={pro.metiers[0]} /> : <PointPro />}
             </Pressable>

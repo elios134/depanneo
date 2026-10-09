@@ -21,5 +21,7 @@ const TERMES: Record<Metier | 'tous', string> = {
 
 /** Recherche Google Maps autour de la position (Android l'ouvre dans l'appli Google Maps si elle est installée). */
 export function lienGoogleMaps(position: Position, filtre: Metier | 'tous'): string {
-  return `https://www.google.com/maps/search/${encodeURIComponent(TERMES[filtre])}/@${position.lat},${position.lon},14z`;
+  // Position arrondie à 3 décimales (~100 m), comme pour les appels aux services.
+  const arrondir = (n: number) => Math.round(n * 1000) / 1000;
+  return `https://www.google.com/maps/search/${encodeURIComponent(TERMES[filtre])}/@${arrondir(position.lat)},${arrondir(position.lon)},14z`;
 }

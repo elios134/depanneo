@@ -46,6 +46,15 @@ describe('version du cache', () => {
   it('un cache sans version (ancienne appli) doit être rafraîchi', () => {
     expect(doitRafraichir({ pros: [], centre, rayonKm: 10, date: maintenant }, centre, 10, maintenant)).toBe(true);
   });
+  it('un cache partiel de 10 min reste valable', () => {
+    expect(doitRafraichir({ pros: [], centre, rayonKm: 10, date: maintenant - 10 * 60 * 1000, version: 2, partiel: true }, centre, 10, maintenant)).toBe(false);
+  });
+  it('un cache partiel de 16 min est rafraîchi', () => {
+    expect(doitRafraichir({ pros: [], centre, rayonKm: 10, date: maintenant - 16 * 60 * 1000, version: 2, partiel: true }, centre, 10, maintenant)).toBe(true);
+  });
+  it('un cache complet de 16 min reste valable', () => {
+    expect(doitRafraichir({ pros: [], centre, rayonKm: 10, date: maintenant - 16 * 60 * 1000, version: 2, partiel: false }, centre, 10, maintenant)).toBe(false);
+  });
   it('un cache en version 2 récent et proche reste valable', () => {
     expect(doitRafraichir({ pros: [], centre, rayonKm: 10, date: maintenant, version: 2 }, centre, 10, maintenant)).toBe(false);
   });

@@ -7,12 +7,18 @@ import { chercherOsm } from './chercherOsm';
 import { chercherRegistre } from './chercherRegistre';
 import { chercherRge } from './chercherRge';
 
-let enCours: { cle: string; promesse: Promise<Pro[]> } | null = null;
+export interface ResultatPros {
+  pros: Pro[];
+  // Au moins une source n'a pas répondu.
+  partiel: boolean;
+}
+
+let enCours: { cle: string; promesse: Promise<ResultatPros> } | null = null;
 
 const raisonDeLEchec = (erreur: unknown): RaisonEchec => (erreur instanceof EchecPros ? erreur.raison : classerEchec([erreur]));
 
 // Les trois sources en même temps : on affiche ce qui répond ; échec seulement si aucune ne répond.
-async function interroger(position: Position, rayonKm: number): Promise<Pro[]> {
+async function interroger(position: Position, rayonKm: number): Promise<ResultatPros> {
   const [osm, rge, registre] = await Promise.allSettled([
     chercherOsm(position, rayonKm),
     chercherRge(position, rayonKm),
@@ -24,25 +30,26 @@ async function interroger(position: Position, rayonKm: number): Promise<Pro[]> {
     throw new EchecPros(raisons.every((r) => r === 'hors-ligne') ? 'hors-ligne' : 'indisponible');
   }
   const valeur = (r: PromiseSettledResult<Pro[]>) => (r.status === 'fulfilled' ? r.value : []);
-  return fusionnerPros({ osm: valeur(osm), rge: valeur(rge), registre: valeur(registre) });
+  const pros = fusionnerPros({ osm: valeur(osm), rge: valeur(rge), registre: valeur(registre) });
+  return { pros, partiel: resultats.some((r) => r.status === 'rejected') };
 }
 
 const arrondir = (n: number) => Math.round(n * 1000) / 1000;
 
-export function chercherPros(position: Position, rayonKm: number): Promise<Pro[]> {
+export function chercherPros(position: Position, rayonKm: number): Promise<ResultatPros> {
   // Position arrondie à 3 décimales (~100 m) : moins précise pour les services, et clé de déduplication identique.
   const arrondie = { lat: arrondir(position.lat), lon: arrondir(position.lon) };
   const cle = `${arrondie.lat},${arrondie.lon},${rayonKm}`;
-  let promesse: Promise<Pro[]>;
+  let promesse: Promise<ResultatPros>;
   if (enCours?.cle === cle) {
     promesse = enCours.promesse;
   } else {
-    const nouvelle: Promise<Pro[]> = interroger(arrondie, rayonKm).finally(() => {
+    const nouvelle: Promise<ResultatPros> = interroger(arrondie, rayonKm).finally(() => {
       if (enCours?.promesse === nouvelle) enCours = null;
     });
     enCours = { cle, promesse: nouvelle };
     promesse = nouvelle;
   }
   // Les requêtes fusionnées partagent le même résultat : chacun recale les distances depuis sa propre position.
-  return promesse.then((pros) => recalerPros(pros, position, rayonKm));
+  return promesse.then(({ pros, partiel }) => ({ pros: recalerPros(pros, position, rayonKm), partiel }));
 }

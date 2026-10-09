@@ -20,7 +20,7 @@ export function ListePros({ pros, filtre, onOuvrir }: Props) {
     <>
       {joignables.length > 0 ? (
         <View style={styles.section}>
-          <Text testID="section-joignables" style={[styles.titre, titre]}>Joignables tout de suite</Text>
+          <Text testID="section-joignables" accessibilityRole="header" style={[styles.titre, titre]}>Joignables tout de suite</Text>
           {joignables.map((pro) => (
             <CartePro key={pro.id} pro={pro} metier={metier} onOuvrir={onOuvrir} />
           ))}
@@ -28,7 +28,7 @@ export function ListePros({ pros, filtre, onOuvrir }: Props) {
       ) : null}
       {autres.length > 0 ? (
         <View style={styles.section}>
-          <Text testID="section-registre" style={[styles.titre, titre]}>
+          <Text testID="section-registre" accessibilityRole="header" style={[styles.titre, titre]}>
             Autres artisans déclarés <Text style={styles.aide}>· numéro à chercher</Text>
           </Text>
           {autres.map((pro) => (

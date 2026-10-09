@@ -83,8 +83,8 @@ export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPro
       }
       setResultat((r) => (r?.cle === cle ? { ...r, actualisation: true } : null));
       try {
-        const trouves = await chercherPros(ici, rayonKm);
-        const nouveau: CachePros = { pros: trouves, centre: ici, rayonKm, date: Date.now(), version: VERSION_CACHE };
+        const { pros: trouves, partiel } = await chercherPros(ici, rayonKm);
+        const nouveau: CachePros = { pros: trouves, centre: ici, rayonKm, date: Date.now(), version: VERSION_CACHE, partiel };
         if (annule) return;
         await enregistrer(nouveau);
         if (annule) return;

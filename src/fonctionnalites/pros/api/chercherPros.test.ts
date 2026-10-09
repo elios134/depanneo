@@ -24,16 +24,18 @@ describe('chercherPros', () => {
     osm.mockResolvedValue([pro('node/1', '04', 43.301)]);
     rge.mockResolvedValue([{ ...pro('rge/1', '05', 43.302), source: 'rge', siret: '1' }]);
     registre.mockResolvedValue([{ ...pro('registre/2', null, 43.303), source: 'registre', siret: '2' }]);
-    const pros = await chercherPros({ lat: 43.3, lon: 5.4 }, 10);
+    const { pros, partiel } = await chercherPros({ lat: 43.3, lon: 5.4 }, 10);
     expect(pros.map((p) => p.id)).toEqual(['node/1', 'rge/1', 'registre/2']);
+    expect(partiel).toBe(false);
   });
 
   it('une source en panne : les autres s’affichent', async () => {
     osm.mockRejectedValue(new EchecPros('indisponible'));
     rge.mockResolvedValue([]);
     registre.mockResolvedValue([{ ...pro('registre/2', null, 43.31), source: 'registre', siret: '2' }]);
-    const pros = await chercherPros({ lat: 43.31, lon: 5.41 }, 10);
+    const { pros, partiel } = await chercherPros({ lat: 43.31, lon: 5.41 }, 10);
     expect(pros.map((p) => p.id)).toEqual(['registre/2']);
+    expect(partiel).toBe(true);
   });
 
   it('trois sources hors ligne : échec « hors-ligne »', async () => {

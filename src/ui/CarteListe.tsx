@@ -63,5 +63,5 @@ const styles = StyleSheet.create({
   textes: { flex: 1, gap: 2 },
   titre: { fontSize: 15, fontWeight: '600' },
   ligneSous: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  sousTitre: { fontSize: 12.5 },
+  sousTitre: { fontSize: 12.5, flexShrink: 1 },
 });

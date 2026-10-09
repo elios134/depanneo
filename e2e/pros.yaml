@@ -9,19 +9,18 @@ appId: fr.depanneo.app
 - tapOn: "Ta ville ou ton code postal"
 - inputText: "Marseille"
 - extendedWaitUntil:
-    visible: "Marseille \\(.*\\)"
+    visible: "Marseille \\(130.*\\)"
     timeout: 10000
-- tapOn: "Marseille \\(.*\\)"
+- tapOn: "Marseille \\(130.*\\)"
 - extendedWaitUntil:
     visible:
-      id: "section-registre"
+      id: "section-joignables"
     timeout: 60000
-- assertVisible:
-    id: "section-joignables"
 - scrollUntilVisible:
     element:
       id: "carte-pro-registre"
     direction: DOWN
+    timeout: 30000
 - tapOn:
     id: "carte-pro-registre"
 - assertVisible:

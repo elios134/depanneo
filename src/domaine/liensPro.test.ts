@@ -13,9 +13,10 @@ describe('liens des pros', () => {
     expect(lienChercherNumero(pro)).toBe('https://www.google.com/search?q=VM%20Plomberie%20Marseille%20t%C3%A9l%C3%A9phone');
   });
   it('Google Maps suit le filtre', () => {
-    const ici = { lat: 43.2965, lon: 5.3698 };
-    expect(lienGoogleMaps(ici, 'plombier')).toBe('https://www.google.com/maps/search/plombier/@43.2965,5.3698,14z');
-    expect(lienGoogleMaps(ici, 'electricien')).toBe('https://www.google.com/maps/search/%C3%A9lectricien/@43.2965,5.3698,14z');
-    expect(lienGoogleMaps(ici, 'tous')).toBe('https://www.google.com/maps/search/plombier%20%C3%A9lectricien/@43.2965,5.3698,14z');
+    // Position arrondie à 3 décimales.
+    const ici = { lat: 43.29654321, lon: 5.36981234 };
+    expect(lienGoogleMaps(ici, 'plombier')).toBe('https://www.google.com/maps/search/plombier/@43.297,5.37,14z');
+    expect(lienGoogleMaps(ici, 'electricien')).toBe('https://www.google.com/maps/search/%C3%A9lectricien/@43.297,5.37,14z');
+    expect(lienGoogleMaps(ici, 'tous')).toBe('https://www.google.com/maps/search/plombier%20%C3%A9lectricien/@43.297,5.37,14z');
   });
 });
