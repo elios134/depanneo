@@ -1,5 +1,5 @@
 import { libelleLieu } from './lieux';
-import { metierDeCategorie, sousTitrePro, type Pro } from './pro';
+import { estJoignable, metierDeCategorie, sousTitrePro, texteRge, type Pro } from './pro';
 
 describe('pro et lieux', () => {
   it('déduit le métier de la catégorie de panne', () => {
@@ -17,5 +17,25 @@ describe('pro et lieux', () => {
     const texte = sousTitrePro(pro);
     expect(texte).toContain('Plombier · Électricien · ');
     expect(sousTitrePro({ ...pro, metiers: ['electricien'] })).toMatch(/^Électricien · /);
+  });
+});
+
+const base: Pro = { id: 'x', nom: 'X', metiers: ['plombier'], telephone: null, lat: 43.3, lon: 5.4, distanceKm: 1 };
+
+describe('estJoignable', () => {
+  it('vrai avec un téléphone', () => {
+    expect(estJoignable({ ...base, telephone: '04 91 00 00 00' })).toBe(true);
+  });
+  it('faux sans téléphone ou avec un téléphone vide', () => {
+    expect(estJoignable(base)).toBe(false);
+    expect(estJoignable({ ...base, telephone: '' })).toBe(false);
+  });
+});
+
+describe('texteRge', () => {
+  it('phrase avec organisme en majuscule et date française', () => {
+    expect(
+      texteRge({ qualification: 'Installation de plomberie sanitaire', organisme: 'qualibat', finValidite: '2030-07-11' }),
+    ).toBe('Qualification « Installation de plomberie sanitaire » vérifiée par Qualibat, valable jusqu’au 11/07/2030.');
   });
 });
