@@ -1,0 +1,30 @@
+appId: fr.depanneo.app
+---
+# Onglet Pros avec la ville par défaut (localisation refusée) : sections et fiche d'un artisan du registre.
+- launchApp:
+    clearState: true
+- runFlow: sous-flux/premier-lancement.yaml
+- tapOn:
+    id: "onglet-pros"
+- tapOn: "Ta ville ou ton code postal"
+- inputText: "Marseille"
+- extendedWaitUntil:
+    visible: "Marseille \\(.*\\)"
+    timeout: 10000
+- tapOn: "Marseille \\(.*\\)"
+- extendedWaitUntil:
+    visible:
+      id: "section-registre"
+    timeout: 60000
+- assertVisible:
+    id: "section-joignables"
+- scrollUntilVisible:
+    element:
+      id: "carte-pro-registre"
+    direction: DOWN
+- tapOn:
+    id: "carte-pro-registre"
+- assertVisible:
+    id: "bouton-chercher-numero"
+- assertVisible:
+    id: "bouton-fiche-officielle"
