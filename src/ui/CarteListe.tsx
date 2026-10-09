@@ -18,11 +18,16 @@ interface Props {
   grande?: boolean;
   couleurBordure?: string;
   testID?: string;
+  /** Élément affiché devant le sous-titre, ex. badge RGE. */
+  badge?: ReactNode;
+  /** Carte plus effacée : pros sans téléphone. */
+  discret?: boolean;
 }
 
-export function CarteListe({ icone, couleur, titre, sousTitre, onPress, droite, danger, grande, couleurBordure, testID }: Props) {
+export function CarteListe({ icone, couleur, titre, sousTitre, onPress, droite, danger, grande, couleurBordure, testID, badge, discret }: Props) {
   const { couleurs } = useTheme();
-  const fond = danger ? teinte(couleurs.danger, 0.12) : couleurs.carte;
+  // Les cartes discrètes (pros sans téléphone) n'ont pas de fond : seule la bordure reste.
+  const fond = danger ? teinte(couleurs.danger, 0.12) : discret ? 'transparent' : couleurs.carte;
   const bordure = danger
     ? teinte(couleurs.danger, 0.45)
     : couleurBordure
@@ -40,7 +45,12 @@ export function CarteListe({ icone, couleur, titre, sousTitre, onPress, droite, 
       <Pastille icone={icone} couleur={couleur} taille={grande ? 40 : 34} />
       <View style={styles.textes}>
         <Text style={[styles.titre, { color: couleurTitre }]}>{titre}</Text>
-        {sousTitre ? <Text style={[styles.sousTitre, { color: couleurs.texteDiscret }]}>{sousTitre}</Text> : null}
+        {sousTitre || badge ? (
+          <View style={styles.ligneSous}>
+            {badge}
+            {sousTitre ? <Text style={[styles.sousTitre, { color: couleurs.texteDiscret }]}>{sousTitre}</Text> : null}
+          </View>
+        ) : null}
       </View>
       {droite ?? (onPress ? <Icone nom="chevron-right" couleur={couleurs.texteDiscret} taille={18} /> : null)}
     </Pressable>
@@ -52,5 +62,6 @@ const styles = StyleSheet.create({
   grande: { paddingVertical: 16 },
   textes: { flex: 1, gap: 2 },
   titre: { fontSize: 15, fontWeight: '600' },
+  ligneSous: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   sousTitre: { fontSize: 12.5 },
 });

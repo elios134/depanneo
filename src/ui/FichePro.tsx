@@ -1,17 +1,20 @@
 // src/ui/FichePro.tsx
 import { useState } from 'react';
-import { Alert, Linking, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { formaterDistance } from '@/domaine/distance';
 import type { NomIcone } from '@/domaine/icones';
 import { formaterHoraires } from '@/domaine/horaires';
 import { lienAvis } from '@/domaine/lienAvis';
-import { LIBELLES_METIER, type Pro } from '@/domaine/pro';
+import { lienChercherNumero, lienFicheOfficielle } from '@/domaine/liensPro';
+import { LIBELLES_METIER, type Pro, type SourcePro } from '@/domaine/pro';
 import { teinte } from '@/theme/teinte';
 import { useTheme } from '@/theme/ThemeProvider';
 import { appeler } from './appeler';
+import { BlocRge } from './BlocRge';
 import { BoutonPrincipal } from './BoutonPrincipal';
 import { Icone } from './Icone';
+import { ouvrirLien } from './ouvrirLien';
 import { Pastille } from './Pastille';
 import { Verre } from './Verre';
 
@@ -20,9 +23,11 @@ interface Props {
   onFermer: () => void;
 }
 
-function ouvrir(url: string) {
-  Linking.openURL(url).catch(() => Alert.alert('Ouverture impossible', "Cette adresse ne peut pas s'ouvrir sur ton téléphone."));
-}
+const NOTES: Record<SourcePro, string> = {
+  osm: 'Infos OpenStreetMap, parfois incomplètes. Les avis s’ouvrent dans ton navigateur.',
+  rge: 'Infos de l’annuaire RGE de l’ADEME.',
+  registre: 'Artisan déclaré au registre des entreprises (INSEE). Son numéro n’est pas public : la recherche s’ouvre dans ton navigateur.',
+};
 
 function Ligne({ icone, texte, lien, libelle }: { icone: NomIcone; texte: string; lien?: string; libelle: string }) {
   const { couleurs } = useTheme();
@@ -35,7 +40,7 @@ function Ligne({ icone, texte, lien, libelle }: { icone: NomIcone; texte: string
   const style = [styles.ligne, { borderTopColor: couleurs.bordure }];
   if (!lien) return <View style={style}>{contenu}</View>;
   return (
-    <Pressable onPress={() => ouvrir(lien)} accessibilityRole="link" accessibilityLabel={libelle} style={style}>
+    <Pressable onPress={() => ouvrirLien(lien)} accessibilityRole="link" accessibilityLabel={libelle} style={style}>
       {contenu}
     </Pressable>
   );
@@ -49,7 +54,7 @@ export function FichePro({ pro, onFermer }: Props) {
   if (pro && pro !== dernier) setDernier(pro);
   const p = pro ?? dernier;
   const siteAffiche = p?.siteWeb?.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, '');
-  const aDesInfos = Boolean(p && (p.adresse || p.horaires || p.siteWeb || p.email));
+  const aDesInfos = Boolean(p && (p.adresse || p.horaires || p.siteWeb || p.email || p.anneeCreation));
 
   return (
     <Modal visible={pro !== null} transparent animationType="slide" onRequestClose={onFermer} statusBarTranslucent>
@@ -85,28 +90,49 @@ export function FichePro({ pro, onFermer }: Props) {
                 <Icone nom="x" couleur={couleurs.texteDiscret} taille={16} />
               </Pressable>
             </View>
+            {p.rge ? <BlocRge rge={p.rge} /> : null}
             {p.adresse ? <Ligne icone="map-pin" texte={p.adresse} libelle="Adresse" /> : null}
             {p.horaires ? <Ligne icone="clock" texte={formaterHoraires(p.horaires)} libelle="Horaires" /> : null}
             {p.siteWeb ? <Ligne icone="globe" texte={siteAffiche ?? p.siteWeb} lien={p.siteWeb} libelle={`Ouvrir le site de ${p.nom}`} /> : null}
             {p.email ? <Ligne icone="mail" texte={p.email} lien={`mailto:${p.email}`} libelle={`Écrire à ${p.nom}`} /> : null}
+            {p.anneeCreation ? <Ligne icone="building" texte={`Entreprise créée en ${p.anneeCreation}`} libelle="Date de création" /> : null}
             {aDesInfos ? null : (
               <Text style={[styles.peu, { color: couleurs.texteDiscret, borderTopColor: couleurs.bordure }]}>
                 Peu d&apos;infos disponibles pour ce pro.
               </Text>
             )}
             <View style={styles.boutons}>
-              {p.telephone ? <BoutonPrincipal libelle="Appeler" icone="phone" accessibilityLabel={`Appeler ${p.nom}`} onPress={() => appeler(p.telephone!)} /> : null}
-              <BoutonPrincipal
-                libelle="Voir les avis sur le web"
-                icone="search"
-                variante="teinte"
-                accessibilityLabel={`Voir les avis sur ${p.nom} sur le web`}
-                onPress={() => ouvrir(lienAvis(p))}
-              />
+              {p.telephone ? (
+                <BoutonPrincipal libelle="Appeler" icone="phone" accessibilityLabel={`Appeler ${p.nom}`} onPress={() => appeler(p.telephone!)} />
+              ) : (
+                <BoutonPrincipal
+                  libelle="Chercher le numéro"
+                  icone="search"
+                  testID="bouton-chercher-numero"
+                  accessibilityLabel={`Chercher le numéro de ${p.nom} sur le web`}
+                  onPress={() => ouvrirLien(lienChercherNumero(p))}
+                />
+              )}
+              {p.siret && !p.telephone ? (
+                <BoutonPrincipal
+                  libelle="Voir la fiche officielle"
+                  icone="building"
+                  variante="teinte"
+                  testID="bouton-fiche-officielle"
+                  accessibilityLabel={`Voir la fiche officielle de ${p.nom}`}
+                  onPress={() => ouvrirLien(lienFicheOfficielle(p.siret!))}
+                />
+              ) : (
+                <BoutonPrincipal
+                  libelle="Voir les avis sur le web"
+                  icone="search"
+                  variante="teinte"
+                  accessibilityLabel={`Voir les avis sur ${p.nom} sur le web`}
+                  onPress={() => ouvrirLien(lienAvis(p))}
+                />
+              )}
             </View>
-            <Text style={[styles.note, { color: couleurs.texteDiscret }]}>
-              Infos OpenStreetMap, parfois incomplètes. Les avis s&apos;ouvrent dans ton navigateur.
-            </Text>
+            <Text style={[styles.note, { color: couleurs.texteDiscret }]}>{NOTES[p.source ?? 'osm']}</Text>
           </Verre>
         ) : null}
       </View>
