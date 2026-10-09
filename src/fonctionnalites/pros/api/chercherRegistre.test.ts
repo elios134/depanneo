@@ -75,4 +75,29 @@ describe('chercherRegistre', () => {
     await expect(lancer(chercherRegistre(ici, 5))).rejects.toMatchObject({ statut: 400 });
     expect(appels).toHaveLength(1);
   });
+
+  it('un rayon élargi qui échoue : renvoie les résultats du rayon précédent', async () => {
+    simuler([
+      () => reponseOk(corps(3, ['1'])),
+      () => {
+        throw new TypeError('Network request failed');
+      },
+    ]);
+    const pros = await lancer(chercherRegistre(ici, 5));
+    expect(appels).toHaveLength(2);
+    expect(pros.map((p) => p.id)).toEqual(['registre/1']);
+  });
+
+  it('budget de 15 s épuisé : plus aucune requête, résultats précédents renvoyés', async () => {
+    simuler([
+      () => {
+        jest.setSystemTime(Date.now() + 16000);
+        return reponseOk(corps(3, ['1']));
+      },
+      () => reponseOk(corps(12, ['1', '2'])),
+    ]);
+    const pros = await lancer(chercherRegistre(ici, 5));
+    expect(appels).toHaveLength(1);
+    expect(pros.map((p) => p.id)).toEqual(['registre/1']);
+  });
 });

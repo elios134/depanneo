@@ -15,32 +15,52 @@ const attendre = (ms: number) => new Promise<void>((resoudre) => setTimeout(reso
 const codeRefuse = (erreur: unknown) =>
   erreur instanceof ErreurHttp && erreur.statut === 400 && /activite_principale/.test(erreur.corps);
 
+class BudgetEpuise extends Error {}
+
 export async function chercherRegistre(position: Position, rayonKm: number): Promise<Pro[]> {
   const debut = Date.now();
   let codes: readonly string[] = CODES_NAF;
   let premiere = true;
 
+  // Chaque requête reçoit ce qui reste du budget total au moment où elle part.
+  async function lireUne(rayon: number, page: number) {
+    const restant = BUDGET_MS - (Date.now() - debut);
+    if (restant <= 0) throw new BudgetEpuise();
+    return analyserRegistre(await lireJson(construireUrlRegistre(position, rayon, codes, page), restant), position, rayon);
+  }
+
   async function lirePage(rayon: number, page: number) {
     if (!premiere) await attendre(PAUSE_MS);
     premiere = false;
-    const restant = Math.max(1000, BUDGET_MS - (Date.now() - debut));
     try {
-      return analyserRegistre(await lireJson(construireUrlRegistre(position, rayon, codes, page), restant), position, rayon);
+      return await lireUne(rayon, page);
     } catch (erreur) {
       if (codes !== CODES_NAF || !codeRefuse(erreur)) throw erreur;
       // Bascule NAF 2025 : on garde les nouveaux codes pour la suite.
       codes = CODES_NAF_2025;
       await attendre(PAUSE_MS);
-      return analyserRegistre(await lireJson(construireUrlRegistre(position, rayon, codes, page), restant), position, rayon);
+      return lireUne(rayon, page);
     }
   }
 
   const rayons = rayonsEssai(rayonKm);
+  let precedent: Pro[] | null = null;
   for (const rayon of rayons) {
-    const { pros, total } = await lirePage(rayon, 1);
+    let premierePage;
+    try {
+      premierePage = await lirePage(rayon, 1);
+    } catch (erreur) {
+      // Un rayon élargi qui échoue (réseau, délai, budget) : on garde le meilleur résultat déjà obtenu.
+      if (precedent) return precedent;
+      throw erreur;
+    }
+    const { pros, total } = premierePage;
     const dernier = rayon === rayons[rayons.length - 1];
-    if (total < SEUIL_REGISTRE && !dernier) continue;
-    // Une deuxième page si l'API en annonce une ; son échec n'annule pas la première.
+    if (total < SEUIL_REGISTRE && !dernier) {
+      precedent = pros;
+      continue;
+    }
+    // Une deuxième page si l'API en annonce une ; son échec (ou le budget épuisé) n'annule pas la première.
     const suite = total > PAR_PAGE ? await lirePage(rayon, 2).catch(() => null) : null;
     const tous = [...pros, ...(suite?.pros ?? [])];
     return [...new Map(tous.map((p) => [p.id, p])).values()];
