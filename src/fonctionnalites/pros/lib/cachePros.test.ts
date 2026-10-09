@@ -6,6 +6,7 @@ const cache: CachePros = {
   centre: { lat: 43.3, lon: 5.4 },
   rayonKm: 10,
   date: 0,
+  version: 2,
 };
 
 describe('cache des pros', () => {
@@ -36,5 +37,16 @@ describe('cache des pros', () => {
     expect(ageTexte(0, 3 * HEURE)).toBe('il y a 3 h');
     expect(ageTexte(0, 24 * HEURE)).toBe('il y a 1 jour');
     expect(ageTexte(0, 50 * HEURE)).toBe('il y a 2 jours');
+  });
+});
+
+describe('version du cache', () => {
+  const centre = { lat: 43.3, lon: 5.4 };
+  const maintenant = 1_000_000_000;
+  it('un cache sans version (ancienne appli) doit être rafraîchi', () => {
+    expect(doitRafraichir({ pros: [], centre, rayonKm: 10, date: maintenant }, centre, 10, maintenant)).toBe(true);
+  });
+  it('un cache en version 2 récent et proche reste valable', () => {
+    expect(doitRafraichir({ pros: [], centre, rayonKm: 10, date: maintenant, version: 2 }, centre, 10, maintenant)).toBe(false);
   });
 });

@@ -7,11 +7,11 @@ import type { Position } from '@/domaine/lieux';
 import type { Pro } from '@/domaine/pro';
 import { useReglages } from '@/fonctionnalites/reglages/ReglagesProvider';
 import { chercherPros } from '../api/chercherPros';
-import { CLE_CACHE_PROS, doitRafraichir, ecrireCache, lireCache, type CachePros } from '../lib/cachePros';
+import { CLE_CACHE_PROS, VERSION_CACHE, doitRafraichir, ecrireCache, lireCache, type CachePros } from '../lib/cachePros';
 import { raisonDe } from '../lib/echecPros';
 import { recalerPros } from '../lib/recalerPros';
 
-// hors-ligne : pas de réseau ; indisponible : le réseau marche mais les serveurs Overpass ne répondent pas.
+// hors-ligne : pas de réseau ; indisponible : le réseau marche mais aucun service des pros ne répond.
 export type EtatPros = 'attente' | 'chargement' | 'ok' | 'hors-ligne' | 'indisponible';
 
 export const estEchec = (etat: EtatPros) => etat === 'hors-ligne' || etat === 'indisponible';
@@ -84,7 +84,7 @@ export function usePros(position: Position | null): { pros: Pro[]; etat: EtatPro
       setResultat((r) => (r?.cle === cle ? { ...r, actualisation: true } : null));
       try {
         const trouves = await chercherPros(ici, rayonKm);
-        const nouveau: CachePros = { pros: trouves, centre: ici, rayonKm, date: Date.now() };
+        const nouveau: CachePros = { pros: trouves, centre: ici, rayonKm, date: Date.now(), version: VERSION_CACHE };
         if (annule) return;
         await enregistrer(nouveau);
         if (annule) return;

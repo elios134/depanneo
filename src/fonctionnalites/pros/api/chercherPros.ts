@@ -1,56 +1,36 @@
-import { Platform } from 'react-native';
 import type { Position } from '@/domaine/lieux';
 import type { Pro } from '@/domaine/pro';
+import { classerEchec, EchecPros, type RaisonEchec } from '../lib/echecPros';
+import { fusionnerPros } from '../lib/fusion';
 import { recalerPros } from '../lib/recalerPros';
-import { analyserReponse, construireRequete, SERVEURS_OVERPASS } from '../lib/overpass';
-import { classerEchec, EchecPros } from '../lib/echecPros';
+import { chercherOsm } from './chercherOsm';
+import { chercherRegistre } from './chercherRegistre';
+import { chercherRge } from './chercherRge';
 
-// Les serveurs de secours mettent parfois plus de 15 s à répondre.
-const DELAI_PAR_SERVEUR_MS = 20000;
-const BUDGET_TOTAL_MS = 45000;
 let enCours: { cle: string; promesse: Promise<Pro[]> } | null = null;
 
-async function interrogerServeur(url: string, position: Position, rayonKm: number, delaiMs: number): Promise<Pro[]> {
-  const controleur = new AbortController();
-  const minuterie = setTimeout(() => controleur.abort(), delaiMs);
-  try {
-    const reponse = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        // Overpass refuse les requêtes anonymes ; le navigateur interdit cet en-tête sur le web.
-        ...(Platform.OS === 'web' ? {} : { 'User-Agent': 'Depanneo/2.0' }),
-      },
-      body: 'data=' + encodeURIComponent(construireRequete(position, rayonKm)),
-      signal: controleur.signal,
-    });
-    if (!reponse.ok) throw new Error(`Overpass a répondu ${reponse.status}`);
-    return analyserReponse(await reponse.json(), position);
-  } finally {
-    clearTimeout(minuterie);
-  }
-}
+const raisonDeLEchec = (erreur: unknown): RaisonEchec => (erreur instanceof EchecPros ? erreur.raison : classerEchec([erreur]));
 
-// Essaie chaque serveur à la suite et s'arrête au premier succès.
+// Les trois sources en même temps : on affiche ce qui répond ; échec seulement si aucune ne répond.
 async function interroger(position: Position, rayonKm: number): Promise<Pro[]> {
-  const debut = Date.now();
-  const erreurs: unknown[] = [];
-  for (const url of SERVEURS_OVERPASS) {
-    const restant = BUDGET_TOTAL_MS - (Date.now() - debut);
-    if (restant <= 0) break;
-    try {
-      return await interrogerServeur(url, position, rayonKm, Math.min(DELAI_PAR_SERVEUR_MS, restant));
-    } catch (erreur) {
-      erreurs.push(erreur);
-    }
+  const [osm, rge, registre] = await Promise.allSettled([
+    chercherOsm(position, rayonKm),
+    chercherRge(position, rayonKm),
+    chercherRegistre(position, rayonKm),
+  ]);
+  const resultats = [osm, rge, registre];
+  if (resultats.every((r) => r.status === 'rejected')) {
+    const raisons = resultats.map((r) => raisonDeLEchec((r as PromiseRejectedResult).reason));
+    throw new EchecPros(raisons.every((r) => r === 'hors-ligne') ? 'hors-ligne' : 'indisponible');
   }
-  throw new EchecPros(classerEchec(erreurs));
+  const valeur = (r: PromiseSettledResult<Pro[]>) => (r.status === 'fulfilled' ? r.value : []);
+  return fusionnerPros({ osm: valeur(osm), rge: valeur(rge), registre: valeur(registre) });
 }
 
 const arrondir = (n: number) => Math.round(n * 1000) / 1000;
 
 export function chercherPros(position: Position, rayonKm: number): Promise<Pro[]> {
-  // Position arrondie à 3 décimales (~100 m) : moins précise pour Overpass, et clé de déduplication identique.
+  // Position arrondie à 3 décimales (~100 m) : moins précise pour les services, et clé de déduplication identique.
   const arrondie = { lat: arrondir(position.lat), lon: arrondir(position.lon) };
   const cle = `${arrondie.lat},${arrondie.lon},${rayonKm}`;
   let promesse: Promise<Pro[]>;
