@@ -4,13 +4,16 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Metier, Pro } from '@/domaine/pro';
 import { useReglages } from '@/fonctionnalites/reglages/ReglagesProvider';
 import { useTheme } from '@/theme/ThemeProvider';
+import { lienGoogleMaps } from '@/domaine/liensPro';
 import { BandeauHorsLigne } from '@/ui/BandeauHorsLigne';
-import { CartePro } from '@/ui/CartePro';
+import { BoutonPrincipal } from '@/ui/BoutonPrincipal';
 import { EnTete } from '@/ui/EnTete';
 import { FichePro } from '@/ui/FichePro';
 import { FondEcran } from '@/ui/FondEcran';
 import { Onglets } from '@/ui/Onglets';
+import { ouvrirLien } from '@/ui/ouvrirLien';
 import { CartePros } from './components/CartePros';
+import { ListePros } from './components/ListePros';
 import { RechercheVille } from './components/RechercheVille';
 import { useCarteEchec } from './hooks/useCarteEchec';
 import { usePosition } from './hooks/usePosition';
@@ -75,7 +78,7 @@ export function EcranPros() {
           ) : null}
           {etat === 'ok' && pros.length === 0 ? (
             <Text style={[styles.message, discret]}>
-              Aucun pro trouvé dans un rayon de {reglages.rayonKm} km. Les données d&apos;OpenStreetMap peuvent être incomplètes.
+              Aucun pro trouvé dans un rayon de {reglages.rayonKm} km.
             </Text>
           ) : null}
           {(etat === 'ok' || echec) && pros.length > 0 && liste.length === 0 ? (
@@ -90,11 +93,19 @@ export function EcranPros() {
                 : 'Pas de liste enregistrée. Reconnecte-toi pour trouver les pros autour de toi.'}
             </Text>
           ) : null}
-          {liste.map((pro) => (
-            <CartePro key={pro.id} pro={pro} metier={filtre === 'tous' ? undefined : filtre} onOuvrir={setProOuvert} />
-          ))}
+          <ListePros pros={liste} filtre={filtre} onOuvrir={setProOuvert} />
+          {position ? (
+            <BoutonPrincipal
+              libelle="Voir plus sur Google Maps"
+              icone="map-pin"
+              variante="discret"
+              testID="bouton-google-maps"
+              accessibilityLabel="Voir plus de pros sur Google Maps"
+              onPress={() => ouvrirLien(lienGoogleMaps(position, filtre))}
+            />
+          ) : null}
           {date !== null && liste.length > 0 ? (
-            <Text style={[styles.credit, discret]}>Données © OpenStreetMap · mis à jour {age}</Text>
+            <Text style={[styles.credit, discret]}>Données © OpenStreetMap · ADEME · INSEE (Sirene) · mis à jour {age}</Text>
           ) : null}
           {sansReseau || indisponible ? (
             <Pressable

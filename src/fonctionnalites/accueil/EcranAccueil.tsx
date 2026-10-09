@@ -1,7 +1,8 @@
 // src/fonctionnalites/accueil/EcranAccueil.tsx
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { estJoignable } from '@/domaine/pro';
 import { CartePros } from '@/fonctionnalites/pros/components/CartePros';
 import { useCarteEchec } from '@/fonctionnalites/pros/hooks/useCarteEchec';
 import { usePosition } from '@/fonctionnalites/pros/hooks/usePosition';
@@ -19,6 +20,8 @@ export function EcranAccueil() {
   const margeBarre = useMargeBarre();
   const { position, statut, demanderAutorisation } = usePosition();
   const { pros, etat, date, reessayer } = usePros(position);
+  // L'accueil sert à appeler vite : seulement les pros avec un téléphone.
+  const joignables = useMemo(() => pros.filter(estJoignable), [pros]);
   const { carteEchec, setCarteEchec, rechargement, relancerCarte } = useCarteEchec();
   const [recentrage, setRecentrage] = useState(0);
   const horsLigne = etat === 'hors-ligne';
@@ -28,7 +31,7 @@ export function EcranAccueil() {
 
   return (
     <View style={[styles.racine, { backgroundColor: couleurs.carteSol }]}>
-      <CartePros centre={position} pros={pros} horsLigne={horsLigne} recentrage={recentrage} onEchecCarte={setCarteEchec} rechargement={rechargement} />
+      <CartePros centre={position} pros={joignables} horsLigne={horsLigne} recentrage={recentrage} onEchecCarte={setCarteEchec} rechargement={rechargement} />
       <View style={[styles.haut, { top: top + 12 }]}>
         <View style={styles.place} />
         {sansReseau ? <BandeauHorsLigne /> : indisponible ? <BandeauHorsLigne texte="Service des pros indisponible" /> : null}
@@ -42,8 +45,8 @@ export function EcranAccueil() {
         <Text style={[styles.credit, { top: top + 62, color: couleurs.texteDiscret }]}>© OpenFreeMap · OpenMapTiles · OpenStreetMap</Text>
       ) : null}
       <View style={[styles.panneau, { bottom: margeBarre - 8 }]}>
-        <PanneauAccueil nombrePros={pros.length}>
-          <SectionPros statut={statut} pros={pros} etat={etat} date={date} onUtiliserPosition={demanderAutorisation} peutReessayer={sansReseau || indisponible}
+        <PanneauAccueil nombrePros={joignables.length}>
+          <SectionPros statut={statut} pros={joignables} etat={etat} date={date} onUtiliserPosition={demanderAutorisation} peutReessayer={sansReseau || indisponible}
             onReessayer={() => {
               reessayer();
               relancerCarte();
