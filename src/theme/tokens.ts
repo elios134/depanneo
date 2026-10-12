@@ -2,8 +2,8 @@ export type NomTheme = 'sombre' | 'clair';
 
 export interface Couleurs {
   fond: string;
-  halo1: string;
-  halo2: string;
+  // Lueur bleue discrète derrière l'en-tête (fond de l'appli, maquette 14 option C).
+  lueur: string;
   texte: string;
   texteDiscret: string;
   carte: string;
@@ -38,9 +38,8 @@ export interface Couleurs {
 
 export const COULEURS: Record<NomTheme, Couleurs> = {
   sombre: {
-    fond: '#0a0a0f',
-    halo1: 'rgba(79,163,255,0.16)',
-    halo2: 'rgba(139,92,246,0.12)',
+    fond: '#0b0d12',
+    lueur: 'rgba(79,163,255,0.18)',
     texte: 'rgba(255,255,255,0.9)',
     texteDiscret: 'rgba(255,255,255,0.5)',
     carte: 'rgba(255,255,255,0.03)',
@@ -74,8 +73,7 @@ export const COULEURS: Record<NomTheme, Couleurs> = {
   },
   clair: {
     fond: '#f5f7fb',
-    halo1: 'rgba(79,163,255,0.18)',
-    halo2: 'rgba(139,92,246,0.10)',
+    lueur: 'rgba(79,163,255,0.16)',
     texte: '#0f172a',
     texteDiscret: 'rgba(15,23,42,0.5)',
     carte: '#ffffff',
