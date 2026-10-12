@@ -4,7 +4,7 @@ export const NOMS_ICONES = [
   'toggle-left', 'zap-off', 'door-open', 'plug', 'lightbulb-off', 'lightbulb',
   'house', 'triangle-alert', 'book-open', 'map-pin', 'settings', 'stethoscope', 'phone',
   'locate-fixed', 'search', 'rotate-ccw', 'shield-alert', 'hard-hat', 'flame', 'power', 'siren',
-  'chevron-right', 'chevron-left', 'chevron-up', 'x', 'zap', 'clock', 'globe', 'mail', 'info', 'euro', 'share',
+  'chevron-right', 'chevron-left', 'chevron-up', 'x', 'zap', 'clock', 'globe', 'mail', 'info', 'euro', 'share', 'building',
 ] as const;
 
 export type NomIcone = (typeof NOMS_ICONES)[number];

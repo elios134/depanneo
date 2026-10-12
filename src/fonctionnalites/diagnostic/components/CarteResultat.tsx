@@ -2,7 +2,7 @@
 import { router } from 'expo-router';
 import { useState, type ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { LIBELLES_METIER, type Metier, type Pro } from '@/domaine/pro';
+import { estJoignable, LIBELLES_METIER, type Metier, type Pro } from '@/domaine/pro';
 import type { Resultat } from '@/domaine/types';
 import { gestesUrgence } from '@/donnees/gestesUrgence';
 import { tutos } from '@/donnees/tutos';
@@ -38,7 +38,7 @@ export function CarteResultat({ diagnosticId, choix, resultat, metier, onRecomme
   const tuto = tutos.find((t) => t.id === resultat.tutoId);
   const geste = gestesUrgence.find((g) => g.id === resultat.gesteUrgenceId);
   const prosMetier = prosVisibles(resultat)
-    ? filtrerPros(pros, metier).slice(0, resultat.verdict === 'vert' ? 1 : 2)
+    ? filtrerPros(pros.filter(estJoignable), metier).slice(0, resultat.verdict === 'vert' ? 1 : 2)
     : [];
 
   const carteRenvoi = resultat.renvoi ? <CarteRenvoi key="renvoi" renvoi={resultat.renvoi} /> : null;

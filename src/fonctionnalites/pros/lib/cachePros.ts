@@ -7,18 +7,27 @@ export interface CachePros {
   centre: Position;
   rayonKm: number;
   date: number;
+  // 2 = liste fusionnée (OSM + RGE + registre). Absent = ancienne appli (OSM seul).
+  version?: number;
+  // Au moins une source n'a pas répondu : on réessaie bientôt.
+  partiel?: boolean;
 }
+
+export const VERSION_CACHE = 2;
 
 export const CLE_CACHE_PROS = 'depanneo.pros';
 
 const MINUTE = 60 * 1000;
 const HEURE = 60 * MINUTE;
 const JOUR = 24 * HEURE;
+const DELAI_PARTIEL = 15 * MINUTE;
 
 export function doitRafraichir(cache: CachePros | null, position: Position, rayonKm: number, maintenant: number): boolean {
   if (!cache) return true;
+  if (cache.version !== VERSION_CACHE) return true;
   if (cache.rayonKm !== rayonKm) return true;
   if (maintenant - cache.date > JOUR) return true;
+  if (cache.partiel && maintenant - cache.date > DELAI_PARTIEL) return true;
   return distanceKm(cache.centre, position) > 1;
 }
 

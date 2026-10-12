@@ -37,7 +37,7 @@ Cette version est autonome (elle n'a pas besoin de ton PC), mais chaque changeme
 
 ## Tests de bout en bout (Maestro)
 
-Cinq scénarios (dossier `e2e/`) ouvrent la vraie appli sur un téléphone ou un émulateur et vérifient les parcours importants : diagnostic WC, gaz, urgence eau, tuto avec Plan B, panneau de l'accueil. Ils tournent sur la version de production (APK release), sans serveur Metro.
+Huit scénarios (dossier `e2e/`) ouvrent la vraie appli sur un téléphone ou un émulateur et vérifient les parcours importants : diagnostic WC, gaz, urgence eau, tuto avec Plan B, panneau de l'accueil, mon logement, qui paie, onglet Pros (`pros.yaml` : nécessite le réseau ; peut prendre jusqu'à une minute). Ils tournent sur la version de production (APK release), sans serveur Metro.
 
 1. Installer Maestro une fois : voir https://maestro.mobile.dev (`maestro --version` doit répondre).
 2. Brancher le téléphone (débogage USB) ou lancer un émulateur ; `adb devices` doit le lister.

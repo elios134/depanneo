@@ -1,10 +1,11 @@
 import { Camera, Map, ViewAnnotation, type CameraRef } from '@maplibre/maplibre-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
+import { estJoignable } from '@/domaine/pro';
 import { useTheme } from '@/theme/ThemeProvider';
 import type { PropsCartePros } from './carteTypes';
 import { FondCarte } from './FondCarte';
-import { EpinglePro, PointPosition } from './Marqueurs';
+import { EpinglePro, PointPosition, PointPro } from './Marqueurs';
 
 const STYLES = {
   sombre: 'https://tiles.openfreemap.org/styles/dark',
@@ -55,6 +56,9 @@ export function CartePros({ centre, pros, horsLigne, recentrage, interactive = t
 
   if (horsLigne) return <FondCarte neutre />;
 
+  // Les pros appelables passent en premier : ce sont eux qu'on garde si la limite d'épingles est atteinte.
+  const ordonnes = [...pros.filter(estJoignable), ...pros.filter((p) => !estJoignable(p))];
+
   return (
     <>
       <Map key={rechargement} style={StyleSheet.absoluteFill} mapStyle={STYLES[nom]} attribution={false} logo={false} compass={false}
@@ -80,16 +84,16 @@ export function CartePros({ centre, pros, horsLigne, recentrage, interactive = t
             <PointPosition />
           </ViewAnnotation>
         ) : null}
-        {pros.slice(0, MAX_EPINGLES).map((pro) => (
-          <ViewAnnotation key={pro.id} id={pro.id} lngLat={[pro.lon, pro.lat]} anchor="bottom">
+        {ordonnes.slice(0, MAX_EPINGLES).map((pro) => (
+          <ViewAnnotation key={pro.id} id={pro.id} lngLat={[pro.lon, pro.lat]} anchor={estJoignable(pro) ? 'bottom' : 'center'}>
             <Pressable
               onPress={() => onOuvrirPro?.(pro)}
               disabled={!onOuvrirPro}
               accessibilityRole="button"
               accessibilityLabel={`Voir la fiche de ${pro.nom}`}
-              hitSlop={8}
+              hitSlop={estJoignable(pro) ? 8 : 16}
             >
-              <EpinglePro metier={pro.metiers[0]} />
+              {estJoignable(pro) ? <EpinglePro metier={pro.metiers[0]} /> : <PointPro />}
             </Pressable>
           </ViewAnnotation>
         ))}

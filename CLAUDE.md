@@ -18,7 +18,7 @@ Particuliers, locataires et propriétaires, sans connaissance technique. Tout do
 - **Qui paie ?** : sur chaque résultat de diagnostic, une phrase dit si la réparation est à la charge du locataire, du propriétaire ou du gestionnaire (selon le statut choisi au premier lancement, modifiable dans les réglages).
 - **Mon logement** (depuis l'onglet Urgences) : photo et note pour les emplacements clés (robinet d'arrêt, tableau électrique, gaz, chauffe-eau), rappelées dans les gestes d'urgence (« Chez toi »). Stocké sur le téléphone.
 - **Envoyer à un pro** : depuis un résultat, un message prêt à partager (diagnostic + photo de la panne) par SMS, WhatsApp ou e-mail.
-- **Carte des pros** (OpenStreetMap) : plombiers et électriciens proches, appel en 1 appui.
+- **Carte des pros** : plombiers et électriciens proches, depuis OpenStreetMap, l'annuaire RGE de l'ADEME (badge RGE) et le registre des entreprises de l'État (artisans sans numéro : « Chercher le numéro »). Appel en 1 appui pour les pros joignables.
 - **Réglages** : thème sombre/clair/auto, rayon de recherche, localisation.
 - Le diagnostic, les urgences et les tutos **fonctionnent sans réseau**.
 - Plus tard : annuaire de pros partenaires, carnet d'entretien, photo analysée par IA.
@@ -26,7 +26,7 @@ Particuliers, locataires et propriétaires, sans connaissance technique. Tout do
 ## Stack technique
 - React Native + Expo (Expo Router), TypeScript strict.
 - Design : style SC Fleet Manager (sombre, verre dépoli, barre de navigation flottante), icônes Lucide.
-- Données des pannes : JSON embarqués. Carte : MapLibre + OpenFreeMap. Pros : Overpass (OpenStreetMap).
+- Données des pannes : JSON embarqués. Carte : MapLibre + OpenFreeMap. Pros : Overpass (OpenStreetMap), annuaire RGE (data.ademe.fr), API Recherche d'entreprises (recherche-entreprises.api.gouv.fr).
 - Carte native : l'appli ne tourne plus dans Expo Go ; build de développement nécessaire (voir `docs/build-android.md`). La prévisualisation web affiche un fond de carte factice.
 
 ## Architecture du code

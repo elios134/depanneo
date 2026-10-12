@@ -77,7 +77,7 @@ export function SectionPros({ statut, pros, etat, date, onUtiliserPosition, peut
             ? 'Le service des pros ne répond pas. Réessaie dans quelques minutes.'
             : horsLigne
             ? 'Reconnecte-toi pour trouver les pros autour de toi.'
-            : "Les données viennent d'OpenStreetMap et peuvent être incomplètes."}
+            : "L'onglet Pros montre aussi les artisans sans numéro."}
         </Text>
         {horsLigne || peutReessayer ? <Lien texte="Réessayer" onPress={onReessayer} /> : null}
         {!horsLigne && reglages.rayonKm < 20 ? <Lien texte="Élargir à 20 km" onPress={() => modifier({ rayonKm: 20 })} /> : null}

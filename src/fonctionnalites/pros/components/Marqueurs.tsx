@@ -25,7 +25,14 @@ export function EpinglePro({ metier }: { metier: Metier }) {
   );
 }
 
+/** Pro sans téléphone (registre) : petit point gris, plus discret que l'épingle. */
+export function PointPro() {
+  const { couleurs } = useTheme();
+  return <View style={[styles.pointPro, { backgroundColor: couleurs.texteDiscret, borderColor: couleurs.fond }]} />;
+}
+
 const styles = StyleSheet.create({
+  pointPro: { width: 12, height: 12, borderRadius: 6, borderWidth: 2 },
   halo: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   point: { width: 16, height: 16, borderRadius: 8, borderWidth: 3 },
   epingle: {

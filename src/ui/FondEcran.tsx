@@ -21,19 +21,15 @@ export function FondEcran({ children, defilant = true }: { children: ReactNode; 
   const contenuStyle = { paddingTop: top + 12, paddingBottom: margeBarre, paddingHorizontal: 16, gap: 12 };
   return (
     <View style={[styles.racine, { backgroundColor: couleurs.fond }]}>
+      {/* Une seule lueur bleue, discrète, en haut de l'écran ; le reste est uni. */}
       <Svg style={StyleSheet.absoluteFill}>
         <Defs>
-          <RadialGradient id="halo1" cx="15%" cy="60%" r="60%">
-            <Stop offset="0" stopColor={couleurs.halo1} />
-            <Stop offset="1" stopColor={couleurs.fond} stopOpacity="0" />
-          </RadialGradient>
-          <RadialGradient id="halo2" cx="85%" cy="10%" r="50%">
-            <Stop offset="0" stopColor={couleurs.halo2} />
+          <RadialGradient id="lueur" cx="50%" cy="-10%" rx="75%" ry="45%">
+            <Stop offset="0" stopColor={couleurs.lueur} />
             <Stop offset="1" stopColor={couleurs.fond} stopOpacity="0" />
           </RadialGradient>
         </Defs>
-        <Rect width="100%" height="100%" fill="url(#halo1)" />
-        <Rect width="100%" height="100%" fill="url(#halo2)" />
+        <Rect width="100%" height="100%" fill="url(#lueur)" />
       </Svg>
       {defilant ? (
         <ScrollView
